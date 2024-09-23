@@ -7,7 +7,7 @@ import {
   createTask,
   deletedTask,
   updateTask,
-} from "../controller/taskController.js";
+} from "../controllers/taskController.js";
 
 router.get("/", getTasks).post("/", createTask);
 router.delete("/:id", deletedTask).put("/:id", updateTask);
