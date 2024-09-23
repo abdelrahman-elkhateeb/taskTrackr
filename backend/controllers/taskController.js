@@ -20,6 +20,16 @@ export const createTask = async (req, res) => {
   }
   const newTask = new Task(task);
   try {
+    // Check if a task with the same description already exists
+    const existingTask = await Task.findOne({ description: task.description });
+
+    if (existingTask) {
+      return res.status(400).json({
+        success: false,
+        message: "Task with this description already exists",
+      });
+    }
+
     const savedTask = await newTask.save();
     res.status(201).json({ success: true, data: savedTask });
   } catch (err) {
