@@ -13,7 +13,7 @@ export const getTasks = async (res) => {
 
 export const createTask = async (req, res) => {
   const task = req.body;
-  if (!description || !priority) {
+  if (!task.description || !task.priority) {
     return res
       .status(400)
       .json({ success: false, message: "Please fill in all" });
