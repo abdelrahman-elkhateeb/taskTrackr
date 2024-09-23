@@ -1,15 +1,15 @@
 import './App.css'
-import Table from './Components/Table'
+import Navbar from './Component/Navbar'
+import Table from './Component/Table'
 
 function App() {
 
   return (
     <>
-      
-
+<Navbar/>
        <Table />
-     
-       
+ 
+  
     </>
   )
 }

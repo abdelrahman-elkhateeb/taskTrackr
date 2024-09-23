@@ -66,7 +66,7 @@ const Table = () => {
             01/11/2024
         </td>
         <td className="px-6 py-4 text-right">
-            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+        <a href="/Editpage" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" >Edit</a>
         </td>
     </tr>
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -83,7 +83,7 @@ const Table = () => {
             15/11/2024
         </td>
         <td className="px-6 py-4 text-right">
-            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+        <a href="/Editpage" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" >Edit</a>
         </td>
     </tr>
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -100,7 +100,7 @@ const Table = () => {
             30/11/2024
         </td>
         <td className="px-6 py-4 text-right">
-            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+        <a href="/Editpage" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" >Edit</a>
         </td>
     </tr>
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -117,7 +117,7 @@ const Table = () => {
             05/12/2024
         </td>
         <td className="px-6 py-4 text-right">
-            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+        <a href="/Editpage" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" >Edit</a>
         </td>
     </tr>
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -134,7 +134,7 @@ const Table = () => {
             20/12/2024
         </td>
         <td className="px-6 py-4 text-right">
-            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+        <a href="/Editpage" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" >Edit</a>
         </td>
     </tr>
 </tbody>
@@ -153,7 +153,7 @@ const Table = () => {
             01/11/2024
         </td>
         <td className="px-6 py-4 text-right">
-            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+        <a href="/Editpage" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" >Edit</a>
         </td>
     </tr>
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -170,7 +170,7 @@ const Table = () => {
             15/11/2024
         </td>
         <td className="px-6 py-4 text-right">
-            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+        <a href="/Editpage" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" >Edit</a>
         </td>
     </tr>
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -187,7 +187,7 @@ const Table = () => {
             30/11/2024
         </td>
         <td className="px-6 py-4 text-right">
-            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+        <a href="/Editpage" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" >Edit</a>
         </td>
     </tr>
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -204,7 +204,7 @@ const Table = () => {
             05/12/2024
         </td>
         <td className="px-6 py-4 text-right">
-            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+        <a href="/Editpage" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" >Edit</a>
         </td>
     </tr>
     <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
