@@ -1,8 +1,17 @@
 import express from "express";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
+import userRoutes from './router/userRoutes.js';
+
+dotenv.config(); 
+
+const app = express();
+
+app.use(express.json()); 
+
+app.use('/api/users', userRoutes); 
 
 app.listen(process.env.PORT || 5000, () => {
-  connectDB();
+  connectDB(); 
   console.log("Server is running on port 5000");
 });
