@@ -1,7 +1,7 @@
-import Task from "../models/taskModel";
+import Task from "../models/taskModel.js";
 import mongoose from "mongoose";
 
-export const getTasks = async (res) => {
+export const getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({});
     res.status(200).json({ success: true, data: tasks });
@@ -13,7 +13,7 @@ export const getTasks = async (res) => {
 
 export const createTask = async (req, res) => {
   const task = req.body;
-  if (!description || !priority) {
+  if (!task.description || !task.priority) {
     return res
       .status(400)
       .json({ success: false, message: "Please fill in all" });
