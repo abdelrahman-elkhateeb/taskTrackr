@@ -1,4 +1,5 @@
 import './App.css'
+import Table from './Components/Table'
 
 function App() {
 
@@ -6,6 +7,7 @@ function App() {
     <>
       
        <p className='text-indigo-500 text-center'>Task Management</p>
+       <Table />
     </>
   )
 }
