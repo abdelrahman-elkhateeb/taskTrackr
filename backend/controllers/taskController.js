@@ -1,7 +1,7 @@
 import Task from "../models/taskModel.js";
 import mongoose from "mongoose";
 
-export const getTasks = async (res) => {
+export const getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({});
     res.status(200).json({ success: true, data: tasks });
