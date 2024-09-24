@@ -15,6 +15,7 @@ const Navbar = () => {
               alt="Flowbite Logo"
             />
             <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">
+              Task Tracker
             </span>
           </a>
           <div className="flex md:order-2">
