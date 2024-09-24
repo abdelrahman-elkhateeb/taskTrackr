@@ -2,7 +2,7 @@
 function Editpage() {
   return (
     <>
-        bbbjbubu
+     
     </>
   )
 }
