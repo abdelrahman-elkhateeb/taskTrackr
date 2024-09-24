@@ -13,23 +13,24 @@ export const getTasks = async (req, res) => {
 };
 
 export const createTask = async (req, res) => {
-  const { description, priority, dueDate, userId } = req.body;
+  const { title, description, priority, dueDate, userId } = req.body;
 
-  if (!description || !priority || !dueDate || !userId) {
+  if (!title || !description || !priority || !dueDate || !userId) {
     return res.status(400).json({ success: false, message: "Please fill in all fields" });
   }
 
   try {
-    const existingTask = await Task.findOne({ description });
+    const existingTask = await Task.findOne({ title, user: userId });
 
     if (existingTask) {
       return res.status(400).json({
         success: false,
-        message: "Task with this description already exists",
+        message: "Task with this title already exists for this user",
       });
     }
 
     const newTask = new Task({
+      title,
       description,
       priority,
       dueDate,

@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const taskSchema = new mongoose.Schema(
   {
+    title: {
+      type: String,
+      required: [true, "Task title is required"],
+    },
     description: {
       type: String,
       required: [true, "Task description is required"],
@@ -18,6 +22,11 @@ const taskSchema = new mongoose.Schema(
     dueDate: {
       type: Date,
       required: [true, "Due date is required"],
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: "User",
+      required: true,
     },
   },
   { timestamps: true },

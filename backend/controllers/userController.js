@@ -3,7 +3,22 @@ import User from '../models/userModel.js';
 const register = async (req, res) => {
     const { username, email, password } = req.body;
 
+    
+
     try {
+        if (await User.findOne({ email })) {
+            return res.status(400).json({ message: 'Email already exists' });
+        }
+        if (await User.findOne({ username })) {
+            return res.status(400).json({ message: 'Username already exists' });
+        }
+        if (!username ||!email ||!password) {
+            return res.status(400).json({ message: 'Please fill in all fields' });
+        }
+        if (password.length < 6) {
+            return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+        }
+        
         const newUser = await User.create({
             username,
             email,
@@ -20,6 +35,7 @@ const login = async (req, res) => {
 
     try {
         const user = await User.findOne({ email });
+
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
