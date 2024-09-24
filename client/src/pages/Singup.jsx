@@ -1,7 +1,21 @@
-import { Link } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import {  useNavigate } from "react-router-dom"
 
 const Singup = () => {
+const navgite =useNavigate()
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+      } = useForm()
+      const onSubmit = (data) => {
+        console.log(data)
+        navgite('/login')
+      }
+      
   return (
+
+
     <>
       <div className="flex font-poppins items-center justify-center">
         <div className="h-screen w-screen flex justify-center items-center dark:bg-gray-900">
@@ -14,7 +28,7 @@ const Singup = () => {
                 <h1 className="pt-8 pb-6 font-bold dark:text-gray-400 text-5xl text-center cursor-default">
               Singup
                 </h1>
-                <form action="#" method="post" className="space-y-4">
+                <form action="#" method="post" className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
 
 
                 <div>
@@ -29,8 +43,10 @@ const Singup = () => {
                       className="border p-3 dark:bg-indigo-700 dark:text-gray-300  dark:border-gray-700 shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
                       type="Text"
                       placeholder="Text"
-                      required
-                    />
+                      {...register("firstname",{ required: true })}
+                  
+                  />
+                    {errors.firstname && <span>This field is required</span>}
                   </div>
 
 
@@ -46,8 +62,10 @@ const Singup = () => {
                       className="border p-3 dark:bg-indigo-700 dark:text-gray-300  dark:border-gray-700 shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
                       type="Text"
                       placeholder="Text"
-                      required
-                    />
+                      {...register("lastname",{ required: true })}
+                  
+                  />
+                    {errors.lastname && <span>This field is required</span>}
                   </div>
 
 
@@ -63,8 +81,10 @@ const Singup = () => {
                       className="border p-3 dark:bg-indigo-700 dark:text-gray-300  dark:border-gray-700 shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
                       type="email"
                       placeholder="Email"
-                      required
+                      {...register("email",{ required: true })}
+                  
                     />
+                      {errors.email && <span>This field is required</span>}
                   </div>
                   <div>
                     <label
@@ -78,8 +98,10 @@ const Singup = () => {
                       className="border p-3 shadow-md dark:bg-indigo-700 dark:text-gray-300  dark:border-gray-700 placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
                       type="password"
                       placeholder="Password"
-                      required
-                    />
+                      {...register("password",{ required: true })}
+                  
+                  />
+                    {errors.password && <span>This field is required</span>}
                   </div>
                   <div>
                     <label
@@ -93,17 +115,19 @@ const Singup = () => {
                       className="border p-3 shadow-md dark:bg-indigo-700 dark:text-gray-300  dark:border-gray-700 placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full"
                       type="password"
                       placeholder="Password"
-                      required
-                    />
+                      {...register("password",{ required: true })}
+                  
+                  />
+                    {errors.password && <span>This field is required</span>}
                   </div>
                   
-                  <Link
+                  <button
                     className="bg-gradient-to-r dark:text-gray-300 from-blue-500 to-purple-500 shadow-lg mt-6 p-2 text-white rounded-lg w-full hover:scale-105 hover:from-purple-500 hover:to-blue-500 transition duration-300 ease-in-out block text-center"
                     type="submit"
-                     to='/login'
+                    
                   >
                     Singup
-                  </Link>
+                  </button>
                 </form>
                 
 
