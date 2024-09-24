@@ -38,7 +38,6 @@ export const createTask = async (req, res) => {
 
     const savedTask = await newTask.save();
 
-    // Update the user's tasks array
     await User.findByIdAndUpdate(userId, { $push: { tasks: savedTask._id } });
 
     res.status(201).json({ success: true, data: savedTask });

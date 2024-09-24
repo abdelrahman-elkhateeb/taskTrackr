@@ -15,7 +15,11 @@ const Navbar = () => {
               alt="Flowbite Logo"
             />
             <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">
+<<<<<<< HEAD
               Task Tracker
+=======
+              TaskTracker
+>>>>>>> 3fa3a10ef50361b0c5b50d36b8b0ac5ec7d81f32
             </span>
           </a>
           <div className="flex md:order-2">
@@ -123,7 +127,14 @@ const Navbar = () => {
                 >
                   Services
                 </NavLink>
+                
               </li>
+              <li><NavLink
+                  to='/login'
+                  className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                >
+               logout
+                </NavLink></li>
             </ul>
           </div>
         </div>
