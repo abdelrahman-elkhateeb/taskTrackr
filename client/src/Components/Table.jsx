@@ -6,17 +6,8 @@ const Table = () => {
     <>
       
 
-<div className="relative overflow-x-auto shadow-md sm:rounded-lg  max-w-2xl  mx-auto  " >
-<div className="mb-1 text-lg font-medium dark:text-white">Extra Large</div>
-<div className="flex justify-between items-center w-full h-6 bg-gray-200 rounded-full dark:bg-gray-700">
-  <div className="h-6 bg-blue-600 rounded-full dark:bg-blue-500 w-[45%]"></div>
-  <button
-    type="button"
-    className="ml-8 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
-  >
-    Add task
-  </button>
-</div>
+<div className="relative overflow-x-auto shadow-md sm:rounded-lg    " >
+
 
 
 
