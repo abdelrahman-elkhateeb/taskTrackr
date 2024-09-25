@@ -148,7 +148,7 @@ function Login() {
               </button>
               <p className="text-sm font-light">
                 Don't have account?{" "}
-                <a href="#" className="font-medium text-primary hover:underline" onClick={handleRegisterClick}>
+                <a href="" className="font-medium text-primary hover:underline" onClick={handleRegisterClick}>
                   Register
                 </a>
               </p>

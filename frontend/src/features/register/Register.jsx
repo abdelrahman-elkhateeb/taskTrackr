@@ -195,7 +195,7 @@ function Register() {
               <p className="text-sm font-light">
                 Already have an account?{" "}
                 <a
-                  href="#"
+                  href=""
                   className="font-medium text-primary hover:underline"
                   onClick={handleSigninClick}
                 >
