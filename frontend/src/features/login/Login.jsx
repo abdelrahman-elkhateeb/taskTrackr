@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
+import loginImg from "../../../public/login.svg";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -31,7 +32,8 @@ function Login() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/login", { // Update your backend URL if needed
+      const response = await fetch("http://localhost:5000/api/login", {
+        // Update your backend URL if needed
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,7 +53,6 @@ function Login() {
       console.log("Login successful:", data);
       // Redirect to home page after successful login
       navigate("/"); // Navigate to home page
-
     } catch (error) {
       console.error("Error:", error);
       setError(error.message); // Display the error message
@@ -61,14 +62,8 @@ function Login() {
   };
 
   return (
-    <section className="bg-base-100 h-screen">
-      <div className="flex flex-col items-center justify-center h-full px-6 py-8 mx-auto">
-        <a
-          href="#"
-          className="flex items-center mb-6 text-2xl font-semibold uppercase"
-        >
-          Login
-        </a>
+    <section className="bg-base-100 grid grid-cols-2">
+      <div className="flex flex-col items-center justify-center h-full px-6 py-8 ">
         <div className="w-full bg-base-200 rounded-lg shadow-md sm:max-w-md">
           <div className="p-6 space-y-4">
             <h1 className="text-xl font-bold leading-tight tracking-tight">
@@ -135,7 +130,11 @@ function Login() {
                   Forgot password?
                 </a>
               </div>
-              <button type="submit" className="btn btn-primary w-full" disabled={loading}>
+              <button
+                type="submit"
+                className="btn btn-primary w-full"
+                disabled={loading}
+              >
                 {loading ? "Loading..." : "Sign in"}
               </button>
               <p className="text-sm font-light">
@@ -151,6 +150,7 @@ function Login() {
           </div>
         </div>
       </div>
+      <img src={loginImg} alt="login" />
     </section>
   );
 }
