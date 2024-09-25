@@ -78,7 +78,7 @@ function Register() {
         </a>
         <div className="w-full bg-base-200 rounded-lg shadow-md sm:max-w-md">
           <div className="p-6 space-y-4">
-            <h1 className="text-xl font-bold leading-tight tracking-tight   ">
+            <h1 className="text-xl font-bold leading-tight tracking-tight">
               Create your account
             </h1>
             {error && <p className="text-red-500">{error}</p>}
@@ -86,7 +86,7 @@ function Register() {
               <div>
                 <label
                   htmlFor="username"
-                  className="block mb-2 text-sm font-medium   "
+                  className="block mb-2 text-sm font-medium"
                 >
                   Your Name
                 </label>
@@ -104,7 +104,7 @@ function Register() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block mb-2 text-sm font-medium   "
+                  className="block mb-2 text-sm font-medium"
                 >
                   Your email
                 </label>
@@ -122,7 +122,7 @@ function Register() {
               <div>
                 <label
                   htmlFor="password"
-                  className="block mb-2 text-sm font-medium   "
+                  className="block mb-2 text-sm font-medium"
                 >
                   Password
                 </label>
@@ -140,7 +140,7 @@ function Register() {
               <div>
                 <label
                   htmlFor="confirmPassword"
-                  className="block mb-2 text-sm font-medium   "
+                  className="block mb-2 text-sm font-medium"
                 >
                   Confirm Password
                 </label>
@@ -158,7 +158,7 @@ function Register() {
 
               {/* Gender Selection */}
               <div>
-                <label className="block mb-2 text-sm font-medium   ">
+                <label className="block mb-2 text-sm font-medium">
                   Gender
                 </label>
                 <div className="flex space-x-4">
@@ -190,7 +190,7 @@ function Register() {
               <button type="submit" className="btn btn-primary w-full">
                 Register
               </button>
-              <p className="text-sm font-light   ">
+              <p className="text-sm font-light">
                 Already have an account?{" "}
                 <a
                   href="#"
