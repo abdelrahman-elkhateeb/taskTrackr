@@ -1,5 +1,7 @@
 import { useState } from "react";
-import Loader from "../Ui/Loader";
+import signUp from "../../../public/signUp.svg";
+import { useNavigate } from "react-router-dom"; 
+
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -10,7 +12,8 @@ function Register() {
     gender: "",
   });
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,18 +25,15 @@ function Register() {
 
   const registerUser = async (e) => {
     e.preventDefault();
-    setLoading(true); 
 
     const { username, email, password, confirmPassword, gender } = formData;
 
     if (!username || !email || !password || !gender) {
       setError("All fields are required.");
-      setLoading(false); 
       return;
     }
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
-      setLoading(false); 
       return;
     }
 
@@ -56,25 +56,29 @@ function Register() {
         throw new Error(errorData.message || "An error occurred");
       }
 
-      await response.json();
-      window.location.href = '/login';
+      const data = await response.json();
+      alert("Registration successful!");
+
+      setFormData({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        gender: "",
+      });
     } catch (error) {
       console.error("Error:", error);
       setError("An error occurred. Please try again.");
-    } finally {
-      setLoading(false); 
     }
   };
 
+  const handleSigninClick = () => {
+    navigate("/login");
+  };
+
   return (
-    <section className="bg-base-100 h-screen">
-      <div className="flex flex-col items-center justify-center h-full px-6 py-8 mx-auto">
-        <a
-          href="#"
-          className="flex items-center mb-6 text-2xl font-semibold uppercase"
-        >
-          Register
-        </a>
+    <section className="bg-base-100 grid grid-cols-2 items-center w-full">
+      <div className="flex flex-col items-center justify-center h-full px-6 py-8 w-full">
         <div className="w-full bg-base-200 rounded-lg shadow-md sm:max-w-md">
           <div className="p-6 space-y-4">
             <h1 className="text-xl font-bold leading-tight tracking-tight">
@@ -83,7 +87,10 @@ function Register() {
             {error && <p className="text-red-500">{error}</p>}
             <form className="space-y-4" onSubmit={registerUser}>
               <div>
-                <label htmlFor="username" className="block mb-2 text-sm font-medium">
+                <label
+                  htmlFor="username"
+                  className="block mb-2 text-sm font-medium"
+                >
                   Your Name
                 </label>
                 <input
@@ -98,7 +105,10 @@ function Register() {
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block mb-2 text-sm font-medium">
+                <label
+                  htmlFor="email"
+                  className="block mb-2 text-sm font-medium"
+                >
                   Your email
                 </label>
                 <input
@@ -113,7 +123,10 @@ function Register() {
                 />
               </div>
               <div>
-                <label htmlFor="password" className="block mb-2 text-sm font-medium">
+                <label
+                  htmlFor="password"
+                  className="block mb-2 text-sm font-medium"
+                >
                   Password
                 </label>
                 <input
@@ -128,7 +141,10 @@ function Register() {
                 />
               </div>
               <div>
-                <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium">
+                <label
+                  htmlFor="confirmPassword"
+                  className="block mb-2 text-sm font-medium"
+                >
                   Confirm Password
                 </label>
                 <input
@@ -156,7 +172,7 @@ function Register() {
                       onChange={handleChange}
                       required
                     />
-                    <span className="ml-2">Male</span>
+                    <span className="ml-2   ">Male</span>
                   </label>
                   <label className="flex items-center">
                     <input
@@ -167,19 +183,21 @@ function Register() {
                       onChange={handleChange}
                       required
                     />
-                    <span className="ml-2">Female</span>
+                    <span className="ml-2   ">Female</span>
                   </label>
                 </div>
               </div>
 
-              {/* Register Button */}
-              <button type="submit" className="btn btn-primary w-full" disabled={loading}>
-                {loading ? <Loader /> : "Register"}
+              <button type="submit" className="btn btn-primary w-full">
+                Register
               </button>
-
               <p className="text-sm font-light">
                 Already have an account?{" "}
-                <a href="#" className="font-medium text-primary hover:underline">
+                <a
+                  href="#"
+                  className="font-medium text-primary hover:underline"
+                  onClick={handleSigninClick}
+                >
                   Sign in
                 </a>
               </p>
@@ -187,6 +205,7 @@ function Register() {
           </div>
         </div>
       </div>
+      <img src={signUp} alt="Sign Up Illustration" className=" " />
     </section>
   );
 }

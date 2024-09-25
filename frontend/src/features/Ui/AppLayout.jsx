@@ -9,7 +9,7 @@ function AppLayout() {
     <div>
       {isLoading && <Loading />}
       <NavBar />
-      <main className="mx-auto max-w-3xl">
+      <main className="mx-auto px-4 container">
         <Outlet />
       </main>
     </div>
