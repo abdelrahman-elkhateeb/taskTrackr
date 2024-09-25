@@ -7,24 +7,30 @@ const register = async (req, res) => {
         if (await User.findOne({ email })) {
             return res.status(400).json({ message: 'Email already exists' });
         }
+
         if (await User.findOne({ username })) {
             return res.status(400).json({ message: 'Username already exists' });
         }
-        if (!username ||!email ||!password) {
+
+        if (!username || !email || !password || !gender) {
             return res.status(400).json({ message: 'Please fill in all fields' });
         }
+
         if (password.length < 6) {
             return res.status(400).json({ message: 'Password must be at least 6 characters long' });
         }
-        if (gender!== 'male' && gender!== 'female') {
+
+        if (gender !== 'male' && gender !== 'female') {
             return res.status(400).json({ message: 'Invalid gender' });
         }
-        
+
         const newUser = await User.create({
             username,
             email,
-            password 
+            password,
+            gender, 
         });
+
         res.status(201).json({ message: 'User registered successfully', user: newUser });
     } catch (error) {
         res.status(400).json({ message: error.message });
