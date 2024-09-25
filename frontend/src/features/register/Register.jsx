@@ -1,4 +1,5 @@
 import { useState } from "react";
+import signUp from "../../../public/signUp.svg";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -68,14 +69,8 @@ function Register() {
   };
 
   return (
-    <section className="bg-base-100">
-      <div className="flex flex-col items-center justify-center h-full px-6 py-8 mx-auto">
-        <a
-          href="#"
-          className="flex items-center mb-6 text-2xl font-semibold uppercase"
-        >
-          Register
-        </a>
+    <section className="bg-base-100 grid grid-cols-2 items-center w-full">
+      <div className="flex flex-col items-center justify-center h-full px-6 py-8 w-full">
         <div className="w-full bg-base-200 rounded-lg shadow-md sm:max-w-md">
           <div className="p-6 space-y-4">
             <h1 className="text-xl font-bold leading-tight tracking-tight">
@@ -158,9 +153,7 @@ function Register() {
 
               {/* Gender Selection */}
               <div>
-                <label className="block mb-2 text-sm font-medium">
-                  Gender
-                </label>
+                <label className="block mb-2 text-sm font-medium">Gender</label>
                 <div className="flex space-x-4">
                   <label className="flex items-center">
                     <input
@@ -203,6 +196,7 @@ function Register() {
           </div>
         </div>
       </div>
+      <img src={signUp} alt="Sign Up Illustration" className=" " />
     </section>
   );
 }
