@@ -1,5 +1,5 @@
 import male from "../../../public/male.svg";
-import female from "../../../public/female.svg";
+// import female from "../../../public/female.svg";
 import logo from "../../../public/logo.png";
 import { Link } from "react-router-dom";
 function NavBar() {

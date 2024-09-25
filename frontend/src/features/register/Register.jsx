@@ -57,7 +57,8 @@ function Register() {
       }
 
       const data = await response.json();
-      alert("Registration successful!");
+      console.log(data);
+      
 
       setFormData({
         username: "",
