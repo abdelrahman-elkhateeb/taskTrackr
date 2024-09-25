@@ -1,0 +1,6 @@
+1- task component ( categorization, filteration, search and create task)
+2- profile component ( edit: name, password and gender )
+
+
+
+aboraya - create home , (login, signup): responsive, routes and layout of web application -  25/9 
