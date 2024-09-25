@@ -1,5 +1,7 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom"; 
+import Loader from "../Ui/Loader"; 
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -7,8 +9,8 @@ function Login() {
     password: "",
   });
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); // State to handle loading
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [loading, setLoading] = useState(false); 
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,18 +22,18 @@ function Login() {
 
   const loginUser = async (e) => {
     e.preventDefault();
-    setLoading(true); // Set loading to true
+    setLoading(true); 
 
     const { email, password } = formData;
 
     if (!email || !password) {
       setError("Both email and password are required.");
-      setLoading(false); // Reset loading
+      setLoading(false);
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/login", { // Update your backend URL if needed
+      const response = await fetch("http://localhost:5000/api/Users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,14 +51,16 @@ function Login() {
 
       const data = await response.json();
       console.log("Login successful:", data);
-      // Redirect to home page after successful login
-      navigate("/"); // Navigate to home page
+
+      setTimeout(() => {
+        navigate("/"); 
+      }, 2000);
 
     } catch (error) {
       console.error("Error:", error);
-      setError(error.message); // Display the error message
+      setError(error.message); 
     } finally {
-      setLoading(false); // Reset loading in either case
+      // setLoading(false); 
     }
   };
 
@@ -136,15 +140,12 @@ function Login() {
                 </a>
               </div>
               <button type="submit" className="btn btn-primary w-full" disabled={loading}>
-                {loading ? "Loading..." : "Sign in"}
+                {loading ? <Loader /> : "Login"}
               </button>
               <p className="text-sm font-light">
-                Don’t have an account yet?{" "}
-                <a
-                  href="#"
-                  className="font-medium text-primary hover:underline"
-                >
-                  Sign up
+                Don't have account?{" "}
+                <a href="#" className="font-medium text-primary hover:underline">
+                  Register
                 </a>
               </p>
             </form>
