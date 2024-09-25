@@ -4,6 +4,8 @@ const apis = {
     deleteTask: (id) => ["/api/Tasks/" + id, "DELETE"],
     updateTask: (id) => ["/api/Tasks/" + id, "PUT"],
     getUserTasks: (userId) => ["/api/Users/" + userId + "/tasks", "GET"],
+    
     login: "/api/Users/login",
-    user: "/api/Users/register"
+    user: "/api/Users/register",
+    updateUser: (userId) => ["/api/Users/" + userId ],
 }

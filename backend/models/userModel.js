@@ -16,6 +16,11 @@ const userSchema = new mongoose.Schema({
         required: [true, "Password is required"],
         minlength: [6, "Password must be at least 6 characters long"] 
     },
+    gender: {
+        type: String,
+        enum: ["male", "female"],
+        required: [true, "Gender is required"]
+    },
     tasks: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Task",
