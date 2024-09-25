@@ -5,11 +5,15 @@
   },
   "type": "module",
   "dependencies": {
-    "daisyui": "^4.12.10",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "mongoose": "^8.6.3",
     "nodemon": "^3.1.7",
-    "react-hook-form": "^7.53.0"
+    "react-hook-form": "^7.53.0",
+    "react-router": "^6.26.2",
+    "react-router-dom": "^6.26.2"
+  },
+  "devDependencies": {
+    "daisyui": "^4.12.10"
   }
 }
