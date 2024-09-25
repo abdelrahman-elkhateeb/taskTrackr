@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 function Register() {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    gender: '',
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,11 +55,11 @@ function Register() {
       alert("Registration successful!");
 
       setFormData({
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        gender: '',
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        gender: "",
       });
     } catch (error) {
       console.error("Error:", error);
@@ -78,13 +78,16 @@ function Register() {
         </a>
         <div className="w-full bg-base-200 rounded-lg shadow-md sm:max-w-md">
           <div className="p-6 space-y-4">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-neutral">
+            <h1 className="text-xl font-bold leading-tight tracking-tight   ">
               Create your account
             </h1>
             {error && <p className="text-red-500">{error}</p>}
             <form className="space-y-4" onSubmit={registerUser}>
               <div>
-                <label htmlFor="username" className="block mb-2 text-sm font-medium text-neutral">
+                <label
+                  htmlFor="username"
+                  className="block mb-2 text-sm font-medium   "
+                >
                   Your Name
                 </label>
                 <input
@@ -99,7 +102,10 @@ function Register() {
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block mb-2 text-sm font-medium text-neutral">
+                <label
+                  htmlFor="email"
+                  className="block mb-2 text-sm font-medium   "
+                >
                   Your email
                 </label>
                 <input
@@ -114,7 +120,10 @@ function Register() {
                 />
               </div>
               <div>
-                <label htmlFor="password" className="block mb-2 text-sm font-medium text-neutral">
+                <label
+                  htmlFor="password"
+                  className="block mb-2 text-sm font-medium"
+                >
                   Password
                 </label>
                 <input
@@ -129,7 +138,10 @@ function Register() {
                 />
               </div>
               <div>
-                <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-neutral">
+                <label
+                  htmlFor="confirmPassword"
+                  className="block mb-2 text-sm font-medium   "
+                >
                   Confirm Password
                 </label>
                 <input
@@ -146,7 +158,7 @@ function Register() {
 
               {/* Gender Selection */}
               <div>
-                <label className="block mb-2 text-sm font-medium text-neutral">
+                <label className="block mb-2 text-sm font-medium   ">
                   Gender
                 </label>
                 <div className="flex space-x-4">
@@ -159,7 +171,7 @@ function Register() {
                       onChange={handleChange}
                       required
                     />
-                    <span className="ml-2 text-neutral">Male</span>
+                    <span className="ml-2   ">Male</span>
                   </label>
                   <label className="flex items-center">
                     <input
@@ -170,7 +182,7 @@ function Register() {
                       onChange={handleChange}
                       required
                     />
-                    <span className="ml-2 text-neutral">Female</span>
+                    <span className="ml-2   ">Female</span>
                   </label>
                 </div>
               </div>
@@ -178,7 +190,7 @@ function Register() {
               <button type="submit" className="btn btn-primary w-full">
                 Register
               </button>
-              <p className="text-sm font-light text-neutral">
+              <p className="text-sm font-light   ">
                 Already have an account?{" "}
                 <a
                   href="#"
