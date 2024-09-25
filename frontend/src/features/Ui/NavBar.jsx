@@ -1,5 +1,6 @@
 import male from "../../../public/male.svg";
 import female from "../../../public/female.svg";
+import logo from "../../../public/logo.png";
 import { Link } from "react-router-dom";
 function NavBar() {
   return (
@@ -45,9 +46,11 @@ function NavBar() {
             </li>
           </ul>
         </div>
-        <Link to="/" className="btn btn-ghost text-xl">
-          TaskTrackr
-        </Link>
+        <div className="w-40">
+          <Link to="/" className="btn btn-ghost text-xl w-full h-full">
+            <img src={logo} alt="logo" />
+          </Link>
+        </div>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
