@@ -1,10 +1,13 @@
 import male from "../../../public/male.svg";
 import female from "../../../public/female.svg";
+import { Link } from "react-router-dom";
 function NavBar() {
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">TaskTrackr</a>
+        <Link to="/" className="btn btn-ghost text-xl">
+          TaskTrackr
+        </Link>
       </div>
       <div className="flex-none gap-2">
         <div className="form-control">
