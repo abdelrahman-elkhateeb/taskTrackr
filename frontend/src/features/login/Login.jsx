@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; 
-import Loader from "../Ui/Loader"; 
+import { useNavigate } from "react-router-dom";
+import Loader from "../Ui/Loader";
 import loginImg from "../../../public/login.svg";
 
 function Login() {
@@ -10,7 +10,7 @@ function Login() {
     password: "",
   });
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -23,7 +23,7 @@ function Login() {
 
   const loginUser = async (e) => {
     e.preventDefault();
-    setLoading(true); 
+    setLoading(true);
 
     const { email, password } = formData;
 
@@ -35,7 +35,6 @@ function Login() {
 
     try {
       const response = await fetch("http://localhost:5000/api/Users/login", {
-
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,14 +54,17 @@ function Login() {
       console.log("Login successful:", data);
 
       setTimeout(() => {
-        navigate("/"); 
+        navigate("/");
       }, 2000);
-
     } catch (error) {
-      console.error("Error:", error);
-      setError(error.message); 
+      setTimeout(() => {
+        console.error("Error:", error);
+        setError(error.message);
+      }, 1000);
     } finally {
-      // setLoading(false); 
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     }
   };
 
@@ -71,7 +73,7 @@ function Login() {
   };
 
   return (
-    <section className="bg-base-100 grid grid-cols-2">
+    <section className="bg-base-100 grid grid-cols-1 md:grid-cols-2 h-screen">
       <div className="flex flex-col items-center justify-center h-full px-6 py-8 ">
         <div className="w-full bg-base-200 rounded-lg shadow-md sm:max-w-md">
           <div className="p-6 space-y-4">
@@ -148,7 +150,11 @@ function Login() {
               </button>
               <p className="text-sm font-light">
                 Don't have account?{" "}
-                <a href="" className="font-medium text-primary hover:underline" onClick={handleRegisterClick}>
+                <a
+                  href=""
+                  className="font-medium text-primary hover:underline"
+                  onClick={handleRegisterClick}
+                >
                   Register
                 </a>
               </p>
@@ -156,7 +162,7 @@ function Login() {
           </div>
         </div>
       </div>
-      <img src={loginImg} alt="login" />
+      <img src={loginImg} alt="login" className="hidden md:block w-full h-auto" />
     </section>
   );
 }
