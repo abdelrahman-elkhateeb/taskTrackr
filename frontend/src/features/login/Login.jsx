@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../Ui/Loader";
 import loginImg from "../../../public/login.svg";
+import Cookies from "js-cookie";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -51,8 +52,7 @@ function Login() {
       }
 
       const data = await response.json();
-      console.log("Login successful:", data);
-
+      Cookies.set("userId", data.user._id, { expires: 1 });
       setTimeout(() => {
         navigate("/");
       }, 2000);
@@ -162,7 +162,11 @@ function Login() {
           </div>
         </div>
       </div>
-      <img src={loginImg} alt="login" className="hidden md:block w-full h-auto" />
+      <img
+        src={loginImg}
+        alt="login"
+        className="hidden md:block w-full h-auto"
+      />
     </section>
   );
 }

@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import Cookies from "js-cookie";
 
 export const tasksApi = createApi({
   reducerPath: "tasksApi",
@@ -6,8 +7,8 @@ export const tasksApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api" }),
   endpoints: (builder) => ({
     getTasks: builder.query({
-      query: (id) => ({
-        url: `/Tasks/${id}/tasks`,
+      query: () => ({
+        url: `/Tasks/${Cookies.get("userId")}/tasks`,
       }),
       providesTags: (result) =>
         result
