@@ -13,7 +13,7 @@ export const tasksApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.data.map(({ id }) => ({ type: "tasks", id })),
+              ...result.tasks.map(({ _id }) => ({ type: "tasks", _id })),
               { type: "tasks", id: "LIST" },
             ]
           : [{ type: "tasks", id: "LIST" }],
@@ -25,9 +25,9 @@ export const tasksApi = createApi({
         body,
       }),
       invalidatesTags: [{ type: "tasks", id: "LIST" }],
-      async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ _id, ...patch }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
-          tasksApi.util.updateQueryData("getTasks", id, (draft) => {
+          tasksApi.util.updateQueryData("getTasks", _id, (draft) => {
             Object.assign(draft, patch);
           })
         );
