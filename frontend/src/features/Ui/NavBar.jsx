@@ -1,6 +1,7 @@
 import logo from "../../../public/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 function NavBar() {
+  const navigate=useNavigate()
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -108,7 +109,7 @@ function NavBar() {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              <button onClick={(navigate("/login"))}>Logout</button>
             </li>
           </ul>
         </div>

@@ -4,8 +4,14 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../Ui/Loader";
 import loginImg from "../../../public/login.svg";
 import Cookies from "js-cookie";
+import { useForm } from "react-hook-form";
 
 function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -81,7 +87,7 @@ function Login() {
               Sign in to your account
             </h1>
             {error && <p className="text-red-500">{error}</p>}
-            <form className="space-y-4" onSubmit={loginUser}>
+            <form className="space-y-4" onSubmit={handleSubmit(loginUser)}>
               <div>
                 <label
                   htmlFor="email"
@@ -95,11 +101,13 @@ function Login() {
                   id="email"
                   className="input input-bordered w-full"
                   placeholder="name@company.com"
-                  value={formData.email}
+                  
                   onChange={handleChange}
-                  required
-                />
-              </div>
+                  {...register("email", { required: true })}
+                    />
+                    {errors.email && <span>This field is required</span>}
+                  </div>
+             
               <div>
                 <label
                   htmlFor="password"
@@ -113,11 +121,12 @@ function Login() {
                   id="password"
                   placeholder="••••••••"
                   className="input input-bordered w-full"
-                  value={formData.password}
+               
                   onChange={handleChange}
-                  required
-                />
-              </div>
+                  {...register("password", { required: true })}
+                    />
+                    {errors.password && <span>This field is required</span>}
+                  </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
                   <div className="flex items-center h-5">

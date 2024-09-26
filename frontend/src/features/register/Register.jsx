@@ -2,8 +2,18 @@ import { useState } from "react";
 import signUp from "../../../public/signUp.svg";
 import { useNavigate } from "react-router-dom";
 import Loader from "../Ui/Loader";
+import { useForm } from "react-hook-form";
 
 function Register() {
+
+
+  const {
+    register,
+    handleSubmit,
+
+    formState: { errors },
+  } = useForm()
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -104,7 +114,7 @@ function Register() {
                   </div> 
               </div>
             ) : (
-              <form className="space-y-4" onSubmit={registerUser}>
+              <form className="space-y-4" onSubmit={handleSubmit(registerUser)}>
                 <div>
                   <label
                     htmlFor="username"
@@ -118,10 +128,11 @@ function Register() {
                     id="username"
                     className="input input-bordered w-full"
                     placeholder="John Doe"
-                    value={formData.username}
+                    
                     onChange={handleChange}
-                    required
+                {...register ("username" ,{required:true})}
                   />
+                  {errors.username&&<span>a7a</span>}
                 </div>
                 <div>
                   <label
@@ -136,10 +147,11 @@ function Register() {
                     id="email"
                     className="input input-bordered w-full"
                     placeholder="name@company.com"
-                    value={formData.email}
+               
                     onChange={handleChange}
-                    required
+                {...register ("email" ,{required:true})}
                   />
+                  {errors.email && <span>a7a</span>}
                 </div>
                 <div>
                   <label
@@ -154,10 +166,10 @@ function Register() {
                     id="password"
                     placeholder="••••••••"
                     className="input input-bordered w-full"
-                    value={formData.password}
                     onChange={handleChange}
-                    required
+               {...register ("password",{required:true})}
                   />
+                  {errors.password&& <span>a7a</span>}
                 </div>
                 <div>
                   <label
@@ -172,10 +184,11 @@ function Register() {
                     id="confirmPassword"
                     placeholder="••••••••"
                     className="input input-bordered w-full"
-                    value={formData.confirmPassword}
+                
                     onChange={handleChange}
-                    required
+                    {...register ("confirmPassword" ,{required:true})}
                   />
+                  {errors.password&& <span>a7a</span>}
                 </div>
 
                 {/* Gender Selection */}
@@ -191,8 +204,9 @@ function Register() {
                         value="male"
                         className="radio radio-primary"
                         onChange={handleChange}
-                        required
+                    {...register ("gender" , {required:true})}
                       />
+                      {errors.gender&& <span>a7a</span>}
                       <span className="ml-2">Male</span>
                     </label>
                     <label className="flex items-center">
@@ -209,7 +223,7 @@ function Register() {
                   </div>
                 </div>
 
-                <button type="submit" className="btn btn-primary w-full">
+                <button type="submit" className="btn btn-primary w-full" onClick={(navigate("/login"))}>
                   Register
                 </button>
                 <p className="text-sm font-light">
