@@ -12,5 +12,6 @@ ponus features
 
 
 
-aboraya - create home , (login, signup): responsive, routes and layout of web application -  25/9 
-        - create backend of projects and make it related with users                       -  26/9
+aboraya - create home , (login, signup): responsive, routes and layout of web application                                -  25/9 
+        - create backend of projects and make it related with users                                                      -  26/9
+        - create Dark mode slice to add feature dark mode and add this feature to home, login, register and navbar pages - 27/9
