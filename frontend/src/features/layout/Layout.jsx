@@ -1,6 +1,7 @@
 import { Outlet, useNavigation, useLocation } from "react-router";
 import NavBar from "../Ui/NavBar";
 import Loader from "../Ui/Loader";
+// import Test from "../testDark/Test";
 
 function AppLayout() {
   const navigation = useNavigation();
@@ -14,8 +15,9 @@ function AppLayout() {
     <div>
       {isLoading && <Loader />}
       {shouldShowNavBar && <NavBar />}
-      <main className="mx-auto px-4 container">
+      <main className="">
         <Outlet />
+        {/* <Test /> */}
       </main>
     </div>
   );

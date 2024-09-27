@@ -1,18 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import signUp from "../../../public/signUp.svg";
 import { useNavigate } from "react-router-dom";
 import Loader from "../Ui/Loader";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux"; // Import useSelector
+import DarkModeToggle from "../Ui/DarkModeToggle"; // Import DarkModeToggle
 
 function Register() {
-
-
   const {
     register,
     handleSubmit,
-
     formState: { errors },
-  } = useForm()
+  } = useForm();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -22,8 +21,13 @@ function Register() {
     gender: "",
   });
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const darkMode = useSelector((state) => state.darkMode.darkMode); // Get dark mode state
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", darkMode);
+  }, [darkMode]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -70,7 +74,6 @@ function Register() {
       const data = await response.json();
       console.log(data);
 
-
       setFormData({
         username: "",
         email: "",
@@ -78,19 +81,16 @@ function Register() {
         confirmPassword: "",
         gender: "",
       });
-      setError(""); 
-
+      setError("");
 
       setTimeout(() => {
         navigate("/login");
-      }, 2000); 
+      }, 2000);
     } catch (error) {
       console.error("Error:", error);
       setError("An error occurred. Please try again.");
     } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
+      setLoading(false);
     }
   };
 
@@ -99,10 +99,17 @@ function Register() {
   };
 
   return (
-    <section className="bg-base-100 grid grid-cols-1 md:grid-cols-2 items-center w-full p-6 md:p-12">
-      <div className="flex flex-col items-center justify-center h-full px-6 py-8 w-full">
-        <div className="w-full bg-base-200 rounded-lg shadow-md sm:max-w-md">
+    <section
+      className={`bg-base-100 grid grid-cols-1 md:grid-cols-2 items-center w-full p-6 md:p-12 min-h-screen ${
+        darkMode ? "bg-gray-900" : "bg-white"
+      }`}
+    >
+      <div className={`flex flex-col items-center justify-center h-full px-6 py-8 w-full ${darkMode ? "text-white" : "text-black"}`}>
+        <div className={`w-full bg-base-200 rounded-lg shadow-md sm:max-w-md ${darkMode ? "bg-gray-700" : ""}`}>
           <div className="p-6 space-y-4">
+            <div className="absolute top-3 right-3">
+              <DarkModeToggle />
+            </div>
             <h1 className="text-xl font-bold leading-tight tracking-tight">
               Create your account
             </h1>
@@ -111,53 +118,42 @@ function Register() {
               <div className="flex justify-center items-center h-24">
                 <div className="loader">
                   <Loader />
-                  </div> 
+                </div>
               </div>
             ) : (
               <form className="space-y-4" onSubmit={handleSubmit(registerUser)}>
                 <div>
-                  <label
-                    htmlFor="username"
-                    className="block mb-2 text-sm font-medium"
-                  >
+                  <label htmlFor="username" className="block mb-2 text-sm font-medium">
                     Your Name
                   </label>
                   <input
                     type="text"
                     name="username"
                     id="username"
-                    className="input input-bordered w-full"
+                    className={`input input-bordered w-full ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
                     placeholder="John Doe"
-                    
                     onChange={handleChange}
-                {...register ("username" ,{required:true})}
+                    {...register("username", { required: true })}
                   />
-                  {errors.username&&<span>a7a</span>}
+                  {errors.username && <span className="text-red-500">This field is required</span>}
                 </div>
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block mb-2 text-sm font-medium"
-                  >
+                  <label htmlFor="email" className="block mb-2 text-sm font-medium">
                     Your email
                   </label>
                   <input
                     type="email"
                     name="email"
                     id="email"
-                    className="input input-bordered w-full"
+                    className={`input input-bordered w-full ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
                     placeholder="name@company.com"
-               
                     onChange={handleChange}
-                {...register ("email" ,{required:true})}
+                    {...register("email", { required: true })}
                   />
-                  {errors.email && <span>a7a</span>}
+                  {errors.email && <span className="text-red-500">This field is required</span>}
                 </div>
                 <div>
-                  <label
-                    htmlFor="password"
-                    className="block mb-2 text-sm font-medium"
-                  >
+                  <label htmlFor="password" className="block mb-2 text-sm font-medium">
                     Password
                   </label>
                   <input
@@ -165,17 +161,14 @@ function Register() {
                     name="password"
                     id="password"
                     placeholder="••••••••"
-                    className="input input-bordered w-full"
+                    className={`input input-bordered w-full ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
                     onChange={handleChange}
-               {...register ("password",{required:true})}
+                    {...register("password", { required: true })}
                   />
-                  {errors.password&& <span>a7a</span>}
+                  {errors.password && <span className="text-red-500">This field is required</span>}
                 </div>
                 <div>
-                  <label
-                    htmlFor="confirmPassword"
-                    className="block mb-2 text-sm font-medium"
-                  >
+                  <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium">
                     Confirm Password
                   </label>
                   <input
@@ -183,19 +176,16 @@ function Register() {
                     name="confirmPassword"
                     id="confirmPassword"
                     placeholder="••••••••"
-                    className="input input-bordered w-full"
-                
+                    className={`input input-bordered w-full ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}
                     onChange={handleChange}
-                    {...register ("confirmPassword" ,{required:true})}
+                    {...register("confirmPassword", { required: true })}
                   />
-                  {errors.password&& <span>a7a</span>}
+                  {errors.confirmPassword && <span className="text-red-500">This field is required</span>}
                 </div>
 
                 {/* Gender Selection */}
                 <div>
-                  <label className="block mb-2 text-sm font-medium">
-                    Gender
-                  </label>
+                  <label className="block mb-2 text-sm font-medium">Gender</label>
                   <div className="flex space-x-4">
                     <label className="flex items-center">
                       <input
@@ -204,9 +194,8 @@ function Register() {
                         value="male"
                         className="radio radio-primary"
                         onChange={handleChange}
-                    {...register ("gender" , {required:true})}
+                        {...register("gender", { required: true })}
                       />
-                      {errors.gender&& <span>a7a</span>}
                       <span className="ml-2">Male</span>
                     </label>
                     <label className="flex items-center">
@@ -216,23 +205,19 @@ function Register() {
                         value="female"
                         className="radio radio-primary"
                         onChange={handleChange}
-                        required
+                        {...register("gender", { required: true })}
                       />
                       <span className="ml-2">Female</span>
                     </label>
                   </div>
                 </div>
 
-                <button type="submit" className="btn btn-primary w-full" onClick={(navigate("/login"))}>
+                <button type="submit" className={`btn btn-primary w-full ${darkMode ? "bg-blue-600" : "bg-blue-500"}`}>
                   Register
                 </button>
                 <p className="text-sm font-light">
                   Already have an account?{" "}
-                  <a
-                    href="#"
-                    className="font-medium text-primary hover:underline"
-                    onClick={handleSigninClick}
-                  >
+                  <a href="#" className="font-medium text-primary hover:underline" onClick={handleSigninClick}>
                     Sign in
                   </a>
                 </p>

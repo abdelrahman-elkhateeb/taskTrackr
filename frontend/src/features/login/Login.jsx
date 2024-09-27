@@ -1,17 +1,19 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Loader from "../Ui/Loader";
 import loginImg from "../../../public/login.svg";
 import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
+import DarkModeToggle from "../Ui/DarkModeToggle";
 
 function Login() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm()
+  } = useForm();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,6 +21,11 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const darkMode = useSelector((state) => state.darkMode.darkMode);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", darkMode);
+  }, [darkMode]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,16 +68,12 @@ function Login() {
       Cookies.set("userId", data.user._id, { expires: 1 });
       setTimeout(() => {
         navigate("/");
-      }, 2000);
+      }, 1000);
     } catch (error) {
-      setTimeout(() => {
-        console.error("Error:", error);
-        setError(error.message);
-      }, 1000);
+      console.error("Error:", error);
+      setError(error.message);
     } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
+      setLoading(false);
     }
   };
 
@@ -79,9 +82,22 @@ function Login() {
   };
 
   return (
-    <section className="bg-base-100 grid grid-cols-1 md:grid-cols-2 h-screen">
-      <div className="flex flex-col items-center justify-center h-full px-6 py-8 ">
-        <div className="w-full bg-base-200 rounded-lg shadow-md sm:max-w-md">
+    <section
+      className={`h-screen flex items-center justify-center ${
+        darkMode ? "bg-gray-900" : "bg-white"
+      }`}
+    >
+      <div
+        className={`flex flex-col items-center justify-center h-full px-6 py-8 
+          ${darkMode ? " text-white" : " text-black"}
+        `}
+      >
+        <div className="absolute top-3 right-3">
+          <DarkModeToggle />
+        </div>
+        <div
+          className={`w-full md:w-96 bg-base-200 dark:bg-gray-700 rounded-lg shadow-md`}
+        >
           <div className="p-6 space-y-4">
             <h1 className="text-xl font-bold leading-tight tracking-tight">
               Sign in to your account
@@ -99,15 +115,18 @@ function Login() {
                   type="email"
                   name="email"
                   id="email"
-                  className="input input-bordered w-full"
+                  className={`input input-bordered w-full ${
+                    darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+                  }`}
                   placeholder="name@company.com"
-                  
                   onChange={handleChange}
                   {...register("email", { required: true })}
-                    />
-                    {errors.email && <span>This field is required</span>}
-                  </div>
-             
+                />
+                {errors.email && (
+                  <span className="text-red-500">This field is required</span>
+                )}
+              </div>
+
               <div>
                 <label
                   htmlFor="password"
@@ -120,13 +139,17 @@ function Login() {
                   name="password"
                   id="password"
                   placeholder="••••••••"
-                  className="input input-bordered w-full"
-               
+                  className={`input input-bordered w-full ${
+                    darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+                  }`}
                   onChange={handleChange}
                   {...register("password", { required: true })}
-                    />
-                    {errors.password && <span>This field is required</span>}
-                  </div>
+                />
+                {errors.password && (
+                  <span className="text-red-500">This field is required</span>
+                )}
+              </div>
+
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
                   <div className="flex items-center h-5">
@@ -138,9 +161,7 @@ function Login() {
                     />
                   </div>
                   <div className="ml-3 text-sm">
-                    <label htmlFor="remember" className="">
-                      Remember me
-                    </label>
+                    <label htmlFor="remember">Remember me</label>
                   </div>
                 </div>
                 <a
@@ -152,13 +173,13 @@ function Login() {
               </div>
               <button
                 type="submit"
-                className="btn btn-primary w-full"
+                className={`btn btn-primary w-full ${darkMode ? "bg-blue-600 text-white" : "bg-blue-500 text-black"}`}
                 disabled={loading}
               >
-                {loading ? <Loader /> : "Signin"}
-              </button>
+                {loading ? <Loader /> : "Sign In"}
+              </button >
               <p className="text-sm font-light">
-                Don't have account?{" "}
+                Don't have an account?{" "}
                 <a
                   href=""
                   className="font-medium text-primary hover:underline"
@@ -174,7 +195,7 @@ function Login() {
       <img
         src={loginImg}
         alt="login"
-        className="hidden md:block w-full h-auto"
+        className="hidden md:block w-1/3 min-w-[500px] h-auto"
       />
     </section>
   );
