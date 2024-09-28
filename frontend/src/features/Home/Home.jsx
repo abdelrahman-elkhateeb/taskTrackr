@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux"; 
-import Loader from "../Ui/Loader";
-import homeImg from "../../../public/home.svg";
-import './Home.css'; 
+import { useSelector } from "react-redux";
+import Lottie from "lottie-react";
+import Loader from "../Ui/Loader"; // Ensure you have this component correctly implemented
+import background from "../../../public/background.json";
+import person from "../../../public/person.json";
+import "./Home.css";
 
 function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const darkMode = useSelector((state) => state.darkMode.darkMode); // Access dark mode state
+  const darkMode = useSelector((state) => state.darkMode.darkMode);
 
   const handleButtonClick = () => {
     setIsLoading(true);
@@ -20,37 +22,45 @@ function Home() {
   };
 
   return (
-    <section className={`flex flex-col md:flex-row justify-center items-center h-screen ${darkMode ? "bg-gray-900 text-white" : "bg-base-100 text-black"}`}>
-      <div className="flex flex-col items-center justify-center text-center md:w-1/2">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold mt-6 fade-in">
-          Welcome to Our Project
-        </h1>
-        <p className="text-base sm:text-lg md:text-xl mt-2 max-w-md fade-in">
-          This project is designed to help users manage their tasks efficiently
-          and intuitively. Explore the features by clicking the button below.
-        </p>
+    <section
+      className={`relative flex justify-center items-center h-screen overflow-hidden ${
+        darkMode ? "bg-gray-900 text-white" : "bg-base-100 text-black"
+      }`}
+    >
+      {isLoading ? (
+        // Show Loader when isLoading is true
+        <Loader />
+      ) : (
+        // Show main content when isLoading is false
+        <>
+          {/* Background Animation */}
+          <Lottie
+            animationData={background}
+            className="absolute inset-0 w-full h-full object-cover z-0"
+          />
 
-        <button
-          type="button"
-          className={`mt-6 btn btn-primary transition-all duration-200 ${darkMode ? "bg-blue-600 text-white" : "bg-blue-500 text-black hover:text-white"} bounce`}
-          style={isLoading ? { border: "1px solid #FF865B", cursor: "not-allowed" } : { cursor: "pointer" }}
-          onClick={handleButtonClick}
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <div className="flex items-center justify-center space-x-2 ">
-              <Loader />
-              <span>Loading...</span>
+          {/* Hero Content */}
+          <div className="relative z-10 flex flex-col items-center md:flex-row md:justify-center container mx-auto text-center md:text-left p-6">
+            <div className="mb-8 md:mb-0 md:mr-8">
+              <h1 className="text-4xl md:text-6xl font-bold mb-5">
+                Organize, Prioritize, and Conquer Your Tasks Effortlessly
+              </h1>
+              <p className="text-xl font-medium mb-6">
+                Stay on top of your to-do list with our intuitive task
+                management system. Boost your productivity, meet deadlines, and
+                achieve your goals—all in one place.
+              </p>
+              <button
+                onClick={handleButtonClick}
+                className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition"
+              >
+                Get Started
+              </button>
             </div>
-          ) : (
-            "Go to Tasks"
-          )}
-        </button>
-      </div>
-
-      <div className="hidden md:flex md:w-1/2 justify-center items-center">
-        <img src={homeImg} alt="Home illustration" className="w-3/4 rotating-svg" />
-      </div>
+            <Lottie animationData={person} className="w-80 md:w-96" />
+          </div>
+        </>
+      )}
     </section>
   );
 }

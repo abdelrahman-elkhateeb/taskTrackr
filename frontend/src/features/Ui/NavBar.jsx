@@ -1,14 +1,20 @@
 import logo from "../../../public/logo.png";
 import { Link } from "react-router-dom";
-import DarkModeToggle from "./DarkModeToggle"; 
-import { useSelector } from "react-redux"; 
-import './NavBar.css'
+import DarkModeToggle from "./DarkModeToggle";
+import { useSelector } from "react-redux";
+import "./NavBar.css";
 
 function NavBar() {
-  const darkMode = useSelector((state) => state.darkMode.darkMode); 
+  const darkMode = useSelector((state) => state.darkMode.darkMode);
 
   return (
-    <div className={`navbar ${darkMode ? "bg-gray-900 text-white dark-nav-shadow" : "bg-base-100 text-black light-nav-shadow"} shadow-md`}>
+    <div
+      className={`navbar ${
+        darkMode
+          ? "bg-gray-900 text-white dark-nav-shadow"
+          : "bg-base-100 text-black light-nav-shadow"
+      } shadow-md`}
+    >
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -27,28 +33,6 @@ function NavBar() {
               />
             </svg>
           </div>
-          <ul
-            tabIndex={0}
-            className={`menu menu-sm dropdown-content ${darkMode ? "bg-gray-800 text-white" : "bg-base-100 text-black"} rounded-box z-[1] mt-3 w-52 p-2 shadow`}
-          >
-            <li>
-              <a>Item 1</a>
-            </li>
-            <li>
-              <a>Parent</a>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a>Item 3</a>
-            </li>
-          </ul>
         </div>
         <div className="w-40">
           <Link to="/" className="btn btn-ghost text-xl w-full h-full">
@@ -62,31 +46,11 @@ function NavBar() {
             <a>Item 1</a>
           </li>
           <li>
-            <details>
-              <summary>Parent</summary>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </details>
-          </li>
-          <li>
             <a>Item 3</a>
           </li>
         </ul>
       </div>
       <div className="navbar-end flex-none gap-8">
-        <div className="form-control">
-          <input
-            type="search"
-            placeholder="Search"
-            className={`input input-bordered w-24 md:w-auto ${darkMode ? "bg-gray-800 text-white" : "bg-base-100 text-black"}`} 
-          />
-        </div>
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
@@ -102,7 +66,9 @@ function NavBar() {
           </div>
           <ul
             tabIndex={0}
-            className={`menu menu-sm dropdown-content ${darkMode ? "bg-gray-800 text-white" : "bg-base-100 text-black"} rounded-box z-[1] mt-3 w-52 p-2 shadow`}
+            className={`menu menu-sm dropdown-content ${
+              darkMode ? "bg-gray-800 text-white" : "bg-base-100 text-black"
+            } rounded-box z-[1] mt-3 w-52 p-2 shadow`}
           >
             <li>
               <a>Profile</a>
