@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Loader from "../Ui/Loader";
-import loginImg from "../../../public/login.svg";
 import loginSvg from "../../../public/login.json";
 import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
