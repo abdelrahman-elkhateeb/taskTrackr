@@ -84,7 +84,7 @@ function Login() {
   return (
     <section
       className={`h-screen flex items-center justify-center ${
-        darkMode ? "bg-dark-bg" : "bg-ligh-bg"
+        darkMode ? "bg-dark-bg" : "bg-light-bg"
       }`}
     >
       <div
@@ -96,10 +96,10 @@ function Login() {
           <DarkModeToggle />
         </div>
         <div
-          className={`w-full md:w-96 rounded-lg shadow-md ${darkMode ? "bg-dark-bg" : "bg-light-bg"}`} //  bg-dark-bg == bg-dark-primary
+          className={`w-full md:w-96 rounded-lg shadow-md ${darkMode ? "bg-dark-primary" : "bg-light-primary "}`} //  bg-dark-bg == bg-dark-primary
         >
           <div className="p-6 space-y-4">
-            <h1 className={`text-xl font-bold leading-tight tracking-tight ${darkMode? "text-dark-text" : " text-light-text"}`}>
+            <h1 className={`text-xl font-bold leading-tight tracking-tight ${darkMode? "text-dark-text" : " text-light-text "}`}>
               Sign in to your account
             </h1>
             {error && <p className="text-red-500">{error}</p>}
@@ -166,7 +166,7 @@ function Login() {
                 </div>
                 <a
                   href="#"
-                  className="text-sm font-medium text-primary hover:underline"
+                  className={`text-sm font-medium text-primary hover:underline ${darkMode ? " text-dark-accent" : " text-light-accent"}`}
                 >
                   Forgot password?
                 </a>
@@ -182,7 +182,7 @@ function Login() {
                 Don't have an account?{" "}
                 <a
                   href=""
-                  className="font-medium text-primary hover:underline"
+                  className={`font-medium text-primary hover:underline ${darkMode ? " text-dark-accent" : " text-light-accent"}`}
                   onClick={handleRegisterClick}
                 >
                   Register
