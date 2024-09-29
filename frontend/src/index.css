@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 * {
-  font-family: "Karla", sans-serif;
+  font-family: "Lato", sans-serif;
   @apply transition-colors 
 }
