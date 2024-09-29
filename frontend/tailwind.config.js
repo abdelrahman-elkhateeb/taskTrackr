@@ -25,9 +25,7 @@ const config = {
   },
   darkMode: "class", // Enable dark mode with the 'dark' class
   plugins: [daisyui],
-  daisyui: {
-    themes: ["nord", "sunset"], // Use the nord and sunset themes from daisyUI
-  },
+  daisyui: {},
 };
 
 export default config;
