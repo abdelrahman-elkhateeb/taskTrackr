@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Lottie from "lottie-react";
-import Loader from "../Ui/Loader"; // Ensure you have this component correctly implemented
+import Loader from "../Ui/Loader";
 import background from "../../../public/background.json";
 import person from "../../../public/person.json";
 import "./Home.css";
