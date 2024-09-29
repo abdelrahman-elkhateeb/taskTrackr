@@ -84,22 +84,22 @@ function Login() {
   return (
     <section
       className={`h-screen flex items-center justify-center ${
-        darkMode ? "bg-gray-900" : "bg-white"
+        darkMode ? "bg-dark-bg" : "bg-ligh-bg"
       }`}
     >
       <div
         className={`flex flex-col items-center justify-center h-full px-6 py-8 
-          ${darkMode ? " text-white" : " text-black"}
+          ${darkMode ? " text-dark-text" : " text-light-text"}
         `}
       >
         <div className="absolute top-3 right-3">
           <DarkModeToggle />
         </div>
         <div
-          className={`w-full md:w-96 bg-base-200 dark:bg-gray-700 rounded-lg shadow-md`}
+          className={`w-full md:w-96 rounded-lg shadow-md ${darkMode ? "bg-dark-bg" : "bg-light-bg"}`} //  bg-dark-bg == bg-dark-primary
         >
           <div className="p-6 space-y-4">
-            <h1 className="text-xl font-bold leading-tight tracking-tight">
+            <h1 className={`text-xl font-bold leading-tight tracking-tight ${darkMode? "text-dark-text" : " text-light-text"}`}>
               Sign in to your account
             </h1>
             {error && <p className="text-red-500">{error}</p>}
@@ -107,7 +107,7 @@ function Login() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block mb-2 text-sm font-medium"
+                  className={`block mb-2 text-sm font-medium ${darkMode ? " text-dark-text" : " text-light-text"}`}
                 >
                   Your email
                 </label>
@@ -116,7 +116,7 @@ function Login() {
                   name="email"
                   id="email"
                   className={`input input-bordered w-full ${
-                    darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+                    darkMode ? "bg-gray-800 text-dark-text" : "bg-white text-light-text"
                   }`}
                   placeholder="name@company.com"
                   onChange={handleChange}
@@ -130,7 +130,7 @@ function Login() {
               <div>
                 <label
                   htmlFor="password"
-                  className="block mb-2 text-sm font-medium"
+                  className={`block mb-2 text-sm font-medium ${darkMode ? " text-dark-text" : " text-light-text"}`}
                 >
                   Password
                 </label>
@@ -160,7 +160,7 @@ function Login() {
                       className="checkbox checkbox-primary"
                     />
                   </div>
-                  <div className="ml-3 text-sm">
+                  <div className={`ml-3 text-sm ${darkMode ? " text-dark-text" : " text-light-text"}`}>
                     <label htmlFor="remember">Remember me</label>
                   </div>
                 </div>
@@ -173,7 +173,7 @@ function Login() {
               </div>
               <button
                 type="submit"
-                className={`btn btn-primary w-full ${darkMode ? "bg-blue-600 text-white" : "bg-blue-500 text-black"}`}
+                className={`btn btn-primary w-full ${darkMode ? "bg-dark-bg text-dark-text" : "bg-light-bg text-light-text"}`}
                 disabled={loading}
               >
                 {loading ? <Loader /> : "Sign In"}

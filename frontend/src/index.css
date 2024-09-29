@@ -4,4 +4,5 @@
 
 * {
   font-family: "Karla", sans-serif;
+  @apply transition-colors 
 }

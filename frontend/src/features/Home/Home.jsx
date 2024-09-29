@@ -24,7 +24,7 @@ function Home() {
   return (
     <section
       className={`relative flex justify-center items-center h-screen overflow-hidden ${
-        darkMode ? "bg-gray-900 text-white" : "bg-base-100 text-black"
+        darkMode ? "bg-dark-bg text-dark-text" : "bg-light-bg text-light-text"
       }`}
     >
       {isLoading ? (
@@ -38,17 +38,17 @@ function Home() {
 
           <div className="relative z-10 flex flex-col items-center md:flex-row md:justify-center container mx-auto text-center md:text-left p-6">
             <div className="mb-8 md:mb-0 md:mr-8">
-              <h1 className="text-4xl md:text-6xl font-bold mb-5">
-                Organize, Prioritize, and Conquer Your Tasks Effortlessly
+              <h1 className={`text-4xl md:text-6xl font-bold mb-5 ${darkMode? "text-dark-text": "text-light-text" }`}>
+                Organize, Prioritize,  and Conquer Your Tasks Effortlessly
               </h1>
-              <p className="text-xl font-medium mb-6">
+              <p className={`text-xl font-medium mb-6 ${darkMode? "text-dark-text": "text-light-text" }`} >
                 Stay on top of your to-do list with our intuitive task
                 management system. Boost your productivity, meet deadlines, and
                 achieve your goals—all in one place.
               </p>
               <button
                 onClick={handleButtonClick}
-                className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition"
+                className={`bg-li  py-2 px-6 hover:shadow-md rounded transition ${darkMode? "text-dark-text bg-dark-primary hover:bg-dark-pHover" : "text-ligh-text bg-light-primary hover:bg-light-pHover"}`}
               >
                 Get Started
               </button>
