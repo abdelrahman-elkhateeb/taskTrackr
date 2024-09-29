@@ -96,7 +96,7 @@ function Login() {
           <DarkModeToggle />
         </div>
         <div
-          className={`w-full md:w-96 rounded-lg shadow-md ${darkMode ? "bg-dark-primary" : "bg-light-primary "}`} //  bg-dark-bg == bg-dark-primary
+          className={`w-full md:w-96 rounded-lg shadow-md border-2 ${darkMode ? "border-dark-primary" : "border-dark-primary"}`} //  bg-dark-bg == bg-dark-primary
         >
           <div className="p-6 space-y-4">
             <h1 className={`text-xl font-bold leading-tight tracking-tight ${darkMode? "text-dark-text" : " text-light-text "}`}>
@@ -107,7 +107,7 @@ function Login() {
               <div>
                 <label
                   htmlFor="email"
-                  className={`block mb-2 text-sm font-medium ${darkMode ? " text-dark-text" : " text-light-text"}`}
+                  className={`block mb-2 text-sm font-medium border-2 ${darkMode ? " text-dark-text border-dark-primary" : " text-light-text"}`}
                 >
                   Your email
                 </label>
@@ -116,7 +116,7 @@ function Login() {
                   name="email"
                   id="email"
                   className={`input input-bordered w-full ${
-                    darkMode ? "bg-gray-800 text-dark-text" : "bg-white text-light-text"
+                    darkMode ? "bg-dark-bg text-dark-text" : "bg-light-bg text-light-text"
                   }`}
                   placeholder="name@company.com"
                   onChange={handleChange}
