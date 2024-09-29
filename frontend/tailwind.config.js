@@ -1,4 +1,4 @@
-import daisyui from 'daisyui';
+import daisyui from "daisyui";
 
 /** @type {import('tailwindcss').Config} */
 const config = {
@@ -7,23 +7,23 @@ const config = {
     extend: {
       colors: {
         light: {
-          text: '#0a0b0f',
-          bg: '#f2f4f8',
-          primary: '#526ab7',
-          secondary: '#97a7dd',
-          accent: '#5b78d7',
+          text: "#070c03",
+          bg: "#f8fcf3",
+          primary: "#85ce3b",
+          secondary: "#96dfe4",
+          accent: "#5c8bd6",
         },
         dark: {
-          text: '#f0f1f5',
-          bg: '#07090d',
-          primary: '#4860ad',
-          secondary: '#223268',
-          accent: '#2845a4',
+          text: "#f7fcf3",
+          bg: "#080c03",
+          primary: "#7ac431",
+          secondary: "#1b656a",
+          accent: "#2958a3",
         },
       },
     },
   },
-  darkMode: 'class', // Enable dark mode with the 'dark' class
+  darkMode: "class", // Enable dark mode with the 'dark' class
   plugins: [daisyui],
   daisyui: {
     themes: ["nord", "sunset"], // Use the nord and sunset themes from daisyUI

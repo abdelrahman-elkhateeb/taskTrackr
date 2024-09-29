@@ -28,18 +28,14 @@ function Home() {
       }`}
     >
       {isLoading ? (
-        // Show Loader when isLoading is true
         <Loader />
       ) : (
-        // Show main content when isLoading is false
         <>
-          {/* Background Animation */}
           <Lottie
             animationData={background}
             className="md:block hidden absolute inset-0 w-full h-full object-cover z-0 "
           />
 
-          {/* Hero Content */}
           <div className="relative z-10 flex flex-col items-center md:flex-row md:justify-center container mx-auto text-center md:text-left p-6">
             <div className="mb-8 md:mb-0 md:mr-8">
               <h1 className="text-4xl md:text-6xl font-bold mb-5">
