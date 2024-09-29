@@ -107,7 +107,7 @@ function Login() {
               <div>
                 <label
                   htmlFor="email"
-                  className={`block mb-2 text-sm font-medium border-2 ${darkMode ? " text-dark-text border-dark-primary" : " text-light-text"}`}
+                  className={`block mb-2 text-sm font-medium ${darkMode ? " text-dark-text " : " text-light-text"}`}
                 >
                   Your email
                 </label>
@@ -115,8 +115,8 @@ function Login() {
                   type="email"
                   name="email"
                   id="email"
-                  className={`input input-bordered w-full ${
-                    darkMode ? "bg-dark-bg text-dark-text" : "bg-light-bg text-light-text"
+                  className={`input input-bordered w-full border-[1px] ${
+                    darkMode ? "bg-dark-bg text-dark-text border-dark-primary" : "bg-light-bg text-light-text"
                   }`}
                   placeholder="name@company.com"
                   onChange={handleChange}
@@ -139,8 +139,8 @@ function Login() {
                   name="password"
                   id="password"
                   placeholder="••••••••"
-                  className={`input input-bordered w-full ${
-                    darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+                  className={`input input-bordered w-full border-[1px] ${
+                    darkMode ? "bg-dark-bg text-dark-text border-dark-primary" : "bg-light-bg text-light-text"
                   }`}
                   onChange={handleChange}
                   {...register("password", { required: true })}
@@ -157,23 +157,23 @@ function Login() {
                       id="remember"
                       aria-describedby="remember"
                       type="checkbox"
-                      className="checkbox checkbox-primary"
+                      className={`checkbox checkbox-primary border-dark-primary hover:`}
                     />
                   </div>
-                  <div className={`ml-3 text-sm ${darkMode ? " text-dark-text" : " text-light-text"}`}>
+                  <div className={`ml-3 text-sm ${darkMode ? " text-dark-primary" : " text-light-primary"}`}>
                     <label htmlFor="remember">Remember me</label>
                   </div>
                 </div>
                 <a
-                  href="#"
-                  className={`text-sm font-medium text-primary hover:underline ${darkMode ? " text-dark-accent" : " text-light-accent"}`}
+                  href=""
+                  className={`text-sm font-medium hover:underline ${darkMode ? "text-dark-primary" : "text-light-primary"}`}
                 >
                   Forgot password?
                 </a>
               </div>
               <button
                 type="submit"
-                className={`btn btn-primary w-full ${darkMode ? "bg-dark-bg text-dark-text" : "bg-light-bg text-light-text"}`}
+                className={`btn btn-primary w-full ${darkMode ? "bg-dark-primary text-dark-text" : "bg-light-primary text-light-text"}`}
                 disabled={loading}
               >
                 {loading ? <Loader /> : "Sign In"}
