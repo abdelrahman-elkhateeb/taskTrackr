@@ -10,7 +10,7 @@ const config = {
           text: "#062223",
           bg: "#e1f5f9",
           primary: "#15636a",
-          pHover: "#87e8fbb0",
+          pHover: "#15636aa6",
           secondary: "#7b82e5",
           accent: "#4723b3",
         },

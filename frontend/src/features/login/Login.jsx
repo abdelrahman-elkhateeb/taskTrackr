@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
 import DarkModeToggle from "../Ui/DarkModeToggle";
 import Lottie from "lottie-react";
+import { motion } from "framer-motion"; // Import Framer Motion
 
 function Login() {
   const {
@@ -96,10 +97,13 @@ function Login() {
         <div className="absolute top-3 right-3">
           <DarkModeToggle />
         </div>
-        <div
+        <motion.div
           className={`w-full md:w-96 rounded-lg shadow-md border-2 ${
             darkMode ? "border-dark-primary" : "border-dark-primary"
-          }`} //  bg-dark-bg == bg-dark-primary
+          }`}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
         >
           <div className="p-6 space-y-4">
             <h1
@@ -109,13 +113,23 @@ function Login() {
             >
               Sign in to your account
             </h1>
-            {error && <p className="text-red-500">{error}</p>}
+            {error && (
+              <motion.p
+                className="text-red-500"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                {error}
+              </motion.p>
+            )}
             <form className="space-y-4" onSubmit={handleSubmit(loginUser)}>
               <div>
                 <label
                   htmlFor="email"
-                  className={`block mb-2 text-sm font-medium ${darkMode ? " text-dark-text " : " text-light-text"}`}
-
+                  className={`block mb-2 text-sm font-medium ${
+                    darkMode ? " text-dark-text " : " text-light-text"
+                  }`}
                 >
                   Your email
                 </label>
@@ -124,8 +138,9 @@ function Login() {
                   name="email"
                   id="email"
                   className={`input input-bordered w-full border-[1px] ${
-                    darkMode ? "bg-dark-bg text-dark-text border-dark-primary" : "bg-light-bg text-light-text"
-
+                    darkMode
+                      ? "bg-dark-bg text-dark-text border-dark-primary"
+                      : "bg-light-bg text-light-text"
                   }`}
                   placeholder="name@company.com"
                   onChange={handleChange}
@@ -151,7 +166,9 @@ function Login() {
                   id="password"
                   placeholder="••••••••"
                   className={`input input-bordered w-full border-[1px] ${
-                    darkMode ? "bg-dark-bg text-dark-text border-dark-primary" : "bg-light-bg text-light-text"
+                    darkMode
+                      ? "bg-dark-bg text-dark-text border-dark-primary"
+                      : "bg-light-bg text-light-text"
                   }`}
                   onChange={handleChange}
                   {...register("password", { required: true })}
@@ -171,22 +188,30 @@ function Login() {
                       className={`checkbox checkbox-primary border-dark-primary hover:`}
                     />
                   </div>
-                  <div className={`ml-3 text-sm ${darkMode ? " text-dark-primary" : " text-light-primary"}`}>
-
+                  <div
+                    className={`ml-3 text-sm ${
+                      darkMode ? " text-dark-primary" : " text-light-primary"
+                    }`}
+                  >
                     <label htmlFor="remember">Remember me</label>
                   </div>
                 </div>
                 <a
                   href=""
-                  className={`text-sm font-medium hover:underline ${darkMode ? " text-dark-accent" : " text-light-accent"}`}
-
+                  className={`text-sm font-medium hover:underline ${
+                    darkMode ? " text-dark-accent" : " text-light-accent"
+                  }`}
                 >
                   Forgot password?
                 </a>
               </div>
               <button
                 type="submit"
-                className={`btn btn-primary w-full ${darkMode ? "bg-dark-primary text-light-text hover:bg-dark-pHover" : "bg-light-primary text-dark-text hover:bg-light-pHover"}`}
+                className={`btn btn-primary w-full ${
+                  darkMode
+                    ? "bg-dark-primary text-light-text hover:bg-dark-pHover"
+                    : "bg-light-primary text-dark-text hover:bg-light-pHover"
+                }`}
                 disabled={loading}
               >
                 {loading ? <Loader /> : "Sign In"}
@@ -205,12 +230,18 @@ function Login() {
               </p>
             </form>
           </div>
-        </div>
+        </motion.div>
       </div>
-      <Lottie
-        animationData={loginSvg}
-        className="hidden md:block w-1/3 min-w-[500px] h-auto"
-      />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Lottie
+          animationData={loginSvg}
+          className="hidden md:block w-1/3 min-w-[500px] h-auto"
+        />
+      </motion.div>
     </section>
   );
 }
