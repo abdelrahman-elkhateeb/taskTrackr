@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Loader from "../Ui/Loader";
 import loginImg from "../../../public/login.svg";
+import loginSvg from "../../../public/login.json";
 import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
 import DarkModeToggle from "../Ui/DarkModeToggle";
+import Lottie from "lottie-react";
 
 function Login() {
   const {
@@ -96,10 +98,16 @@ function Login() {
           <DarkModeToggle />
         </div>
         <div
-          className={`w-full md:w-96 rounded-lg shadow-md border-2 ${darkMode ? "border-dark-primary" : "border-dark-primary"}`} //  bg-dark-bg == bg-dark-primary
+          className={`w-full md:w-96 rounded-lg shadow-md border-2 ${
+            darkMode ? "border-dark-primary" : "border-dark-primary"
+          }`} //  bg-dark-bg == bg-dark-primary
         >
           <div className="p-6 space-y-4">
-            <h1 className={`text-xl font-bold leading-tight tracking-tight ${darkMode? "text-dark-text" : " text-light-text "}`}>
+            <h1
+              className={`text-xl font-bold leading-tight tracking-tight ${
+                darkMode ? "text-dark-text" : " text-light-text "
+              }`}
+            >
               Sign in to your account
             </h1>
             {error && <p className="text-red-500">{error}</p>}
@@ -107,7 +115,11 @@ function Login() {
               <div>
                 <label
                   htmlFor="email"
-                  className={`block mb-2 text-sm font-medium border-2 ${darkMode ? " text-dark-text border-dark-primary" : " text-light-text"}`}
+                  className={`block mb-2 text-sm font-medium border-2 ${
+                    darkMode
+                      ? " text-dark-text border-dark-primary"
+                      : " text-light-text"
+                  }`}
                 >
                   Your email
                 </label>
@@ -116,7 +128,9 @@ function Login() {
                   name="email"
                   id="email"
                   className={`input input-bordered w-full ${
-                    darkMode ? "bg-dark-bg text-dark-text" : "bg-light-bg text-light-text"
+                    darkMode
+                      ? "bg-dark-bg text-dark-text"
+                      : "bg-light-bg text-light-text"
                   }`}
                   placeholder="name@company.com"
                   onChange={handleChange}
@@ -130,7 +144,9 @@ function Login() {
               <div>
                 <label
                   htmlFor="password"
-                  className={`block mb-2 text-sm font-medium ${darkMode ? " text-dark-text" : " text-light-text"}`}
+                  className={`block mb-2 text-sm font-medium ${
+                    darkMode ? " text-dark-text" : " text-light-text"
+                  }`}
                 >
                   Password
                 </label>
@@ -160,29 +176,41 @@ function Login() {
                       className="checkbox checkbox-primary"
                     />
                   </div>
-                  <div className={`ml-3 text-sm ${darkMode ? " text-dark-text" : " text-light-text"}`}>
+                  <div
+                    className={`ml-3 text-sm ${
+                      darkMode ? " text-dark-text" : " text-light-text"
+                    }`}
+                  >
                     <label htmlFor="remember">Remember me</label>
                   </div>
                 </div>
                 <a
                   href="#"
-                  className={`text-sm font-medium text-primary hover:underline ${darkMode ? " text-dark-accent" : " text-light-accent"}`}
+                  className={`text-sm font-medium text-primary hover:underline ${
+                    darkMode ? " text-dark-accent" : " text-light-accent"
+                  }`}
                 >
                   Forgot password?
                 </a>
               </div>
               <button
                 type="submit"
-                className={`btn btn-primary w-full ${darkMode ? "bg-dark-bg text-dark-text" : "bg-light-bg text-light-text"}`}
+                className={`btn btn-primary w-full ${
+                  darkMode
+                    ? "bg-dark-bg text-dark-text"
+                    : "bg-light-bg text-light-text"
+                }`}
                 disabled={loading}
               >
                 {loading ? <Loader /> : "Sign In"}
-              </button >
+              </button>
               <p className="text-sm font-light">
                 Don't have an account?{" "}
                 <a
                   href=""
-                  className={`font-medium text-primary hover:underline ${darkMode ? " text-dark-accent" : " text-light-accent"}`}
+                  className={`font-medium text-primary hover:underline ${
+                    darkMode ? " text-dark-accent" : " text-light-accent"
+                  }`}
                   onClick={handleRegisterClick}
                 >
                   Register
@@ -192,9 +220,8 @@ function Login() {
           </div>
         </div>
       </div>
-      <img
-        src={loginImg}
-        alt="login"
+      <Lottie
+        animationData={loginSvg}
         className="hidden md:block w-1/3 min-w-[500px] h-auto"
       />
     </section>
