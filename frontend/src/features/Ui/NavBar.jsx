@@ -87,8 +87,8 @@ function NavBar() {
       </Link>
 
       <ul className="flex gap-4 items-center">
-        <li>project management</li>
-        <li>login</li>
+        <li className="cursor-pointer">project management</li>
+        <li className="cursor-pointer">login</li>
         <li>
           <DarkModeToggle />
         </li>
