@@ -7,16 +7,24 @@ function NavBar() {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
   return (
     <nav
-      className={`flex justify-between p-4 items-center border-b-2 ${
+      className={`flex justify-between p-4 px-8 items-center border-2 rounded-[35px] mt-7 container ${
         darkMode ? "text-dark-text" : "text-light-text"
       }`}
     >
       <Link to="/">
-        <h4 className="logo">TaskTrackr</h4>
+        <h4 className={`logo ${
+            darkMode
+              ? " text-dark-primary"
+              : " text-light-primary"
+          }`}>TaskTrackr</h4>
       </Link>
 
       <ul className="flex gap-4 items-center font-semibold">
-        <li className="cursor-pointer">project management</li>
+        <li className={`cursor-pointer ${
+            darkMode
+              ? " text-dark-primary"
+              : " text-light-primary"
+          }`}>project management</li>
         <li
           className={`cursor-pointer px-3 py-1 rounded ${
             darkMode
