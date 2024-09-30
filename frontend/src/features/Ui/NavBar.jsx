@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import DarkModeToggle from "./DarkModeToggle";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-
+import "./NavBar.css";
 function NavBar() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const darkMode = useSelector((state) => state.darkMode.darkMode);
