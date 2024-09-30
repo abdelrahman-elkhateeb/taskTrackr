@@ -53,6 +53,7 @@ function Login() {
 
       const data = await response.json();
       Cookies.set("userId", data.user._id, { expires: 1 });
+      localStorage.setItem("loggedIn", true);
       setTimeout(() => {
         navigate("/");
       }, 1000);

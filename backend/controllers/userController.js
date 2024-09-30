@@ -102,8 +102,4 @@ const updateUser = async (req, res) => {
     }
 };
 
-const getUser = async (req,res)=>{
-    const { userId } = req.params;
-}
-
 export { register, login, updateUser };

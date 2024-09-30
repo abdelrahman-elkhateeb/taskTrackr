@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Lottie from "lottie-react";
@@ -12,19 +12,25 @@ function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const darkMode = useSelector((state) => state.darkMode.darkMode);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("loggedIn") === "true";
+    setIsLoggedIn(loggedIn);
+  }, []);
 
   const handleButtonClick = () => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      navigate("/tasks");
+      isLoggedIn ? navigate("/tasks") : navigate("/login");
     }, 1500);
   };
 
   // Framer motion variants for animations
   const containerVariants = {
     hidden: { opacity: 0, y: -50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
   const buttonVariants = {

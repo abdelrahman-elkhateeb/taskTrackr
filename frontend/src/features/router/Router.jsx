@@ -5,6 +5,7 @@ import Home from "../home/Home";
 import AppLayout from "../layout/Layout";
 import Error from "../Ui/Error";
 import Tasks from "../tasks/Tasks";
+import Profile from "../profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       { path: "/tasks", element: <Tasks /> },
+      { path: "/profile", element: <Profile /> },
     ],
   },
 ]);

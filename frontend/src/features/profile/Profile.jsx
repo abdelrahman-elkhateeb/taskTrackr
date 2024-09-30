@@ -1,5 +1,5 @@
-function profile() {
-  return <div></div>;
+function Profile() {
+  return <section className="container mx-auto px-4">this is profile</section>;
 }
 
-export default profile;
+export default Profile;
