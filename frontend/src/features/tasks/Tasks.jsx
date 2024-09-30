@@ -3,9 +3,11 @@ import AlertModal from "./DeleteTask";
 import TaskCard from "./TaskCard";
 import { useGetTasksQuery } from "./tasksApi";
 import TaskSkeleton from "./TaskSkeleton";
+import UpdateTask from "./UpdateTask";
 
 function Tasks() {
   const [taskIdToDelete, setTaskIdToDelete] = useState();
+  const [taskToEdit, setTaskToEdit] = useState();
   const { isLoading, data } = useGetTasksQuery();
   if (isLoading)
     return (
@@ -28,10 +30,12 @@ function Tasks() {
             description={task.description}
             dueDate={task.dueDate}
             priority={task.priority}
+            setTaskToEdit={setTaskToEdit}
           />
         ))}
       </div>
       <AlertModal id={taskIdToDelete} />
+      <UpdateTask taskEdit={taskToEdit} />
     </>
   );
 }

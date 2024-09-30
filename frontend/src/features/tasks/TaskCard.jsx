@@ -9,6 +9,7 @@ const TaskCard = ({
   dueDate,
   id,
   setTaskIdToDelete,
+  setTaskToEdit,
 }) => {
   return (
     <>
@@ -42,9 +43,21 @@ const TaskCard = ({
             </span>
           </div>
           <div className="card-actions ">
-            <button className="bg-teal-400 hover:bg-teal-600 text-gray-700 p-2 rounded-md">
+            <label
+              htmlFor="modal-update"
+              className="bg-teal-400 hover:bg-teal-600 text-gray-700 p-2 rounded-md"
+              onClick={() =>
+                setTaskToEdit({
+                  id,
+                  title,
+                  priority,
+                  description,
+                  dueDate,
+                })
+              }
+            >
               <MdEdit />
-            </button>
+            </label>
             <label
               htmlFor="alert"
               className=" bg-red-400 hover:bg-red-600 text-gray-700 p-2 rounded-md"
