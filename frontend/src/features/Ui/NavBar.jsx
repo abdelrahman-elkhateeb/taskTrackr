@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DarkModeToggle from "./DarkModeToggle";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -20,6 +20,7 @@ function NavBar() {
     localStorage.setItem("loggedIn", false);
     setIsLoggedIn(false);
     navigate("/login");
+    setSidebarOpen(false);
   }
 
   const toggleSidebar = () => {
@@ -29,7 +30,7 @@ function NavBar() {
   return (
     <nav
       className={`flex justify-between p-4 px-8 items-center border-2 rounded-[35px] mt-7 container mx-auto ${
-        darkMode ? "text-dark-text" : "text-light-text"
+        darkMode ? "border-dark-primary text-dark-text" : "border-light-primary text-light-text"
       }`}
     >
       {/* Logo */}
@@ -67,7 +68,9 @@ function NavBar() {
 
       {/* Sidebar for Mobile */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-900 z-50 transform ${
+        className={`fixed top-0 left-0 h-full w-64 ${
+          darkMode ? "bg-dark-bg" : "bg-light-bg"
+        } z-50 transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out`}
       >
@@ -86,34 +89,68 @@ function NavBar() {
             </div>
           )}
           <li
-            className={`cursor-pointer ${
+            className={`cursor-pointer relative ${
               darkMode ? "text-dark-primary" : "text-light-primary"
             }`}
           >
-            project management
+            <a
+              className="after"
+              onClick={() => {
+                setSidebarOpen(false);
+              }}
+            >
+              project management
+            </a>
           </li>
           <Link
             to="/tasks"
-            className={`cursor-pointer ${
+            className={`cursor-pointer relative ${
               darkMode ? "text-dark-primary" : "text-light-primary"
             }`}
           >
-            Tasks
+            <a
+              className="after"
+              onClick={() => {
+                setSidebarOpen(false);
+              }}
+            >
+              Tasks
+            </a>
           </Link>
           {!isLoggedIn ? (
             <Link
               to={"/login"}
-              className={`cursor-pointer px-4 py-2 rounded-lg ${
-                darkMode
-                  ? "bg-dark-primary text-light-text"
-                  : "bg-light-primary text-dark-text"
+              className={`cursor-pointer rounded-lg relative${
+                darkMode ? " text-dark-primary" : " text-light-primary"
               }`}
             >
-              login
+              <a
+                className="after"
+                onClick={() => {
+                  setSidebarOpen(false);
+                }}
+              >
+                login
+              </a>
             </Link>
           ) : (
-            <li onClick={() => handleLogout()}>logout</li>
+            <li
+              className={`relative ${
+                darkMode ? "text-dark-primary" : "text-light-primary"
+              }`}
+              onClick={() => {
+                handleLogout();
+                setSidebarOpen(false);
+              }}
+            >
+              <a className="after">logout</a>
+            </li>
           )}
+          {
+            !isLoggedIn && <div className="left">
+              <DarkModeToggle />
+            </div>
+          }
         </ul>
       </div>
 
@@ -147,21 +184,32 @@ function NavBar() {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
+              className={`menu menu-sm dropdown-content bg-base-100 border-[1px] rounded-box z-50 mt-3 w-52 p-2 shadow ${
+                darkMode
+                  ? "bg-dark-bg border-dark-primary"
+                  : "bg-light-bg border-light-primary"
+              }`}
             >
               <li>
                 <a
-                  className="justify-between"
+                  className={`justify-between ${
+                    darkMode ? "text-dark-primary" : "text-light-primary"
+                  }`}
                   onClick={() => {
                     navigate("/profile");
                   }}
                 >
                   Profile
-                  <span className="badge">New</span>
                 </a>
               </li>
               <li onClick={() => handleLogout()}>
-                <a>logout</a>
+                <a
+                  className={`${
+                    darkMode ? "text-dark-primary" : "text-light-primary"
+                  }`}
+                >
+                  logout
+                </a>
               </li>
             </ul>
           </div>
