@@ -12,20 +12,25 @@ function NavBar() {
       }`}
     >
       <Link to="/">
-        <h4 className={`logo ${
-            darkMode
-              ? " text-dark-primary"
-              : " text-light-primary"
-          }`}>TaskTrackr</h4>
+        <h4
+          className={`logo ${
+            darkMode ? " text-dark-primary" : " text-light-primary"
+          }`}
+        >
+          TaskTrackr
+        </h4>
       </Link>
 
       <ul className="flex gap-4 items-center font-semibold">
-        <li className={`cursor-pointer ${
-            darkMode
-              ? " text-dark-primary"
-              : " text-light-primary"
-          }`}>project management</li>
         <li
+          className={`cursor-pointer ${
+            darkMode ? " text-dark-primary" : " text-light-primary"
+          }`}
+        >
+          project management
+        </li>
+        <Link
+          to={"/login"}
           className={`cursor-pointer px-3 py-1 rounded ${
             darkMode
               ? "bg-dark-primary text-light-text"
@@ -33,7 +38,7 @@ function NavBar() {
           }`}
         >
           login
-        </li>
+        </Link>
         <li>
           <DarkModeToggle />
         </li>

@@ -16,10 +16,6 @@ function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -28,23 +24,12 @@ function Login() {
   useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);
   }, [darkMode]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const loginUser = async (e) => {
-    e.preventDefault();
+  const loginUser = async (data) => {
     setLoading(true);
 
-    const { email, password } = formData;
+    const { email, password } = data;
 
     if (!email || !password) {
-      setError("Both email and password are required.");
       setLoading(false);
       return;
     }
@@ -143,7 +128,6 @@ function Login() {
                       : "bg-light-bg text-light-text"
                   }`}
                   placeholder="name@company.com"
-                  onChange={handleChange}
                   {...register("email", { required: true })}
                 />
                 {errors.email && (
@@ -170,7 +154,6 @@ function Login() {
                       ? "bg-dark-bg text-dark-text border-dark-primary"
                       : "bg-light-bg text-light-text"
                   }`}
-                  onChange={handleChange}
                   {...register("password", { required: true })}
                 />
                 {errors.password && (
