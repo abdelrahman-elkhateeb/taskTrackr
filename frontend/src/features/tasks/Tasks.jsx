@@ -9,7 +9,7 @@ function Tasks() {
   const { isLoading, data } = useGetTasksQuery();
   if (isLoading)
     return (
-      <div className="mt-10  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 p-2 rounded-md">
+      <div className="container mt-10  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 p-2 rounded-md">
         {Array.from({ length: 10 }, (_, index) => (
           <TaskSkeleton key={index} />
         ))}
@@ -17,7 +17,7 @@ function Tasks() {
     );
   return (
     <>
-      <div className="mt-10  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 p-2 rounded-md">
+      <div className="container mt-10  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 p-2 rounded-md">
         {data?.tasks?.map((task) => (
           <TaskCard
             key={task._id}
