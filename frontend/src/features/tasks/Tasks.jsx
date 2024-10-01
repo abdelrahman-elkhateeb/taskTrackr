@@ -6,6 +6,7 @@ import TaskSkeleton from "./TaskSkeleton";
 import UpdateTask from "./UpdateTask";
 import ProgressComponent from "./ProgressTasks";
 import { useSelector } from "react-redux";
+import CreateTask from "./CreateTask";
 
 function Tasks() {
   const [taskIdToDelete, setTaskIdToDelete] = useState();
@@ -17,13 +18,14 @@ function Tasks() {
     <div className="container p-2 ">
       <div className=" flex flex-col md:flex-row justify-between md:items-end mt-3 px-2 ">
         <ProgressComponent />
-        <button
-          className={`bg-dark-primary py-2 px-4  rounded-lg font-medium text-black w-fit m-auto mt-4 md:m-0 hover:bg-gray-500 ${
+        <label
+          htmlFor="modal-create"
+          className={`bg-dark-primary cursor-pointer py-2 px-4  rounded-lg font-medium text-black w-fit m-auto mt-4 md:m-0 hover:bg-gray-500 ${
             darkMode ? "bg-dark-primary " : "bg-light-primary text-white"
           }`}
         >
           Create New task
-        </button>
+        </label>
       </div>
 
       <div className=" mt-10  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 p-2 rounded-md">
@@ -47,6 +49,7 @@ function Tasks() {
       </div>
       <AlertModal id={taskIdToDelete} />
       <UpdateTask taskEdit={taskToEdit} />
+      <CreateTask />
     </div>
   );
 }
