@@ -29,11 +29,12 @@ function NavBar() {
 
   return (
     <nav
-      className={`flex justify-between p-4 px-8 items-center border-2 rounded-[35px] mt-7 container mx-auto ${
-        darkMode ? "border-dark-primary text-dark-text" : "border-light-primary text-light-text"
+      className={`flex justify-between p-5 items-center rounded-[35px] container mx-auto ${
+        darkMode
+          ? "border-dark-primary text-dark-text"
+          : "border-light-primary text-light-text"
       }`}
     >
-      {/* Logo */}
       <Link to="/">
         <h4
           className={`logo text-2xl font-bold ${
@@ -146,11 +147,11 @@ function NavBar() {
               <a className="after">logout</a>
             </li>
           )}
-          {
-            !isLoggedIn && <div className="left">
+          {!isLoggedIn && (
+            <div className="left">
               <DarkModeToggle />
             </div>
-          }
+          )}
         </ul>
       </div>
 
