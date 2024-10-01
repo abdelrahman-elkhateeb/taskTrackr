@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 function TaskCategorization() {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
   return (
-    <section className="md:grid md:grid-cols-2 h-screen container mx-auto px-4">
+    <section className="md:grid md:grid-cols-2 mb-28 container mx-auto px-4">
       <div>
         <motion.h2
           initial={{ opacity: 0, x: 100 }}

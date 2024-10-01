@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 function TaskCreation() {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
   return (
-    <section className="md:grid md:grid-cols-2 h-screen container mx-auto px-4">
+    <section className="md:grid md:grid-cols-2 mb-20 container mx-auto px-4">
       <Lottie animationData={taskCreation} />
       <div>
         <motion.h2
