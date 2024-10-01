@@ -1,38 +1,36 @@
-import Lottie from "lottie-react";
-import taskCreation from "../../../public/taskCreation.json";
-import { useSelector } from "react-redux";
-import { motion } from "framer-motion";
-
 function Features() {
-  const darkMode = useSelector((state) => state.darkMode.darkMode);
   return (
-    <section className="md:grid md:grid-cols-2  container mx-auto px-4">
-      <Lottie animationData={taskCreation} />
+    <section className="container m-auto px-4">
       <div>
-        <motion.h2
-          initial={{ opacity: 0, x: 100 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, ease: "easeInOut" }}
-          viewport={{ once: true }}
-          className={`${
-            darkMode ? "text-dark-text" : "text-light-text"
-          } md:text-7xl text-3xl mb-10 font-semibold`}
-        >
-          Task Creation and Assignment
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, x: 100 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, ease: "easeInOut", delay: 0.5 }}
-          viewport={{ once: true }}
-          className={`${
-            darkMode ? "text-dark-text" : "text-light-text"
-          } md:text-3xl text-xl font-medium`}
-        >
-          Easily create and assign tasks with a few clicks. Assign tasks to
-          yourself or teammates and add detailed descriptions to clarify
-          objectives.
-        </motion.p>
+        <h2>Priority Levels</h2>
+        <p>
+          Set priority levels (low, medium, high) to highlight urgent tasks.
+          Quickly identify which tasks need immediate attention and which can
+          wait.
+        </p>
+      </div>
+      <div>
+        <h2>Due Dates</h2>
+        <p>
+          Stay on top of deadlines by assigning due dates to tasks. Get
+          reminders for upcoming deadlines and ensure timely completion of
+          tasks.
+        </p>
+      </div>
+      <div>
+        <h2>Status Filters</h2>
+        <p>
+          Easily filter tasks based on their status (Completed, In-Progress,
+          Pending). This allows users to focus on tasks that require attention
+          and track overall progress.
+        </p>
+      </div>
+      <div>
+        <h2>Search Functionality</h2>
+        <p>
+          Find specific tasks quickly with the search feature. Search by task
+          name, description, or category to locate important tasks instantly.
+        </p>
       </div>
     </section>
   );
