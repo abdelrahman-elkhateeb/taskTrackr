@@ -13,7 +13,11 @@ function AppLayout() {
   const shouldShowNavBar = !hideNavBarRoutes.includes(location.pathname);
 
   return (
-    <div className={`${darkMode ? "bg-dark-bg" : "bg-light-bg"} min-h-screen`}>
+    <div
+      className={`${
+        darkMode ? "bg-dark-bg" : "bg-light-bg"
+      } min-h-screen`}
+    >
       {isLoading && <Loader />}
       <div className="flex justify-center">
         {shouldShowNavBar && <NavBar />}

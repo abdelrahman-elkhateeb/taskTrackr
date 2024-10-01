@@ -37,7 +37,7 @@ function Hero() {
   };
   return (
     <section
-      className={`container mx-auto flex px-4 h-screen overflow-hidden ${
+      className={`container mx-auto flex px-4 h-screen  ${
         darkMode ? "text-dark-text" : "text-light-text"
       }`}
     >

@@ -29,7 +29,7 @@ function NavBar() {
 
   return (
     <nav
-      className={`flex justify-between p-5 items-center rounded-[35px] container mx-auto ${
+      className={`flex justify-between p-3 items-center rounded-[35px] container mx-auto sticky top-0 ${
         darkMode
           ? "border-dark-primary text-dark-text"
           : "border-light-primary text-light-text"
@@ -37,7 +37,7 @@ function NavBar() {
     >
       <Link to="/">
         <h4
-          className={`logo text-2xl font-bold ${
+          className={`logo text-2xl font-medium ${
             darkMode ? "text-dark-primary" : "text-light-primary"
           }`}
         >
