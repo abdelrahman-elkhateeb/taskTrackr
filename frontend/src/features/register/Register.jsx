@@ -40,8 +40,7 @@ function Register() {
     }));
   };
 
-  const registerUser = async (e) => {
-    e.preventDefault();
+  const registerUser = async (formData) => {
     const { username, email, password, confirmPassword, gender } = formData;
 
     if (!username || !email || !password || !gender) {

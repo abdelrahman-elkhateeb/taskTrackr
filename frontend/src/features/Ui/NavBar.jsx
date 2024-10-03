@@ -1,26 +1,41 @@
 import { Link, useNavigate } from "react-router-dom";
 import DarkModeToggle from "./DarkModeToggle";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
 import male from "../../../public/male.svg";
+import female from "../../../public/female.svg";
 
 import "./NavBar.css";
+
 function NavBar() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const darkMode = useSelector((state) => state.darkMode.darkMode);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem("loggedIn") === "true";
-    setIsLoggedIn(loggedIn);
-  }, []);
+    let userId = Cookies.get("userId");
+    if (userId) {
+      fetch(`http://localhost:5000/api/Users/${userId}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setUserData(data.user);
+          setIsLoggedIn(true);
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
+    } else {
+      navigate("/login");
+    }
+  }, [navigate]);
 
   function handleLogout() {
-    localStorage.setItem("loggedIn", false);
+    Cookies.remove("userId");
     setIsLoggedIn(false);
     navigate("/login");
-    setSidebarOpen(false);
   }
 
   const toggleSidebar = () => {
@@ -29,7 +44,7 @@ function NavBar() {
 
   return (
     <nav
-      className={`flex justify-between p-3 items-center rounded-[35px] container mx-auto sticky top-0 ${
+      className={`flex justify-between p-3 items-center rounded-[35px] container mx-auto ${
         darkMode
           ? "border-dark-primary text-dark-text"
           : "border-light-primary text-light-text"
@@ -84,7 +99,11 @@ function NavBar() {
                   navigate("/profile");
                 }}
               >
-                <img className="w-full" src={male} alt="img" />
+                <img
+                  className="w-full"
+                  src={userData.profileImage || male}
+                  alt="User Avatar"
+                />
               </div>
               <DarkModeToggle />
             </div>
@@ -108,31 +127,23 @@ function NavBar() {
             className={`cursor-pointer relative ${
               darkMode ? "text-dark-primary" : "text-light-primary"
             }`}
+            onClick={() => {
+              setSidebarOpen(false);
+            }}
           >
-            <a
-              className="after"
-              onClick={() => {
-                setSidebarOpen(false);
-              }}
-            >
-              Tasks
-            </a>
+            Tasks
           </Link>
           {!isLoggedIn ? (
             <Link
               to={"/login"}
-              className={`cursor-pointer rounded-lg relative${
-                darkMode ? " text-dark-primary" : " text-light-primary"
+              className={`cursor-pointer rounded-lg relative ${
+                darkMode ? "text-dark-primary" : "text-light-primary"
               }`}
+              onClick={() => {
+                setSidebarOpen(false);
+              }}
             >
-              <a
-                className="after"
-                onClick={() => {
-                  setSidebarOpen(false);
-                }}
-              >
-                login
-              </a>
+              login
             </Link>
           ) : (
             <li
@@ -180,7 +191,11 @@ function NavBar() {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full">
-                <img alt="Tailwind CSS Navbar component" src={male} />
+                <img
+                  alt="User Avatar"
+                  src={userData.gender == "male" ? male : female}
+                  className="w-full"
+                />
               </div>
             </div>
             <ul

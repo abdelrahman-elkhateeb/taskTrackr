@@ -112,7 +112,6 @@ const updateUser = async (req, res) => {
 
 const getUser = async (req, res) => {
   const { userId } = req.params;
-
   try {
     const user = await User.findById(userId);
 

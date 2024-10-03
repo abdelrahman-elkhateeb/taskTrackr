@@ -52,13 +52,10 @@ function Login() {
       }
 
       const data = await response.json();
-  
+
       Cookies.set("userId", data.user._id, { expires: 1 });
-      Cookies.set("userData", JSON.stringify(data), { expires: 1 });
       localStorage.setItem("loggedIn", true);
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
+      navigate("/");
     } catch (error) {
       console.error("Error:", error);
       setError(error.message);

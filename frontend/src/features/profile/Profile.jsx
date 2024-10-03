@@ -6,19 +6,15 @@ import { useSelector } from "react-redux";
 
 function Profile() {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState(null); 
 
   useEffect(() => {
-    const user = Cookies.get("userData");
+    const userId = Cookies.get("userId");
 
-    const parsedUser = user ? JSON.parse(user) : null;
-
-    if (parsedUser && parsedUser._id) {
-      const userId = parsedUser._id;
-
+    if (userId) {
       fetch(`http://localhost:5000/api/Users/${userId}`)
         .then((response) => response.json())
-        .then((data) => setUserData(data))
+        .then((data) => setUserData(data.user)) // Access the nested user object
         .catch((error) => {
           console.error("Error fetching user data:", error);
         });
