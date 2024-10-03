@@ -6,6 +6,7 @@ import AppLayout from "../layout/Layout";
 import Error from "../Ui/Error";
 import Tasks from "../tasks/Tasks";
 import Profile from "../profile/Profile";
+import ProjectManagement from "../projectManagment/ProjectManagment";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
       { path: "/register", element: <Register /> },
       { path: "/tasks", element: <Tasks /> },
       { path: "/profile", element: <Profile /> },
+      { path: "/projectManagement", element: <ProjectManagement /> },
     ],
   },
 ]);

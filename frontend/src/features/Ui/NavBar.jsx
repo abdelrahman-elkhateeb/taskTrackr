@@ -108,19 +108,28 @@ function NavBar() {
               <DarkModeToggle />
             </div>
           )}
+          <Link
+            to="/"
+            className={`cursor-pointer relative ${
+              darkMode ? "text-dark-primary" : "text-light-primary"
+            }`}
+          >
+            Home
+          </Link>
           <li
             className={`cursor-pointer relative ${
               darkMode ? "text-dark-primary" : "text-light-primary"
             }`}
           >
-            <a
+            <Link
+              to="/ProjectManagement"
               className="after"
               onClick={() => {
                 setSidebarOpen(false);
               }}
             >
               project management
-            </a>
+            </Link>
           </li>
           <Link
             to="/tasks"
