@@ -24,7 +24,10 @@ export const tasksApi = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: [{ type: "tasks", id: "LIST" }],
+      invalidatesTags: [
+        { type: "tasks", id: "LIST" },
+        { type: "tasks", id: "COMPLETED" },
+      ],
       async onQueryStarted({ _id, ...patch }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           tasksApi.util.updateQueryData("getTasks", _id, (draft) => {
@@ -44,7 +47,10 @@ export const tasksApi = createApi({
         method: "PUT",
         body,
       }),
-      invalidatesTags: [{ type: "tasks", id: "LIST" }],
+      invalidatesTags: [
+        { type: "tasks", id: "LIST" },
+        { type: "tasks", id: "COMPLETED" },
+      ],
       async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           tasksApi.util.updateQueryData("getTasks", id, (draft) => {
@@ -63,7 +69,16 @@ export const tasksApi = createApi({
         url: `/Tasks/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: "tasks", id: "LIST" }],
+      invalidatesTags: [
+        { type: "tasks", id: "LIST" },
+        { type: "tasks", id: "COMPLETED" },
+      ],
+    }),
+    getCompletedTasks: builder.query({
+      query: () => ({
+        url: `/Tasks/taskCompleted/${Cookies.get("userId")}`,
+      }),
+      providesTags: [{ type: "tasks", id: "COMPLETED" }],
     }),
   }),
 });
@@ -73,4 +88,5 @@ export const {
   useCreateTaskMutation,
   useDeleteTaskMutation,
   useUpdateTaskMutation,
+  useGetCompletedTasksQuery,
 } = tasksApi;
