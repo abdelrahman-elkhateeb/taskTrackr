@@ -1,5 +1,5 @@
 import Task from "../models/taskModel.js";
-import User from '../models/userModel.js';
+import User from "../models/userModel.js";
 import mongoose from "mongoose";
 
 export const getTasks = async (req, res) => {
@@ -16,7 +16,9 @@ export const createTask = async (req, res) => {
   const { title, description, priority, dueDate, userId } = req.body;
 
   if (!title || !description || !priority || !dueDate || !userId) {
-    return res.status(400).json({ success: false, message: "Please fill in all fields" });
+    return res
+      .status(400)
+      .json({ success: false, message: "Please fill in all fields" });
   }
 
   try {
@@ -34,7 +36,7 @@ export const createTask = async (req, res) => {
       description,
       priority,
       dueDate,
-      user: userId, 
+      user: userId,
     });
 
     const savedTask = await newTask.save();
@@ -47,8 +49,6 @@ export const createTask = async (req, res) => {
     res.status(500).json({ success: false, message: "Error in creating task" });
   }
 };
-
-
 
 export const updateTask = async (req, res) => {
   const { id } = req.params;
@@ -89,17 +89,45 @@ export const deleteTask = async (req, res) => {
 };
 
 export const getUserTasks = async (req, res) => {
-  const { userId } = req.params; 
+  const { userId } = req.params;
 
   try {
-    const user = await User.findById(userId).populate('tasks'); 
+    const user = await User.findById(userId).populate("tasks");
 
     if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
 
     res.status(200).json({ success: true, tasks: user.tasks });
   } catch (err) {
+    res.status(500).json({ success: false, message: "Error fetching tasks" });
+  }
+};
+
+export const getCountCompletedTasks = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const userExists = await User.findById(userId);
+    if (!userExists) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+    const numTasks = await Task.find({ user: userId }).countDocuments();
+    const completedTasks = await Task.find({
+      user: userId,
+      completed: true,
+    }).countDocuments();
+    res
+      .status(200)
+      .json({
+        success: true,
+        completedTasks: completedTasks,
+        totalTasks: numTasks,
+      });
+  } catch (error) {
     res.status(500).json({ success: false, message: "Error fetching tasks" });
   }
 };
