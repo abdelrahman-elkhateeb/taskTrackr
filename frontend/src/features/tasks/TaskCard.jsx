@@ -22,7 +22,7 @@ const TaskCard = ({
   };
   return (
     <>
-      <div className="card bg-gray-700 max-w-sm shadow-xl">
+      <div className="card bg-gray-700 max-w-sm shadow-xl ">
         <div className="card-body">
           <div className="flex justify-between">
             <h2 className="card-title text-slate-300">{title}</h2>

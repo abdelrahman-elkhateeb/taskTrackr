@@ -1,55 +1,51 @@
-import { useState } from "react";
-import AlertModal from "./DeleteTask";
-import TaskCard from "./TaskCard";
-import { useGetTasksQuery } from "./tasksApi";
-import TaskSkeleton from "./TaskSkeleton";
-import UpdateTask from "./UpdateTask";
 import ProgressComponent from "./ProgressTasks";
 import { useSelector } from "react-redux";
-import CreateTask from "./CreateTask";
+import TasksList from "./TasksList";
+import FiltrationComponent from "./FiltrationComponent";
+import { useState } from "react";
+import { MdFilterListAlt } from "react-icons/md";
 
 function Tasks() {
-  const [taskIdToDelete, setTaskIdToDelete] = useState();
-  const [taskToEdit, setTaskToEdit] = useState();
-  const { isLoading, data } = useGetTasksQuery();
   const darkMode = useSelector((state) => state.darkMode.darkMode);
-
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const toggleDrawer = () => {
+    setIsDrawerOpen((prev) => !prev);
+  };
   return (
-    <div className="container p-2 ">
-      <div className=" flex flex-col md:flex-row justify-between md:items-end mt-3 px-2 ">
-        <ProgressComponent />
-        <label
-          htmlFor="modal-create"
-          className={`bg-dark-primary cursor-pointer py-2 px-4  rounded-lg font-medium text-black w-fit m-auto mt-4 md:m-0 hover:bg-gray-500 ${
-            darkMode ? "bg-dark-primary " : "bg-light-primary text-white"
-          }`}
-        >
-          Create New task
-        </label>
-      </div>
+    <div className="container p-2  ">
+      <div className="">
+        <div className=" flex flex-col md:flex-row justify-between md:items-end mt-3 px-2 ">
+          <ProgressComponent />
 
-      <div className=" mt-10  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 p-2 rounded-md">
-        {isLoading
-          ? Array.from({ length: 8 }, (_, index) => (
-              <TaskSkeleton key={index} />
-            ))
-          : data?.tasks?.map((task) => (
-              <TaskCard
-                key={task._id}
-                id={task._id}
-                setTaskIdToDelete={setTaskIdToDelete}
-                title={task.title}
-                completed={task.completed}
-                description={task.description}
-                dueDate={task.dueDate}
-                priority={task.priority}
-                setTaskToEdit={setTaskToEdit}
-              />
-            ))}
+          <div className="flex ">
+            <button
+              onClick={toggleDrawer}
+              className={`py-2 px-2 rounded-lg  font-medium m-auto mt-4 text-lg  hover:bg-gray-500 ${
+                darkMode
+                  ? "bg-dark-primary text-black"
+                  : "bg-light-primary text-black"
+              }`}
+            >
+              <MdFilterListAlt />
+            </button>
+            <label
+              htmlFor="modal-create"
+              className={`bg-dark-primary  cursor-pointer py-2 px-4  rounded-lg font-medium text-black w-fit  mt-4 md:m-0 ml-4 hover:bg-gray-500 ${
+                darkMode ? "bg-dark-primary " : "bg-light-primary text-white"
+              }`}
+            >
+              Create New task
+            </label>
+          </div>
+        </div>
+
+        <TasksList />
+
+        <FiltrationComponent
+          isDrawerOpen={isDrawerOpen}
+          toggleDrawer={toggleDrawer}
+        />
       </div>
-      <AlertModal id={taskIdToDelete} />
-      <UpdateTask taskEdit={taskToEdit} />
-      <CreateTask />
     </div>
   );
 }
