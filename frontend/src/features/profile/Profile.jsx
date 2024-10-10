@@ -3,6 +3,7 @@ import female from "../../../public/female.svg";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import Loader from "../Ui/Loader";
 
 function Profile() {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
@@ -24,43 +25,48 @@ function Profile() {
   }, []);
 
   if (!userData) {
-    return <p>Loading...</p>;
+    return <Loader />;
   }
 
   return (
     <section className="container mx-auto px-4">
-      <div className="flex justify-center items-center flex-col mt-9 gap-2">
-        <div className="w-56">
-          <img src={userData.gender === "male" ? male : female} alt="profile" />
-        </div>
-        <div className="mt-7 flex flex-col gap-5">
-          <div
-            className={`${dataClassName} ${
-              darkMode ? "bg-dark-accent" : "bg-light-accent"
-            }`}
-          >
-            <h2
-              className={`${darkMode ? "text-dark-text" : "text-light-text"}`}
+      <div className="flex justify-center items-center">
+        <div className="shadow-xl rounded-xl flex flex-wrap p-4 mt-4">
+          <div className="w-72">
+            <img
+              src={`${userData.gender === "male" ? male : female}`}
+              alt="img"
+            />
+          </div>
+          <div className="mt-5">
+            <h1
+              className={`${dataClassName} ${
+                darkMode ? "text-dark-text" : "text-light-text"
+              } `}
             >
-              Name: {userData.username}
-            </h2>
-          </div>
-          <div
-            className={`${
-              darkMode ? "bg-dark-accent" : "bg-light-accent"
-            } ${dataClassName}`}
-          >
-            <p className={`${darkMode ? "text-dark-text" : "text-light-text"}`}>
-              Email: {userData.email}
-            </p>
-          </div>
-          <div
-            className={`${
-              darkMode ? "bg-dark-accent" : "bg-light-accent"
-            } ${dataClassName}`}
-          >
-            <p className={`${darkMode ? "text-dark-text" : "text-light-text"}`}>
-              Gender: {userData.gender}
+              <span
+                className={`${
+                  darkMode ? "text-dark-accent" : "text-light-accent"
+                } font-bold`}
+              >
+                Name:
+              </span>{" "}
+              {userData.username}
+            </h1>
+
+            <p
+              className={`${dataClassName} ${
+                darkMode ? "text-dark-text" : "text-light-text"
+              }`}
+            >
+              <span
+                className={`${
+                  darkMode ? "text-dark-accent" : "text-light-accent"
+                } font-bold`}
+              >
+                Email:
+              </span>{" "}
+              {userData.email}
             </p>
           </div>
         </div>
