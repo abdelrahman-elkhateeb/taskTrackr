@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 * {
-  font-family: "Lato", sans-serif;
+  font-family: "Figtree", sans-serif;
   @apply transition-colors 
 }

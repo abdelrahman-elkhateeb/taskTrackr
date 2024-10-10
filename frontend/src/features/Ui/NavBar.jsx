@@ -177,21 +177,26 @@ function NavBar() {
 
       {/* Main Nav for Desktop */}
       <ul className="hidden md:flex gap-6 items-center text-lg font-semibold">
-        <li
-          className={`cursor-pointer ${
-            darkMode ? "text-dark-primary" : "text-light-primary"
-          }`}
-        >
-          project management
-        </li>
-        <Link
-          to="/tasks"
-          className={`cursor-pointer ${
-            darkMode ? "text-dark-primary" : "text-light-primary"
-          }`}
-        >
-          Tasks
+        <Link to="/ProjectManagement">
+          <li
+            className={`cursor-pointer ${
+              darkMode ? "text-dark-primary" : "text-light-primary"
+            }`}
+          >
+            project management
+          </li>
         </Link>
+
+        <li>
+          <Link
+            to="/tasks"
+            className={`cursor-pointer ${
+              darkMode ? "text-dark-primary" : "text-light-primary"
+            }`}
+          >
+            Tasks
+          </Link>
+        </li>
         {isLoggedIn ? (
           <div className="dropdown dropdown-end">
             <div
