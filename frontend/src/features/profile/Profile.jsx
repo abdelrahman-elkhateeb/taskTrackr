@@ -8,7 +8,7 @@ import Loader from "../Ui/Loader";
 function Profile() {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
   const [userData, setUserData] = useState(null);
-  const dataClassName = `p-4 rounded-xl text-2xl`;
+  const dataClassName = `p-4 rounded-xl text-2xl flex items-center gap-2 shadow`;
   useEffect(() => {
     const userId = Cookies.get("userId");
 
@@ -31,18 +31,18 @@ function Profile() {
   return (
     <section className="container mx-auto px-4">
       <div className="flex justify-center items-center">
-        <div className="shadow-xl rounded-xl flex flex-wrap p-4 mt-4">
+        <div className="shadow-lg rounded-2xl gap-4 flex flex-wrap p-4 mt-4">
           <div className="w-72">
             <img
               src={`${userData.gender === "male" ? male : female}`}
               alt="img"
             />
           </div>
-          <div className="mt-5">
+          <div className="mt-5 grid ">
             <h1
               className={`${dataClassName} ${
                 darkMode ? "text-dark-text" : "text-light-text"
-              } `}
+              }`}
             >
               <span
                 className={`${
@@ -50,7 +50,7 @@ function Profile() {
                 } font-bold`}
               >
                 Name:
-              </span>{" "}
+              </span>
               {userData.username}
             </h1>
 
@@ -65,8 +65,23 @@ function Profile() {
                 } font-bold`}
               >
                 Email:
-              </span>{" "}
+              </span>
               {userData.email}
+            </p>
+
+            <p
+              className={`${dataClassName} ${
+                darkMode ? "text-dark-text" : "text-light-text"
+              }`}
+            >
+              <span
+                className={`${
+                  darkMode ? "text-dark-accent" : "text-light-accent"
+                } font-bold`}
+              >
+                gender:
+              </span>
+              {userData.gender}
             </p>
           </div>
         </div>
