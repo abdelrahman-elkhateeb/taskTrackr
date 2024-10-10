@@ -12,19 +12,19 @@ const FiltrationBox = () => {
           <div className="form-control ">
             <label className="label cursor-pointer w-full">
               <span className="label-text mr-28 font-black text-lg">Low</span>
-              <input type="checkbox" className="checkbox checkbox-accent" />
+              <input type="radio" name="priority" className="checkbox checkbox-accent" />
             </label>
           </div>
           <div className="form-control">
             <label className="label cursor-pointer">
               <span className="label-text  font-black text-lg">Medium</span>
-              <input type="checkbox" className="checkbox checkbox-accent" />
+              <input type="radio" name="priority" className="checkbox checkbox-accent" />
             </label>
           </div>
           <div className="form-control">
             <label className="label cursor-pointer">
               <span className="label-text mr-28 font-black text-lg">High</span>
-              <input type="checkbox" className="checkbox checkbox-accent" />
+              <input type="radio" name="priority" className="checkbox checkbox-accent" />
             </label>
           </div>
         </div>

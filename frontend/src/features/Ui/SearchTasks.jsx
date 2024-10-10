@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  searchTasks,
   setSearchKeyword,
   setTasks,
 } from "../../app/Slices/darkMode/searchTasksSlice";
@@ -11,11 +12,14 @@ const SearchTasks = () => {
   const dispatch = useDispatch();
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
-    if (e.target.value === "") dispatch(setTasks(tasks));
+    if (e.target.value === "") {
+      dispatch(setTasks(tasks));
+      dispatch(setSearchKeyword(""));
+    }
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(setSearchKeyword(searchText));
+    dispatch(searchTasks(searchText));
   };
   return (
     <form className="max-w-md mx-auto" onSubmit={onSubmit}>

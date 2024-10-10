@@ -7,19 +7,27 @@ import CreateTask from "./CreateTask";
 import TaskCard from "./TaskCard";
 import TaskSkeleton from "./TaskSkeleton";
 import { useDispatch, useSelector } from "react-redux";
-import { setTasks } from "../../app/Slices/darkMode/searchTasksSlice";
+import {
+  setTasks,
+  updateFilteredTasks,
+} from "../../app/Slices/darkMode/searchTasksSlice";
 
 const TasksList = () => {
   const [taskIdToDelete, setTaskIdToDelete] = useState();
   const [taskToEdit, setTaskToEdit] = useState();
   const { isLoading, data } = useGetTasksQuery();
+  const { filteredTasks, searchKeyword } = useSelector(
+    (state) => state.searchTacks
+  );
   const dispatch = useDispatch();
   useEffect(() => {
     if (!isLoading) {
       dispatch(setTasks(data?.tasks));
+      if (searchKeyword !== "") {
+        dispatch(updateFilteredTasks());
+      }
     }
-  }, [isLoading]);
-  const { filteredTasks } = useSelector((state) => state.searchTacks);
+  }, [isLoading, data]);
   return (
     <div>
       <div className=" mt-10  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3  gap-2 md:gap-4  rounded-md">

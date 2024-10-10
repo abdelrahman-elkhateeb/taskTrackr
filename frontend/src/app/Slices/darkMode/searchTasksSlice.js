@@ -12,10 +12,18 @@ const searchTasksReducer = createSlice({
   reducers: {
     setSearchKeyword: (state, action) => {
       state.searchKeyword = action.payload;
+    },
+    searchTasks: (state, action) => {
+      state.searchKeyword = action.payload;
       state.filteredTasks = state.tasks.filter(
         (task) =>
           task.title.toLowerCase().includes(action.payload.toLowerCase()) ||
           task.description.toLowerCase().includes(action.payload.toLowerCase())
+      );
+    },
+    updateFilteredTasks: (state) => {
+      state.filteredTasks = state.tasks.filter((task) =>
+        task.title.toLowerCase().includes(state.searchKeyword.toLowerCase())
       );
     },
     setTasks: (state, action) => {
@@ -25,6 +33,7 @@ const searchTasksReducer = createSlice({
   },
 });
 
-export const { setSearchKeyword, setTasks } = searchTasksReducer.actions;
+export const { setSearchKeyword, setTasks, updateFilteredTasks,searchTasks } =
+  searchTasksReducer.actions;
 
 export default searchTasksReducer.reducer;
