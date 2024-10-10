@@ -4,5 +4,5 @@
 
 * {
   font-family: "Figtree", sans-serif;
-  @apply transition-colors;
+  @apply transition-colors 
 }
