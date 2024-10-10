@@ -1,15 +1,25 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 import { useGetTasksQuery } from "./tasksApi";
 import AlertModal from "./DeleteTask";
 import UpdateTask from "./UpdateTask";
 import CreateTask from "./CreateTask";
 import TaskCard from "./TaskCard";
 import TaskSkeleton from "./TaskSkeleton";
+import { useDispatch, useSelector } from "react-redux";
+import { setTasks } from "../../app/Slices/darkMode/searchTasksSlice";
 
 const TasksList = () => {
   const [taskIdToDelete, setTaskIdToDelete] = useState();
   const [taskToEdit, setTaskToEdit] = useState();
   const { isLoading, data } = useGetTasksQuery();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!isLoading) {
+      dispatch(setTasks(data?.tasks));
+    }
+  }, [isLoading]);
+  const { filteredTasks } = useSelector((state) => state.searchTacks);
   return (
     <div>
       <div className=" mt-10  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3  gap-2 md:gap-4  rounded-md">
@@ -17,7 +27,7 @@ const TasksList = () => {
           ? Array.from({ length: 8 }, (_, index) => (
               <TaskSkeleton key={index} />
             ))
-          : data?.tasks?.map((task) => (
+          : filteredTasks?.map((task) => (
               <TaskCard
                 key={task._id}
                 id={task._id}
