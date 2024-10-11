@@ -16,16 +16,12 @@ const TasksList = () => {
   const [taskIdToDelete, setTaskIdToDelete] = useState();
   const [taskToEdit, setTaskToEdit] = useState();
   const { isLoading, data } = useGetTasksQuery();
-  const { filteredTasks, searchKeyword } = useSelector(
-    (state) => state.searchTacks
-  );
+  const { filteredTasks } = useSelector((state) => state.searchTacks);
   const dispatch = useDispatch();
   useEffect(() => {
     if (!isLoading) {
       dispatch(setTasks(data?.tasks));
-      if (searchKeyword !== "") {
-        dispatch(updateFilteredTasks());
-      }
+      dispatch(updateFilteredTasks());
     }
   }, [isLoading, data]);
   return (
