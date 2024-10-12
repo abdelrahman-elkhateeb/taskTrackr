@@ -5,6 +5,7 @@ const initialState = {
   tasks: [],
   filteredTasks: [],
   filtrationPriorities: [],
+  filtrationStatus: "",
 };
 
 const searchTasksReducer = createSlice({
@@ -35,8 +36,14 @@ const searchTasksReducer = createSlice({
         const matchesPriority =
           state.filtrationPriorities.length === 0 ||
           state.filtrationPriorities.includes(task.priority);
+        const matchesStatus =
+          state.filtrationStatus === "completed"
+            ? task.completed === true
+            : state.filtrationStatus === "inprogress"
+            ? task.completed === false
+            : true;
 
-        return matchesKeyword && matchesPriority;
+        return matchesKeyword && matchesPriority && matchesStatus;
       });
     },
     setTasks: (state, action) => {
@@ -56,6 +63,14 @@ const searchTasksReducer = createSlice({
         state.filtrationPriorities.push(priority);
       }
     },
+    toggleStatus: (state, action) => {
+      const status = action.payload;
+      if (state.filtrationStatus === status) {
+        state.filtrationStatus = "";
+      } else {
+        state.filtrationStatus = status;
+      }
+    },
   },
 });
 
@@ -66,6 +81,7 @@ export const {
   searchTasks,
   setFiltrationPriorities,
   togglePriority,
+  toggleStatus,
 } = searchTasksReducer.actions;
 
 export default searchTasksReducer.reducer;

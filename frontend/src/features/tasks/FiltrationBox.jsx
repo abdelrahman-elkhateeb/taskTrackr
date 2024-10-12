@@ -2,15 +2,20 @@ import { useDispatch, useSelector } from "react-redux";
 import SearchTasks from "../Ui/SearchTasks";
 import {
   togglePriority,
+  toggleStatus,
   updateFilteredTasks,
 } from "../../app/Slices/darkMode/searchTasksSlice";
 
 const FiltrationBox = () => {
-  const { filtrationPriorities } = useSelector((state) => state.searchTacks);
+  const { filtrationPriorities , filtrationStatus } = useSelector((state) => state.searchTacks);
   const dispatch = useDispatch();
   // handlers
   const onChangePriorities = (value) => {
     dispatch(togglePriority(value));
+    dispatch(updateFilteredTasks());
+  };
+  const onChangeStatus = (value) => {
+    dispatch(toggleStatus(value));
     dispatch(updateFilteredTasks());
   };
   return (
@@ -63,7 +68,12 @@ const FiltrationBox = () => {
               <span className="label-text mr-28 font-black text-lg">
                 Completed
               </span>
-              <input type="checkbox" className="checkbox checkbox-accent" />
+              <input
+                type="checkbox"
+                checked={filtrationStatus.includes("completed")}
+                onChange={() => onChangeStatus("completed")}
+                className="checkbox checkbox-accent"
+              />
             </label>
           </div>
           <div className="form-control">
@@ -71,7 +81,12 @@ const FiltrationBox = () => {
               <span className="label-text  font-black text-lg">
                 In Progress
               </span>
-              <input type="checkbox" className="checkbox checkbox-accent" />
+              <input
+                type="checkbox"
+                checked={filtrationStatus.includes("inprogress")}
+                onChange={() => onChangeStatus("inprogress")}
+                className="checkbox checkbox-accent"
+              />
             </label>
           </div>
         </div>
