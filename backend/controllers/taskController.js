@@ -69,21 +69,23 @@ export const updateTask = async (req, res) => {
 
 export const deleteTask = async (req, res) => {
   const { id } = req.params;
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ success: false, message: "Invalid ID" });
   }
+
   try {
     const deletedTask = await Task.findByIdAndDelete(id);
+    
     if (!deletedTask) {
-      return res
-        .status(404)
-        .json({ success: false, message: "task not found" });
+      return res.status(404).json({ success: false, message: "Task not found" });
     }
-    res
-      .status(200)
-      .json({ success: true, message: "task deleted successfully" });
+
+    await User.findByIdAndUpdate(deletedTask.user, { $pull: { tasks: id } });
+
+    res.status(200).json({ success: true, message: "Task deleted successfully" });
   } catch (err) {
-    console.log("error in deleting task:", err.message);
+    console.log("Error in deleting task:", err.message);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
