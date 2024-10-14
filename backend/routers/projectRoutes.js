@@ -12,11 +12,15 @@ import {
 
 const router = express.Router();
 
+router.post('/create', createProject);
+
+router.get('/user/:userId/projects', getUserProjects);
+
 router.get('/:projectId/members', getProjectMembers);
 
 router.get('/user/:userId/projects', getUserProjects);
 
-router.post('/create', createProject);
+
 
 router.post('/assign-role', assignRole);
 

@@ -3,8 +3,8 @@ import { Project } from "../models/projectModel.js";
 import User from "../models/userModel.js";
 
 export const createProject = async (req, res) => {
-  const { title, description } = req.body;
-  const userId = req.user.id;
+  const { title, description, userId } = req.body;
+  // const userId = req.user.id;
 
   if (!title || !description) {
     return res.status(400).json({ success: false, message: "Please fill in all fields" });
@@ -39,8 +39,8 @@ export const createProject = async (req, res) => {
 };
 
 export const assignRole = async (req, res) => {
-  const { projectId, userEmail, role } = req.body;
-  const userId = req.user.id; 
+  const { projectId, userEmail, role, userId } = req.body;
+  // const userId = req.user.id; 
 
   if (!projectId || !userEmail || !role) {
     return res.status(400).json({ success: false, message: "Please fill in all fields" });
@@ -260,7 +260,7 @@ export const getUserProjects = async (req, res) => {
       "name email"
     );
 
-    res.status(200).json({ success: true, projects });
+    res.status(200).json({ projects });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
