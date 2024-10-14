@@ -195,7 +195,6 @@ const ProjectDetails = () => {
         <ChatSection
           messages={messages}
           setMessages={setMessages}
-          darkMode={darkMode}
         />
       )}
 

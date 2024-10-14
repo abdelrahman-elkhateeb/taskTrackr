@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { SendHorizontal } from "lucide-react";
+import { useSelector } from "react-redux";
 
-const ChatSection = ({ messages, setMessages, darkMode }) => {
+const ChatSection = ({ messages, setMessages }) => {
   const [message, setMessage] = useState("");
-
+  const darkMode = useSelector((state) => state.darkMode.darkMode);
   const handleSendMessage = () => {
     if (message.trim()) {
       setMessages((prevMessages) => [
@@ -22,11 +23,12 @@ const ChatSection = ({ messages, setMessages, darkMode }) => {
 
   return (
     <div
-      className={`p-4 shadow rounded-3xl container border-2 h-screen flex flex-col ${
+      className={`p-4 shadow rounded-3xl container h-screen flex flex-col border-2 ${
         darkMode ? "border-dark-primary" : "border-light-primary"
       }`}
     >
       <h2 className="text-xl font-bold mb-4">Project Chat</h2>
+      
       {/* Chat messages */}
       <div className="flex-grow overflow-y-auto space-y-4 custom-scrollbar">
         {messages.map((msg, index) => (
