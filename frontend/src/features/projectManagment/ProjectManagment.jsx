@@ -30,25 +30,25 @@ function ProjectManagement() {
   };
 
   const handleProjectDeleted = (projectId) => {
-    setProjects(projects.filter((project) => project._id !== projectId)); // Use _id for filtering
+    setProjects(projects.filter((project) => project._id !== projectId)); 
   };
 
   useEffect(() => {
     fetchUserProjects();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
   return (
     <section className="container mx-auto px-4">
       <h1 className="text-xl font-bold mb-4">Project Management</h1>
       <CreateProject onProjectCreated={fetchUserProjects} />{" "}
-      {/* Pass fetchUserProjects as a prop */}
       {projects.length === 0 ? (
         <p>No projects available.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {projects.map((project) => (
             <ProjectCard
-              key={project._id} // Changed id to _id for unique key
+              key={project._id} 
               project={project}
               onProjectDeleted={handleProjectDeleted}
             />

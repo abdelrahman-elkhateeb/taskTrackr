@@ -1,4 +1,4 @@
-// ChatSection.jsx
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { SendHorizontal } from "lucide-react";
 

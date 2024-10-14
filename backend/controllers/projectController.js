@@ -91,11 +91,16 @@ export const assignRole = async (req, res) => {
 };
 
 export const updateRole = async (req, res) => {
-  const { projectId, userEmail, newRole } = req.body;
-  const userId = req.user.id; 
+  const { projectId, userEmail, userId } = req.body;
+  const newRole = req.body.newRole.newRole;
 
   if (!projectId || !userEmail || !newRole) {
     return res.status(400).json({ success: false, message: "Please fill all fields" });
+  }
+
+  // Ensure newRole is a string
+  if (typeof newRole !== 'string') {
+    return res.status(400).json({ success: false, message: "Role must be a string" });
   }
 
   const normalizedRole = newRole.toLowerCase();
@@ -142,6 +147,7 @@ export const updateRole = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 export const removeMember = async (req, res) => {
   const { projectId, userEmail, userId } = req.body;
@@ -326,8 +332,6 @@ export const addMissionToProject = async (req, res) => {
   }
 };
 
-
-
 export const getProjectById = async (req, res) => {
   const { projectId } = req.params; 
 
@@ -347,3 +351,5 @@ export const getProjectById = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+
