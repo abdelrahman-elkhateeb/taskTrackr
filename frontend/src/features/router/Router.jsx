@@ -7,7 +7,7 @@ import Error from "../Ui/Error";
 import Tasks from "../tasks/Tasks";
 import Profile from "../profile/Profile";
 import ProjectManagement from "../projectManagment/ProjectManagment";
-import CreateProject from "../projectManagment/CreateProject";
+import ProjectDetails from "../projectManagment/ProjectDetails";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
       { path: "/tasks", element: <Tasks /> },
       { path: "/profile", element: <Profile /> },
       { path: "/projectManagement", element: <ProjectManagement /> },
-      { path: "/projectManagment/createProject", element: <CreateProject />}
+      { path: "/projects/:id", element: <ProjectDetails />} ,
     ],
   },
 ]);

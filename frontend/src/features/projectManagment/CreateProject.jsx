@@ -1,73 +1,154 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate instead of useHistory
-import axios from 'axios';
-import Cookies from 'js-cookie';
+/* eslint-disable react/prop-types */
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
 
-const CreateProject = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate(); // Use useNavigate hook
+const CreateProject = ({ onProjectCreated }) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
+  const darkMode = useSelector((state) => state.darkMode.darkMode);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userId = Cookies.get('userId'); // Assuming you have the userId in cookies
+    const userId = Cookies.get("userId");
 
-    // Validate form fields
     if (!title || !description) {
-      setError('Title and description are required.');
+      setError("Title and description are required.");
       return;
     }
 
     try {
       // Create a new project
-      const response = await axios.post('http://localhost:5000/api/Projects/create', {
-        title,
-        description,
-        userId,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/Projects/create",
+        {
+          title,
+          description,
+          userId,
+        }
+      );
 
       if (response.status === 201) {
-        navigate('/projectManagement'); 
+        setSuccess("Project created successfully!");
+        setError("");
+
+        onProjectCreated();
+
+        setTimeout(() => {
+          navigate("/projectManagement");
+          document.getElementById("my_modal_2").close();
+        }, 1000);
       }
     } catch (err) {
-      console.error("Error creating project:", err);
-      setError('Failed to create project. Please try again.');
+      if (axios.isAxiosError(err) && err.response) {
+        if (err.response.status === 409) {
+          setError(
+            "Conflict: The title is already in use. Please choose a different title."
+          );
+        } else {
+          setError("Failed to create project. Please try again.");
+        }
+      } else {
+        setError("An unexpected error occurred. Please try again.");
+      }
+
+      setSuccess("");
     }
   };
 
   return (
-    <div className="container mx-auto px-4">
-      <h1 className="text-xl font-bold mb-4">Create New Project</h1>
-      {error && <p className="text-red-500">{error}</p>}
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-4">
-        <div className="mb-4">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title</label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            required
-          />
+    <>
+      <button
+        className={`btn rounded-lg mb-4 ${
+          darkMode
+            ? "bg-dark-primary text-light-primary hover:bg-dark-pHover border-dark-primary hover:border-dark-pHover"
+            : "bg-light-primary text-light-bg hover:bg-light-pHover border-light-primary hover:border-light-pHover"
+        }`}
+        onClick={() => document.getElementById("my_modal_2").showModal()}
+      >
+        Create Project
+      </button>
+
+      <dialog id="my_modal_2" className="modal">
+        <div
+          className={`modal-box ${
+            darkMode
+              ? "bg-dark-bg text-dark-primary"
+              : "bg-light-bg text-light-primary"
+          }`}
+        >
+          <h3 className="font-bold text-lg">Create Project</h3>
+          {error && <p className="text-red-500">{error}</p>}
+          {success && <p className="text-green-500">{success}</p>}
+          <form onSubmit={handleSubmit} className="py-4">
+            <div className="mb-4">
+              <label htmlFor="title" className="block text-sm font-medium mb-2">
+                Title
+              </label>
+              <input
+                type="text"
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className={`input w-full ${
+                  darkMode
+                    ? "bg-dark-bg text-dark-pHover border-dark-primary"
+                    : "bg-light-bg text-light-pHover border-light-primary"
+                }`}
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium mb-2"
+              >
+                Description
+              </label>
+              <textarea
+                id="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className={`input w-full ${
+                  darkMode
+                    ? "bg-dark-bg text-dark-pHover border-dark-primary"
+                    : "bg-light-bg text-light-pHover border-light-primary"
+                }`}
+                required
+              />
+            </div>
+            <div className="modal-action">
+              <button
+                type="submit"
+                className={`btn ${
+                  darkMode
+                    ? "bg-dark-primary text-dark-bg hover:bg-dark-bg hover:border-dark-primary hover:text-dark-primary"
+                    : "bg-light-primary text-light-bg hover:bg-light-bg border-light-primary hover:border-light-primary hover:text-light-primary"
+                }`}
+              >
+                Create Project
+              </button>
+              <button
+                type="button"
+                onClick={() => document.getElementById("my_modal_2").close()}
+                className={`btn ${
+                  darkMode
+                    ? "bg-dark-bg text-dark-primary hover:bg-dark-primary border-dark-primary hover:border-dark-primary hover:text-dark-bg"
+                    : "bg-light-bg text-light-primary hover:bg-light-primary border-light-primary hover:border-light-primary hover:text-light-bg"
+                }`}
+              >
+                Close
+              </button>
+            </div>
+          </form>
         </div>
-        <div className="mb-4">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            rows="4"
-            required
-          />
-        </div>
-        <button type="submit" className="bg-blue-500 text-white font-bold py-2 px-4 rounded">
-          Create Project
-        </button>
-      </form>
-    </div>
+      </dialog>
+    </>
   );
 };
 

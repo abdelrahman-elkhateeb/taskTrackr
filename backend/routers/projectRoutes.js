@@ -30,6 +30,6 @@ router.put('/update-role', updateRole);
 
 router.delete('/remove-member', removeMember);
 
-router.delete('/:projectId', deleteProject);
+router.delete('/:projectId/:userId', deleteProject);
 
 export default router;
