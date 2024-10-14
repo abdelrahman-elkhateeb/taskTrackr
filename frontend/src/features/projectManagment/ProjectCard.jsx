@@ -1,16 +1,16 @@
-// ProjectCard.jsx
+/* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Settings, Trash2 } from "lucide-react";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom"; 
 
 const ProjectCard = ({ project, onProjectDeleted }) => {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalRef = useRef(null);
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate(); 
 
   const handleDelete = async () => {
     const userId = Cookies.get("userId");
@@ -48,9 +48,8 @@ const ProjectCard = ({ project, onProjectDeleted }) => {
     };
   }, [isModalOpen]);
 
-  // Function to handle navigation to project details
   const handleNavigate = () => {
-    navigate(`/projects/${project._id}`); // Navigate to project details page
+    navigate(`/projects/${project._id}`);
   };
 
   return (
@@ -87,7 +86,7 @@ const ProjectCard = ({ project, onProjectDeleted }) => {
             className={`cursor-pointer ${
               darkMode ? "text-dark-primary" : "text-light-primary"
             } mr-2`}
-            onClick={handleNavigate} // Navigate on click
+            onClick={handleNavigate} 
           />
           <Trash2
             className={`text-red-500 cursor-pointer`}

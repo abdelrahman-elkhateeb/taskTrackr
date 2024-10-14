@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import ProjectCard from "./ProjectCard";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+// import { useSelector } from "react-redux";
+// import { useNavigate } from "react-router";
 import CreateProject from "./CreateProject";
 
 function ProjectManagement() {
   const [projects, setProjects] = useState([]);
-  const darkMode = useSelector((state) => state.darkMode.darkMode);
-  const navigate = useNavigate();
+  // const darkMode = useSelector((state) => state.darkMode.darkMode);
+  // const navigate = useNavigate();
   const userId = Cookies.get("userId");
 
   const fetchUserProjects = async () => {

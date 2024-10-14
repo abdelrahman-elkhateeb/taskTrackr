@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Project } from "../models/projectModel.js";
+import { Project, Mission } from "../models/projectModel.js";
 import User from "../models/userModel.js";
 
 export const createProject = async (req, res) => {
@@ -144,8 +144,7 @@ export const updateRole = async (req, res) => {
 };
 
 export const removeMember = async (req, res) => {
-  const { projectId, userEmail } = req.body;
-  const userId = req.user.id; 
+  const { projectId, userEmail, userId } = req.body;
 
   if (!projectId || !userEmail) {
     return res.status(400).json({ success: false, message: "Please fill in all fields" });
@@ -266,15 +265,17 @@ export const getUserProjects = async (req, res) => {
   }
 };
 
+
 export const addMissionToProject = async (req, res) => {
-  const { projectId, title, description, userId } = req.body; // userId should still come from the request body
+  const { projectId, title, description, userId, creatorId } = req.body; 
   
-  if (!projectId || !title || !description || !userId) {
+  // Validate input
+  if (!projectId || !title || !description || !userId || !creatorId) {
     return res.status(400).json({ success: false, message: "Please fill in all fields" });
   }
 
-  if (!mongoose.Types.ObjectId.isValid(projectId) || !mongoose.Types.ObjectId.isValid(userId)) {
-    return res.status(400).json({ success: false, message: "Invalid project ID or user ID format" });
+  if (!mongoose.Types.ObjectId.isValid(projectId) || !mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(creatorId)) {
+    return res.status(400).json({ success: false, message: "Invalid project ID, user ID, or creator ID format" });
   }
 
   try {
@@ -283,19 +284,65 @@ export const addMissionToProject = async (req, res) => {
       return res.status(404).json({ success: false, message: "Project not found" });
     }
 
-    const member = project.members.find(member => member.user.toString() === userId);
-    if (!member) {
+    const titleExists = project.missions.some(mission => mission.title === title);
+    if (titleExists) {
+      return res.status(400).json({ success: false, message: "A mission with this title already exists in the project" });
+    }
+
+    const userMember = project.members.find(member => member.user.toString() === userId);
+    if (!userMember) {
       return res.status(403).json({ success: false, message: "User is not a member of this project" });
     }
 
-    if (!["owner", "manager"].includes(member.role)) {
-      return res.status(403).json({ success: false, message: "You do not have permission to add a mission" });
+    const creatorMember = project.members.find(member => member.user.toString() === creatorId);
+    if (!creatorMember) {
+      return res.status(403).json({ success: false, message: "Creator is not a member of this project" });
     }
 
-    project.missions.push({ title, description, completedBy: userId });
+    if (!["owner", "manager"].includes(creatorMember.role)) {
+      return res.status(403).json({ success: false, message: "Creator does not have permission to add a mission" });
+    }
+
+    if (!["owner", "manager", "contributor"].includes(userMember.role)) {
+      return res.status(403).json({ success: false, message: "User does not have permission to add a mission" });
+    }
+
+    const newMission = new Mission({
+      title,
+      description,
+      completedBy: userId,
+      createdBy: creatorId,
+    });
+
+    project.missions.push(newMission);
+
     await project.save();
 
+    await newMission.save();
+
     res.status(201).json({ success: true, message: "Mission added successfully", project });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
+
+export const getProjectById = async (req, res) => {
+  const { projectId } = req.params; 
+
+  if (!mongoose.Types.ObjectId.isValid(projectId)) {
+    return res.status(400).json({ success: false, message: "Invalid project ID format" });
+  }
+
+  try {
+    const project = await Project.findById(projectId).populate("members.user", "name email");
+
+    if (!project) {
+      return res.status(404).json({ success: false, message: "Project not found" });
+    }
+
+    res.status(200).json({ success: true, project });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
