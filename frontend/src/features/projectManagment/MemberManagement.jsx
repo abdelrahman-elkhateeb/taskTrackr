@@ -21,7 +21,18 @@ const MemberManagement = ({
   auth,
 }) => {
   return (
-    <>
+    <div
+      className={`p-4 ${
+        darkMode ? "bg-dark-background" : "bg-light-background"
+      } rounded-lg shadow-md`}
+    >
+      <h2
+        className={`mt-4 text-2xl font-bold ${
+          darkMode ? "text-dark-primary" : "text-light-primary"
+        }`}
+      >
+        Members:
+      </h2>
       {auth && (
         <button
           className={`btn rounded-lg my-4 ${
@@ -56,7 +67,7 @@ const MemberManagement = ({
         isEditModalOpen={isEditModalOpen}
         auth={auth}
       />
-    </>
+    </div>
   );
 };
 

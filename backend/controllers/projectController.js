@@ -359,7 +359,7 @@ export const addMissionToProject = async (req, res) => {
 
 export const updateMissionState = async (req, res) => {
   const { projectId, missionId, newState, userId } = req.body;
-
+  
   if (!projectId || !missionId || !newState || !userId) {
     return res.status(400).json({ success: false, message: "Please provide all required fields" });
   }
@@ -384,9 +384,9 @@ export const updateMissionState = async (req, res) => {
       return res.status(403).json({ success: false, message: "User does not have permission to update this mission" });
     }
 
-    mission.state = newState;
+    mission.status = newState;
 
-    await project.save();
+    await project.save();    
 
     res.status(200).json({ success: true, message: "Mission state updated successfully", mission });
   } catch (error) {
@@ -414,22 +414,22 @@ export const getAllMissions = async (req, res) => {
 };
 
 export const getUserMissions = async (req, res) => {
-  const { projectId, userId } = req.params;
+  const { userId } = req.params;
 
-  // Validate input
-  if (!mongoose.Types.ObjectId.isValid(projectId) || !mongoose.Types.ObjectId.isValid(userId)) {
-    return res.status(400).json({ success: false, message: "Invalid project ID or user ID format" });
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ success: false, message: "Invalid user ID format" });
   }
 
   try {
-    // Find the project by ID
-    const project = await Project.findById(projectId);
-    if (!project) {
-      return res.status(404).json({ success: false, message: "Project not found" });
-    }
+    const projects = await Project.find({});
 
-    // Filter missions assigned to the specified user
-    const userMissions = project.missions.filter(mission => mission.completedBy.toString() === userId);
+    const userMissions = projects.flatMap(project => 
+      project.missions.filter(mission => mission.completedBy.toString() === userId)
+    );
+
+    if (userMissions.length === 0) {
+      return res.status(404).json({ success: false, message: "No missions found for this user" });
+    }
 
     res.status(200).json({ success: true, missions: userMissions });
   } catch (error) {

@@ -1,20 +1,50 @@
+import { useSelector } from "react-redux";
+
 /* eslint-disable react/prop-types */
-
 const ConfirmationModal = ({ isOpen, onClose, onConfirm, missionTitle }) => {
-  if (!isOpen) return null;
+    const darkMode = useSelector((state) => state.darkMode.darkMode);
+    if (!isOpen) return null;
+    
 
-  return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded shadow-md">
-        <h2 className="text-lg font-bold">Delete Mission</h2>
-        <p>Are you sure you want to delete the mission &quot;{missionTitle}&quot;?</p>
-        <div className="flex justify-end mt-4">
-          <button className="btn btn-secondary mr-2" onClick={onClose}>Cancel</button>
-          <button className="btn btn-danger" onClick={onConfirm}>Delete</button>
+    return (
+      <dialog className={`modal ${isOpen ? 'open' : ''}`} open>
+        <div
+          className={`modal-box ${
+            darkMode
+              ? "bg-dark-bg text-dark-primary"
+              : "bg-light-bg text-light-primary"
+          }`}
+        >
+          <h3 className="font-bold text-lg">
+            Are you sure you want to delete the mission &quot;{missionTitle}&quot;?
+          </h3>
+          <p className="py-4">This action cannot be undone.</p>
+          <div className="flex justify-end">
+            <button
+              onClick={onConfirm}
+              className={`btn mr-4 ${
+                darkMode
+                  ? "bg-dark-bg text-dark-primary border-dark-primary hover:bg-dark-primary hover:text-dark-bg hover:border-dark-primary"
+                  : "bg-light-bg text-light-primary border-light-primary hover:bg-light-primary hover:text-light-bg hover:border-light-primary"
+              }`}
+            >
+              Delete
+            </button>
+            <button
+              onClick={onClose}
+              className={`btn ${
+                darkMode
+                  ? "bg-dark-primary text-dark-bg border-dark-primary hover:bg-dark-bg hover:text-dark-primary hover:border-dark-primary"
+                  : "bg-light-primary text-light-bg border-light-primary hover:bg-light-bg hover:text-light-primary hover:border-light-primary"
+              }`}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
-      </div>
-    </div>
-  );
-};
-
-export default ConfirmationModal;
+      </dialog>
+    );
+  };
+  
+  export default ConfirmationModal;
+  

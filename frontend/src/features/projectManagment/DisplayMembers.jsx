@@ -63,23 +63,16 @@ const DisplayMembers = ({
 
   return (
     <>
-      <h2
-        className={`mt-2 text-2xl underline ${
-          darkMode ? "text-dark-primary" : "text-light-primary"
-        }`}
-      >
-        Members:
-      </h2>
       <ul className="w-full">
         {loading ? (
-          <li>Loading members...</li>
+          <li className="p-4 text-center">Loading members...</li>
         ) : members.length === 0 ? (
-          <li>No members to display.</li>
+          <li className="p-4 text-center">No members to display.</li>
         ) : (
           members.map((member) => (
             <li
               key={member._id}
-              className={`p-4 my-3 flex flex-row justify-between border-2 rounded-xl ${
+              className={`p-4 my-3 flex flex-row justify-between border-2 rounded-xl transition-transform transform hover:scale-105 ${
                 darkMode
                   ? "text-dark-primary border-dark-primary"
                   : "text-light-primary border-light-primary"

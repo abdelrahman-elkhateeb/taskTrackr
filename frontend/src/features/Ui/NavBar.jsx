@@ -128,12 +128,12 @@ function NavBar() {
                 setSidebarOpen(false);
               }}
             >
-              project management
+              Project Management
             </Link>
           </li>
           <Link
             to="/tasks"
-            className={`cursor-pointer relative ${
+            className={`cursor-pointer relative after ${
               darkMode ? "text-dark-primary" : "text-light-primary"
             }`}
             onClick={() => {
@@ -141,6 +141,17 @@ function NavBar() {
             }}
           >
             Tasks
+          </Link>
+          <Link
+            to="/myMissions"
+            className={`cursor-pointer relative after ${
+              darkMode ? "text-dark-primary" : "text-light-primary"
+            }`}
+            onClick={() => {
+              setSidebarOpen(false);
+            }}
+          >
+            Missions
           </Link>
           {!isLoggedIn ? (
             <Link
@@ -183,7 +194,7 @@ function NavBar() {
               darkMode ? "text-dark-primary" : "text-light-primary"
             }`}
           >
-            project management
+            Project Management
           </li>
         </Link>
 
@@ -195,6 +206,17 @@ function NavBar() {
             }`}
           >
             Tasks
+          </Link>
+        </li>
+
+        <li>
+          <Link
+            to="/myMissions"
+            className={`cursor-pointer ${
+              darkMode ? "text-dark-primary" : "text-light-primary"
+            }`}
+          >
+            Missions
           </Link>
         </li>
         {isLoggedIn ? (

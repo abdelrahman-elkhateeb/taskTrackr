@@ -8,7 +8,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import Tabs from "./Tabs";
 
-const DetailsSection = ({ project }) => {
+const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
   const [activeTab, setActiveTab] = useState("members");
   const [members, setMembers] = useState(project.members);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -171,7 +171,7 @@ const DetailsSection = ({ project }) => {
         />
       )}
 
-      {activeTab === "missions" && <DisplayMissions missions={project.missions} setReload={setReload} reload={reload} />}
+      {activeTab === "missions" && <DisplayMissions missions={project.missions} reloadMission={reloadMission} setReloadMission={setReloadMission} />}
     </div>
   );
 };

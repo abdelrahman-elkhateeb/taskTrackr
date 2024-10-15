@@ -9,6 +9,7 @@ import './project.css';
 const ProjectDetails = () => {
   const { id } = useParams();
   const [project, setProject] = useState(null);
+  const [reloadMission, setReloadMission] = useState(null);
   const [messages, setMessages] = useState([
     {
       text: "Welcome to the project chat!",
@@ -135,7 +136,7 @@ const ProjectDetails = () => {
     };
 
     fetchProjectDetails();
-  }, [id]);
+  }, [id, reloadMission]);
 
   if (!project) {
     return <div>Loading...</div>;
@@ -199,7 +200,7 @@ const ProjectDetails = () => {
       )}
 
       {activeTab === "details" && (
-        <DetailsSection project={project}/>
+        <DetailsSection project={project} reloadMission={reloadMission} setReloadMission={setReloadMission} />
       )}
     </div>
   );

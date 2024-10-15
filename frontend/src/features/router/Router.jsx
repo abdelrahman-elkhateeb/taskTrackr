@@ -8,6 +8,7 @@ import Tasks from "../tasks/Tasks";
 import Profile from "../profile/Profile";
 import ProjectManagement from "../projectManagment/ProjectManagment";
 import ProjectDetails from "../projectManagment/ProjectDetails";
+import Missions from "../missions/Missions";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
       { path: "/profile", element: <Profile /> },
       { path: "/projectManagement", element: <ProjectManagement /> },
       { path: "/projects/:id", element: <ProjectDetails />} ,
+      { path: "/myMissions", element: <Missions />} ,
     ],
   },
 ]);

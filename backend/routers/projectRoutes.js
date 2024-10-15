@@ -35,11 +35,11 @@ router.delete('/remove-member', removeMember);                     // ✅
 
 router.post('/addMission', addMissionToProject);                   // ✅
 
-router.put('/updateMissionState', updateMissionState);
+router.put('/updateMissionState', updateMissionState);             // ✅
 
 // router.get('/allMissions/:projectId', getAllMissions);
 
-// router.get('/userMissions/:projectId/:userId', getUserMissions);
+router.get('/userMissions/:userId', getUserMissions);
 
 router.delete('/del-mission', deleteMissionFromProject);           // ✅ 
 
