@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import CreateProject from "./CreateProject";
 import { motion } from "framer-motion";
 
-
 function ProjectManagement() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -37,7 +36,7 @@ function ProjectManagement() {
 
   useEffect(() => {
     fetchUserProjects();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
   return (
@@ -45,10 +44,10 @@ function ProjectManagement() {
       <h1 className={`text-xl font-bold mb-4 ${darkMode ? "text-dark-primary" : "text-light-primary"}`}>
         Project Management
       </h1>
-      <CreateProject onProjectCreated={fetchUserProjects} />{" "}
+      <CreateProject onProjectCreated={fetchUserProjects} />
       {loading ? (
         <div className="flex justify-center items-center">
-          <div className="loader">   </div> {/* You can style this loader as needed */}
+          <span className="loading loading-ball loading-lg"></span> {/* Added your loader here */}
         </div>
       ) : projects.length === 0 ? (
         <p>No projects available.</p>

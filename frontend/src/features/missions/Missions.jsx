@@ -3,21 +3,26 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { motion } from "framer-motion";
+import { Spinner } from "reactstrap"; // Import a spinner component from a library
 
 const Missions = () => {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
   const [missions, setMissions] = useState([]);
+  const [loading, setLoading] = useState(true); // State to manage loading status
   const creatorId = Cookies.get("userId");
 
   useEffect(() => {
     const fetchMissions = async () => {
       try {
+        setLoading(true); // Set loading to true when starting to fetch
         const response = await axios.get(
           `http://localhost:5000/api/Projects/userMissions/${creatorId}`
         );
         setMissions(response.data.missions || []);
       } catch (error) {
         console.error("Error fetching missions:", error);
+      } finally {
+        setLoading(false); // Set loading to false after fetching is done
       }
     };
 
@@ -70,9 +75,9 @@ const Missions = () => {
 
   return (
     <motion.div
-    initial={{ opacity: 0, scale: 0.9 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 0.8 }}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.8 }}
       className={`p-4 container ${
         darkMode ? "bg-dark-background" : "bg-light-background"
       } rounded-lg shadow-md`}
@@ -89,7 +94,11 @@ const Missions = () => {
           darkMode ? "text-dark-primary" : "text-light-primary"
         }`}
       >
-        {missions.length === 0 ? (
+        {loading ? ( // Check if loading is true
+          <li className="p-4 text-center">
+            <span className="loading loading-ball loading-lg"></span>
+          </li>
+        ) : missions.length === 0 ? (
           <li className="p-4 text-center">No missions to display.</li>
         ) : (
           missions.map((mission) => (
@@ -118,7 +127,7 @@ const Missions = () => {
                     Created At:{" "}
                     {new Date(mission.createdAt).toLocaleDateString()}
                   </span>
-                  {mission.status != "completed" ? (
+                  {mission.status !== "completed" ? (
                     <button
                       className={`py-2 px-2 rounded-lg cursor-pointer ${
                         darkMode
@@ -128,7 +137,7 @@ const Missions = () => {
                       onClick={() =>
                         handleStatusChange(mission._id, mission.status)
                       }
-                      disabled={mission.status == "completed"} // Disable if already completed
+                      disabled={mission.status === "completed"} // Disable if already completed
                     >
                       {mission.status === "completed"
                         ? "Completed"
