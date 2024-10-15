@@ -8,7 +8,11 @@ import {
   deleteProject,
   getUserProjects,
   addMissionToProject,
-  getProjectById
+  getProjectById,
+  updateMissionState,
+  getAllMissions,
+  getUserMissions,
+  deleteMissionFromProject,
 } from '../controllers/projectController.js';
 
 const router = express.Router();
@@ -29,6 +33,15 @@ router.put('/update-role', updateRole);                            // ✅
 
 router.delete('/remove-member', removeMember);                     // ✅
 
-router.post('/addMission', addMissionToProject);
+router.post('/addMission', addMissionToProject);                   // ✅
+
+router.put('/updateMissionState', updateMissionState);
+
+// router.get('/allMissions/:projectId', getAllMissions);
+
+// router.get('/userMissions/:projectId/:userId', getUserMissions);
+
+router.delete('/del-mission', deleteMissionFromProject);           // ✅ 
+
 
 export default router;

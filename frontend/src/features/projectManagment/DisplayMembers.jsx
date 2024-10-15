@@ -122,16 +122,20 @@ const DisplayMembers = ({
             <div className="flex justify-end">
               <button
                 onClick={handleDelete}
-                className={`btn mr-2 ${
-                  darkMode ? "bg-dark-bg" : "bg-light-bg"
+                className={`btn mr-4 ${
+                  darkMode
+                    ? "bg-dark-bg text-dark-primary border-dark-primary hover:bg-dark-primary hover:text-dark-bg hover:border-dark-primary"
+                    : "bg-light-bg text-light-primary border-light-primary hover:bg-light-primary hover:text-light-bg hover:border-light-primary"
                 }`}
               >
                 Delete
               </button>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className={`btn ${
-                  darkMode ? "bg-dark-primary" : "bg-light-primary"
+                className={`btn ${loading ? "loading" : ""} ${
+                  darkMode
+                    ? "bg-dark-primary text-dark-bg border-dark-primary hover:bg-dark-bg hover:text-dark-primary hover:border-dark-primary"
+                    : "bg-light-primary text-light-bg border-light-primary hover:bg-light-bg hover:text-light-primary hover:border-light-primary"
                 }`}
               >
                 Cancel

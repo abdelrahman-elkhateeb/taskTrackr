@@ -55,7 +55,11 @@ const EditMemberModal = ({ isOpen, member, onClose, onUpdateRole }) => {
               id="role"
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="select w-full"
+              className={`select w-full ${
+                darkMode
+                  ? "bg-dark-bg text-dark-primary border-dark-primary "
+                  : "bg-light-bg text-light-primary border-light-primary "
+              }`}
             >
               <option value="manager">Manager</option>
               <option value="contributor">Contributor</option>
@@ -66,13 +70,21 @@ const EditMemberModal = ({ isOpen, member, onClose, onUpdateRole }) => {
         <div className="flex justify-end">
           <button
             onClick={handleSave}
-            className={`btn mr-2 ${darkMode ? "bg-dark-bg" : "bg-light-bg"}`}
+            className={`btn mr-4  ${
+              darkMode
+                ? "bg-dark-primary text-dark-bg border-dark-primary hover:bg-dark-bg hover:text-dark-primary hover:border-dark-primary"
+                : "bg-light-primary text-light-bg border-light-primary hover:bg-light-bg hover:text-light-primary hover:border-light-primary"
+            }`}
           >
             Save
           </button>
           <button
             onClick={onClose}
-            className={`btn ${darkMode ? "bg-dark-primary" : "bg-light-primary"}`}
+            className={`btn ${
+              darkMode
+                ? "bg-dark-bg text-dark-primary border-dark-primary hover:bg-dark-primary hover:text-dark-bg hover:border-dark-primary"
+                : "bg-light-bg text-light-primary border-light-primary hover:bg-light-primary hover:text-light-bg hover:border-light-primary"
+            }`}
           >
             Cancel
           </button>

@@ -271,17 +271,35 @@ export const getUserProjects = async (req, res) => {
   }
 };
 
+export const getProjectById = async (req, res) => {
+  const { projectId } = req.params; 
+
+  if (!mongoose.Types.ObjectId.isValid(projectId)) {
+    return res.status(400).json({ success: false, message: "Invalid project ID format" });
+  }
+
+  try {
+    const project = await Project.findById(projectId).populate("members.user", "name email");
+
+    if (!project) {
+      return res.status(404).json({ success: false, message: "Project not found" });
+    }
+
+    res.status(200).json({ success: true, project });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 
 export const addMissionToProject = async (req, res) => {
-  const { projectId, title, description, userId, creatorId } = req.body; 
-  
-  // Validate input
-  if (!projectId || !title || !description || !userId || !creatorId) {
+  const { projectId, title, description, userEmail, creatorId } = req.body;
+
+  if (!projectId || !title || !description || !userEmail || !creatorId) {
     return res.status(400).json({ success: false, message: "Please fill in all fields" });
   }
 
-  if (!mongoose.Types.ObjectId.isValid(projectId) || !mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(creatorId)) {
-    return res.status(400).json({ success: false, message: "Invalid project ID, user ID, or creator ID format" });
+  if (!mongoose.Types.ObjectId.isValid(projectId) || !mongoose.Types.ObjectId.isValid(creatorId)) {
+    return res.status(400).json({ success: false, message: "Invalid project ID or creator ID format" });
   }
 
   try {
@@ -290,12 +308,20 @@ export const addMissionToProject = async (req, res) => {
       return res.status(404).json({ success: false, message: "Project not found" });
     }
 
+    // Find the user by their email
+    const user = await User.findOne({ email: userEmail });
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    const userId = user._id; // Get the user ID from the found user
+
     const titleExists = project.missions.some(mission => mission.title === title);
     if (titleExists) {
       return res.status(400).json({ success: false, message: "A mission with this title already exists in the project" });
     }
 
-    const userMember = project.members.find(member => member.user.toString() === userId);
+    const userMember = project.members.find(member => member.user.toString() === userId.toString());
     if (!userMember) {
       return res.status(403).json({ success: false, message: "User is not a member of this project" });
     }
@@ -323,7 +349,6 @@ export const addMissionToProject = async (req, res) => {
     project.missions.push(newMission);
 
     await project.save();
-
     await newMission.save();
 
     res.status(201).json({ success: true, message: "Mission added successfully", project });
@@ -332,24 +357,120 @@ export const addMissionToProject = async (req, res) => {
   }
 };
 
-export const getProjectById = async (req, res) => {
-  const { projectId } = req.params; 
+export const updateMissionState = async (req, res) => {
+  const { projectId, missionId, newState, userId } = req.body;
+
+  if (!projectId || !missionId || !newState || !userId) {
+    return res.status(400).json({ success: false, message: "Please provide all required fields" });
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(projectId) || !mongoose.Types.ObjectId.isValid(missionId) || !mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ success: false, message: "Invalid project ID, mission ID, or user ID format" });
+  }
+
+  try {
+    const project = await Project.findById(projectId);
+    if (!project) {
+      return res.status(404).json({ success: false, message: "Project not found" });
+    }
+
+    const mission = project.missions.id(missionId);
+    if (!mission) {
+      return res.status(404).json({ success: false, message: "Mission not found" });
+    }
+
+    const userMember = project.members.find(member => member.user.toString() === userId);
+    if (!userMember || !["owner", "manager", "contributor"].includes(userMember.role)) {
+      return res.status(403).json({ success: false, message: "User does not have permission to update this mission" });
+    }
+
+    mission.state = newState;
+
+    await project.save();
+
+    res.status(200).json({ success: true, message: "Mission state updated successfully", mission });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const getAllMissions = async (req, res) => {
+  const { projectId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(projectId)) {
     return res.status(400).json({ success: false, message: "Invalid project ID format" });
   }
 
   try {
-    const project = await Project.findById(projectId).populate("members.user", "name email");
-
+    const project = await Project.findById(projectId).populate('missions');
     if (!project) {
       return res.status(404).json({ success: false, message: "Project not found" });
     }
 
-    res.status(200).json({ success: true, project });
+    res.status(200).json({ success: true, missions: project.missions });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };
 
+export const getUserMissions = async (req, res) => {
+  const { projectId, userId } = req.params;
 
+  // Validate input
+  if (!mongoose.Types.ObjectId.isValid(projectId) || !mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ success: false, message: "Invalid project ID or user ID format" });
+  }
+
+  try {
+    // Find the project by ID
+    const project = await Project.findById(projectId);
+    if (!project) {
+      return res.status(404).json({ success: false, message: "Project not found" });
+    }
+
+    // Filter missions assigned to the specified user
+    const userMissions = project.missions.filter(mission => mission.completedBy.toString() === userId);
+
+    res.status(200).json({ success: true, missions: userMissions });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const deleteMissionFromProject = async (req, res) => {
+  const { projectId, missionId, userId } = req.body; 
+
+  if (!projectId || !missionId || !userId) {
+    return res.status(400).json({ success: false, message: "Please provide project ID, mission ID, and user ID" });
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(projectId) || !mongoose.Types.ObjectId.isValid(missionId) || !mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ success: false, message: "Invalid ID format" });
+  }
+
+  try {
+    const project = await Project.findById(projectId);
+    if (!project) {
+      return res.status(404).json({ success: false, message: "Project not found" });
+    }
+
+    const missionIndex = project.missions.findIndex(mission => mission._id.toString() === missionId);
+    if (missionIndex === -1) {
+      return res.status(404).json({ success: false, message: "Mission not found" });
+    }
+
+    const member = project.members.find(member => member.user.toString() === userId);
+    if (!member || !["owner", "manager"].includes(member.role)) {
+      return res.status(403).json({ success: false, message: "User does not have permission to delete a mission" });
+    }
+
+    project.missions.splice(missionIndex, 1);
+    await project.save();
+
+    await Mission.findByIdAndDelete(missionId);
+
+    res.status(200).json({ success: true, message: "Mission deleted successfully", project });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

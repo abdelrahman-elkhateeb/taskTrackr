@@ -131,6 +131,12 @@ const DetailsSection = ({ project }) => {
     }
   };
 
+  const formattedDate = new Date(project.createdAt).toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   return (
     <div
       className={`p-4 shadow rounded-3xl w-full container overflow-y-auto border-2 h-screen ${darkMode ? "border-dark-primary" : "border-light-primary"}`}
@@ -139,6 +145,7 @@ const DetailsSection = ({ project }) => {
 
       <h1 className={`text-2xl font-bold ${darkMode? "text-dark-primary" : "text-light-primary"}`}>{project.title}</h1>
       <p className={`text-lg ml-2 ${darkMode? "text-dark-pHover" : "text-light-pHover"}`}>{project.description}</p>
+      <p className={`text-lg ml-4 ${darkMode? "text-dark-pHover" : "text-light-pHover"}`}>{formattedDate}</p>
 
       {activeTab === "members" && (
         <MemberManagement
@@ -164,7 +171,7 @@ const DetailsSection = ({ project }) => {
         />
       )}
 
-      {activeTab === "missions" && <DisplayMissions missions={project.missions} />}
+      {activeTab === "missions" && <DisplayMissions missions={project.missions} setReload={setReload} reload={reload} />}
     </div>
   );
 };
