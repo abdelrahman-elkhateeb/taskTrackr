@@ -7,6 +7,7 @@ import DisplayMissions from "./DisplayMissions";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Tabs from "./Tabs";
+import { motion } from "framer-motion";
 
 const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
   const [activeTab, setActiveTab] = useState("members");
@@ -22,26 +23,26 @@ const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
   const { id } = useParams();
   const userId = Cookies.get("userId");
-  const { id: projectId } = useParams();
 
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/Projects/${id}/members/${userId}`);
-        
+        const response = await axios.get(
+          `http://localhost:5000/api/Projects/${id}/members/${userId}`
+        );
+
         setMembers(response.data.members);
         const user = members.find((member) => member.user._id === userId);
         if (user.role === "owner" || user.role === "manager") {
           setAuth(true);
         }
-        
       } catch (error) {
         console.error("DetailsSection-> Error fetching members:", error);
       }
     };
 
     fetchMembers();
-  }, [id,reload]);
+  }, [id, reload]);
 
   const handleAddMember = (newMember) => {
     setMembers((prevMembers) => [...prevMembers, newMember]);
@@ -49,17 +50,21 @@ const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
 
   const handleDeleteMember = async (member) => {
     const { user } = member;
-    const userId = Cookies.get("userId");
     const userEmail = user.email;
 
     try {
-      const response = await axios.delete("http://localhost:5000/api/Projects/remove-member", {
-        data: { projectId: id, userEmail, userId },
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await axios.delete(
+        "http://localhost:5000/api/Projects/remove-member",
+        {
+          data: { projectId: id, userEmail, userId },
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
       if (response.status === 200) {
-        setMembers((prevMembers) => prevMembers.filter((m) => m.user._id !== member.user._id));
+        setMembers((prevMembers) =>
+          prevMembers.filter((m) => m.user._id !== member.user._id)
+        );
       }
     } catch (error) {
       console.error("Error deleting member:", error);
@@ -67,27 +72,30 @@ const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
   };
 
   const handleSubmit = async () => {
-    const userId = Cookies.get("userId");
     setLoading(true);
-  
+
     try {
-      const response = await axios.post("http://localhost:5000/api/Projects/assign-role", {
-        projectId: id,
-        userEmail: addEmail,
-        role: addRole,
-        userId,
-      }, {
-        headers: { "Content-Type": "application/json" },
-      });
-  
+      const response = await axios.post(
+        "http://localhost:5000/api/Projects/assign-role",
+        {
+          projectId: id,
+          userEmail: addEmail,
+          role: addRole,
+          userId,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
       if (response.status === 200) {
         const newMember = { addEmail, addRole, user: response.data.user };
-        handleAddMember(newMember); 
+        handleAddMember(newMember);
         setIsModalOpen(false);
         setAddEmail("");
         setAddRole("manager");
         setError(null);
-        setReload(!reload); 
+        setReload(!reload);
       }
     } catch (error) {
       console.error("Error adding member:", error);
@@ -103,7 +111,7 @@ const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
       const response = await axios.put(
         `http://localhost:5000/api/Projects/update-role`,
         {
-          projectId,
+          projectId: id,
           userEmail,
           newRole: newRole.newRole,
           userId: Cookies.get("userId"),
@@ -111,8 +119,6 @@ const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
       );
 
       if (response.status === 200) {
-        console.log("Member updated successfully");
-
         setMembers((prevMembers) =>
           prevMembers.map((member) =>
             member.user.email === userEmail
@@ -120,59 +126,118 @@ const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
               : member
           )
         );
-
         setIsEditModalOpen(false);
         setReload(!reload);
-      } else {
-        console.error("Failed to update member");
       }
     } catch (error) {
       console.error("Error updating member:", error);
     }
   };
 
-  const formattedDate = new Date(project.createdAt).toLocaleDateString(undefined, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  const formattedDate = new Date(project.createdAt).toLocaleDateString(
+    undefined,
+    {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }
+  );
 
   return (
-    <div
-      className={`p-4 shadow rounded-3xl w-full container overflow-y-auto border-2 h-screen ${darkMode ? "border-dark-primary" : "border-light-primary"}`}
+    <motion.div
+      className={`p-4 shadow rounded-3xl w-full container overflow-y-auto border-2 h-screen ${
+        darkMode ? "border-dark-primary" : "border-light-primary"
+      }`}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
     >
-      <Tabs activeTab={activeTab} setActiveTab={setActiveTab} darkMode={darkMode} />
+      <Tabs
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        darkMode={darkMode}
+      />
 
-      <h1 className={`text-2xl font-bold ${darkMode? "text-dark-primary" : "text-light-primary"}`}>{project.title}</h1>
-      <p className={`text-lg ml-2 ${darkMode? "text-dark-pHover" : "text-light-pHover"}`}>{project.description}</p>
-      <p className={`text-lg ml-4 ${darkMode? "text-dark-pHover" : "text-light-pHover"}`}>{formattedDate}</p>
+      <motion.h1
+        className={`text-2xl font-bold ${
+          darkMode ? "text-dark-primary" : "text-light-primary"
+        }`}
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        {project.title}
+      </motion.h1>
+      <motion.p
+        className={`text-lg ml-2 ${
+          darkMode ? "text-dark-pHover" : "text-light-pHover"
+        }`}
+        initial={{ x: 100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
+        {project.description}
+      </motion.p>
+      <motion.p
+        className={`text-lg ml-4 ${
+          darkMode ? "text-dark-pHover" : "text-light-pHover"
+        }`}
+        initial={{ x: 100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        {formattedDate}
+      </motion.p>
 
       {activeTab === "members" && (
-        <MemberManagement
-          members={members}
-          setMembers={setMembers}
-          handleDeleteMember={handleDeleteMember}
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-          email={addEmail}
-          setEmail={setAddEmail}
-          role={addRole}
-          setRole={setAddRole}
-          loading={loading}
-          handleSubmit={handleSubmit}
-          error={error}
-          darkMode={darkMode}
-          id={id}
-          userId={userId}
-          handleUpdateRole={handleUpdateRole}
-          setIsEditModalOpen={setIsEditModalOpen}
-          isEditModalOpen={isEditModalOpen}
-          auth={auth}
-        />
+        <motion.div
+          key="members"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <MemberManagement
+            members={members}
+            setMembers={setMembers}
+            handleDeleteMember={handleDeleteMember}
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            email={addEmail}
+            setEmail={setAddEmail}
+            role={addRole}
+            setRole={setAddRole}
+            loading={loading}
+            handleSubmit={handleSubmit}
+            error={error}
+            darkMode={darkMode}
+            id={id}
+            userId={userId}
+            handleUpdateRole={handleUpdateRole}
+            setIsEditModalOpen={setIsEditModalOpen}
+            isEditModalOpen={isEditModalOpen}
+            auth={auth}
+          />
+        </motion.div>
       )}
 
-      {activeTab === "missions" && <DisplayMissions missions={project.missions} reloadMission={reloadMission} setReloadMission={setReloadMission} auth={auth} />}
-    </div>
+      {activeTab === "missions" && (
+        <motion.div
+          key="missions"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <DisplayMissions
+            missions={project.missions}
+            reloadMission={reloadMission}
+            setReloadMission={setReloadMission}
+            auth={auth}
+          />
+        </motion.div>
+      )}
+    </motion.div>
   );
 };
 

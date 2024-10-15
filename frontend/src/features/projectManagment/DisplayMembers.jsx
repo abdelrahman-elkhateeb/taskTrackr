@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { UserRoundCog, CircleX } from "lucide-react";
 import { useSelector } from "react-redux";
 import EditMemberModal from "./EditMemberModal";
+import { motion } from "framer-motion"; // Importing motion from framer-motion
 
 const DisplayMembers = ({
   initialMembers,
@@ -70,13 +71,17 @@ const DisplayMembers = ({
           <li className="p-4 text-center">No members to display.</li>
         ) : (
           members.map((member) => (
-            <li
+            <motion.li
               key={member._id}
               className={`p-4 my-3 flex flex-row justify-between border-2 rounded-xl transition-transform transform hover:scale-105 ${
                 darkMode
                   ? "text-dark-primary border-dark-primary"
                   : "text-light-primary border-light-primary"
               }`}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.3 }}
             >
               <div>
                 <strong>{member.role}</strong>
@@ -94,7 +99,7 @@ const DisplayMembers = ({
                   />
                 </div>
               )}
-            </li>
+            </motion.li>
           ))
         )}
       </ul>

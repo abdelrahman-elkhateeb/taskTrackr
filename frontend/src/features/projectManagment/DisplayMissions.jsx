@@ -8,6 +8,8 @@ import EditMissionModal from "./EditMissionModal";
 import { CircleX, Bolt } from "lucide-react";
 import ConfirmationModal from "./ConfirmationModal";
 import Cookies from "js-cookie";
+import { motion } from "framer-motion";
+
 
 const DisplayMissions = ({
   missions,
@@ -147,7 +149,10 @@ const DisplayMissions = ({
           <li className="p-4 text-center">No missions to display.</li>
         ) : (
           missions.map((mission) => (
-            <li
+            <motion.li
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
               key={mission._id}
               className={`p-4 my-3 flex flex-row justify-between border-2 rounded-xl transition-transform transform hover:scale-105 ${
                 darkMode
@@ -208,7 +213,7 @@ const DisplayMissions = ({
                   )}
                 </p>
               </div>
-            </li>
+            </motion.li>
           ))
         )}
       </ul>
@@ -231,7 +236,7 @@ const DisplayMissions = ({
         isOpen={confirmationModalOpen}
         onConfirm={confirmDelete}
         onCancel={() => setConfirmationModalOpen(false)}
-        message={`Are you sure you want to delete ${missionToDelete?.title}?`}
+        setConfirmationModalOpen={setConfirmationModalOpen}
       />
     </div>
   );

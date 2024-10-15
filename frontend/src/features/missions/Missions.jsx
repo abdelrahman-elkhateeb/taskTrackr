@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { motion } from "framer-motion";
 
 const Missions = () => {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
@@ -68,7 +69,10 @@ const Missions = () => {
   };
 
   return (
-    <div
+    <motion.div
+    initial={{ opacity: 0, scale: 0.9 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.8 }}
       className={`p-4 container ${
         darkMode ? "bg-dark-background" : "bg-light-background"
       } rounded-lg shadow-md`}
@@ -139,7 +143,7 @@ const Missions = () => {
           ))
         )}
       </ul>
-    </div>
+    </motion.div>
   );
 };
 

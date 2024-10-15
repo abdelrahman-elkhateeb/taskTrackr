@@ -1,10 +1,13 @@
 import { useSelector } from "react-redux";
 
 /* eslint-disable react/prop-types */
-const ConfirmationModal = ({ isOpen, onClose, onConfirm, missionTitle }) => {
+const ConfirmationModal = ({ isOpen, onConfirm, setConfirmationModalOpen }) => {
     const darkMode = useSelector((state) => state.darkMode.darkMode);
-    if (!isOpen) return null;
     
+    if (!isOpen) return null;
+    function onClose() {
+      setConfirmationModalOpen(prev => !prev);
+    }
 
     return (
       <dialog className={`modal ${isOpen ? 'open' : ''}`} open>
@@ -16,7 +19,7 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm, missionTitle }) => {
           }`}
         >
           <h3 className="font-bold text-lg">
-            Are you sure you want to delete the mission &quot;{missionTitle}&quot;?
+            Are you sure you want to delete this mission ?
           </h3>
           <p className="py-4">This action cannot be undone.</p>
           <div className="flex justify-end">
