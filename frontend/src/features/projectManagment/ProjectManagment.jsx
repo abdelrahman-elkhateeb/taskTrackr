@@ -18,7 +18,6 @@ function ProjectManagement() {
         const response = await axios.get(
           `http://localhost:5000/api/projects/user/${userId}/projects`
         );
-        console.log("API response:", response.data);
 
         setProjects(
           Array.isArray(response.data.projects) ? response.data.projects : []

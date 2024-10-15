@@ -1,16 +1,20 @@
-import { useState, useRef, useEffect } from 'react';
-import { UserRoundCog, CircleX } from 'lucide-react';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import Cookies from 'js-cookie';
-import EditMemberModal from './EditMemberModal'; // Import the new modal component
-import axios from 'axios'; // Import Axios
+/* eslint-disable react/prop-types */
+import { useState, useRef, useEffect } from "react";
+import { UserRoundCog, CircleX } from "lucide-react";
+import { useSelector } from "react-redux";
+import EditMemberModal from "./EditMemberModal";
 
-const DisplayMembers = ({ initialMembers, onDeleteMember }) => {
-  const { id: projectId } = useParams();
+const DisplayMembers = ({
+  initialMembers,
+  onDeleteMember,
+  handleUpdateRole,
+  setIsEditModalOpen,
+  isEditModalOpen,
+  auth,
+}) => {
   const [members, setMembers] = useState(initialMembers); // Use state for members
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false); // State for the edit modal
+  // State for the edit modal
   const [loading, setLoading] = useState(true);
   const [memberToDelete, setMemberToDelete] = useState(null);
   const [selectedMember, setSelectedMember] = useState(null); // State for the selected member
@@ -37,9 +41,9 @@ const DisplayMembers = ({ initialMembers, onDeleteMember }) => {
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick);
+    document.addEventListener("mousedown", handleOutsideClick);
     return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
 
@@ -57,39 +61,13 @@ const DisplayMembers = ({ initialMembers, onDeleteMember }) => {
     setIsEditModalOpen(true);
   };
 
-  const handleSave = async (updatedMember) => {
-    const { userEmail, newRole } = updatedMember;
-
-    try {
-      const response = await axios.put(`http://localhost:5000/api/Projects/update-role`, {
-        projectId,
-        userEmail,
-        newRole,
-        userId: Cookies.get('userId'),
-      });
-
-      if (response.status === 200) {
-        console.log('Member updated successfully');
-
-        // Update the local state with the new role
-        setMembers((prevMembers) =>
-          prevMembers.map((member) =>
-            member.user.email === userEmail ? { ...member, role: newRole } : member
-          )
-        );
-
-        setIsEditModalOpen(false); // Close the modal after saving
-      } else {
-        console.error('Failed to update member');
-      }
-    } catch (error) {
-      console.error('Error updating member:', error);
-    }
-  };
-
   return (
     <>
-      <h2 className={`mt-2 text-2xl underline ${darkMode ? 'text-dark-primary' : 'text-light-primary'}`}>
+      <h2
+        className={`mt-2 text-2xl underline ${
+          darkMode ? "text-dark-primary" : "text-light-primary"
+        }`}
+      >
         Members:
       </h2>
       <ul className="w-full">
@@ -100,22 +78,29 @@ const DisplayMembers = ({ initialMembers, onDeleteMember }) => {
         ) : (
           members.map((member) => (
             <li
-              key={member._id} // Ensure unique key prop is set
+              key={member._id}
               className={`p-4 my-3 flex flex-row justify-between border-2 rounded-xl ${
-                darkMode ? 'text-dark-primary border-dark-primary' : 'text-light-primary border-light-primary'
+                darkMode
+                  ? "text-dark-primary border-dark-primary"
+                  : "text-light-primary border-light-primary"
               }`}
             >
               <div>
                 <strong>{member.role}</strong>
               </div>
-              <div>{member.user?.email || 'Email not available'}</div>
-              <div className="flex flex-row">
-                <UserRoundCog className="cursor-pointer" onClick={() => handleEditClick(member)} />
-                <CircleX
-                  className="text-red-500 cursor-pointer ml-3"
-                  onClick={() => handleDeleteClick(member)}
-                />
-              </div>
+              <div>{member.user?.email || "Email not available"}</div>
+              {auth && (
+                <div className="flex flex-row">
+                  <UserRoundCog
+                    className="cursor-pointer"
+                    onClick={() => handleEditClick(member)}
+                  />
+                  <CircleX
+                    className="text-red-500 cursor-pointer ml-3"
+                    onClick={() => handleDeleteClick(member)}
+                  />
+                </div>
+              )}
             </li>
           ))
         )}
@@ -124,15 +109,31 @@ const DisplayMembers = ({ initialMembers, onDeleteMember }) => {
       {isModalOpen && (
         <dialog id="delete_member_modal" className="modal" open ref={modalRef}>
           <div
-            className={`modal-box ${darkMode ? 'bg-dark-bg text-dark-primary' : 'bg-light-bg text-light-primary'}`}
+            className={`modal-box ${
+              darkMode
+                ? "bg-dark-bg text-dark-primary"
+                : "bg-light-bg text-light-primary"
+            }`}
           >
-            <h3 className="font-bold text-lg">Are you sure you want to delete this member?</h3>
+            <h3 className="font-bold text-lg">
+              Are you sure you want to delete this member?
+            </h3>
             <p className="py-4">This action cannot be undone.</p>
             <div className="flex justify-end">
-              <button onClick={handleDelete} className={`btn mr-2 ${darkMode ? 'bg-dark-bg' : 'bg-light-bg'}`}>
+              <button
+                onClick={handleDelete}
+                className={`btn mr-2 ${
+                  darkMode ? "bg-dark-bg" : "bg-light-bg"
+                }`}
+              >
                 Delete
               </button>
-              <button onClick={() => setIsModalOpen(false)} className={`btn ${darkMode ? 'bg-dark-primary' : 'bg-light-primary'}`}>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className={`btn ${
+                  darkMode ? "bg-dark-primary" : "bg-light-primary"
+                }`}
+              >
                 Cancel
               </button>
             </div>
@@ -145,7 +146,9 @@ const DisplayMembers = ({ initialMembers, onDeleteMember }) => {
         isOpen={isEditModalOpen}
         member={selectedMember}
         onClose={() => setIsEditModalOpen(false)}
-        onSave={(newRole) => handleSave({ userEmail: selectedMember.user.email, newRole })} // Pass userEmail and newRole to handleSave
+        onUpdateRole={(newRole) =>
+          handleUpdateRole({ userEmail: selectedMember.user.email, newRole })
+        }
       />
     </>
   );

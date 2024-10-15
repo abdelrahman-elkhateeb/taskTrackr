@@ -12,25 +12,36 @@ const DetailsSection = ({ project }) => {
   const [activeTab, setActiveTab] = useState("members");
   const [members, setMembers] = useState(project.members);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("manager");
+  const [addEmail, setAddEmail] = useState("");
+  const [addRole, setAddRole] = useState("manager");
   const [loading, setLoading] = useState(false);
+  const [reload, setReload] = useState(false);
+  const [auth, setAuth] = useState(false);
   const [error, setError] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const darkMode = useSelector((state) => state.darkMode.darkMode);
   const { id } = useParams();
+  const userId = Cookies.get("userId");
+  const { id: projectId } = useParams();
 
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/Projects/members/${id}`);
+        const response = await axios.get(`http://localhost:5000/api/Projects/${id}/members/${userId}`);
+        
         setMembers(response.data.members);
+        const user = members.find((member) => member.user._id === userId);
+        if (user.role === "owner" || user.role === "manager") {
+          setAuth(true);
+        }
+        
       } catch (error) {
-        console.error("Error fetching members:", error);
+        console.error("DetailsSection-> Error fetching members:", error);
       }
     };
 
     fetchMembers();
-  }, [id]);
+  }, [id,reload]);
 
   const handleAddMember = (newMember) => {
     setMembers((prevMembers) => [...prevMembers, newMember]);
@@ -57,31 +68,66 @@ const DetailsSection = ({ project }) => {
 
   const handleSubmit = async () => {
     const userId = Cookies.get("userId");
-    setLoading(true); 
-
+    setLoading(true);
+  
     try {
       const response = await axios.post("http://localhost:5000/api/Projects/assign-role", {
         projectId: id,
-        userEmail: email,
-        role,
+        userEmail: addEmail,
+        role: addRole,
         userId,
       }, {
         headers: { "Content-Type": "application/json" },
       });
-
+  
       if (response.status === 200) {
-        const newMember = { email, role, user: response.data.user };
+        const newMember = { addEmail, addRole, user: response.data.user };
         handleAddMember(newMember); 
         setIsModalOpen(false);
-        setEmail("");
-        setRole("manager");
+        setAddEmail("");
+        setAddRole("manager");
         setError(null);
+        setReload(!reload); 
       }
     } catch (error) {
       console.error("Error adding member:", error);
       setError("Failed to add member. Please check the email and try again.");
     } finally {
-      setLoading(false); 
+      setLoading(false);
+    }
+  };
+
+  const handleUpdateRole = async (updatedMember) => {
+    const { userEmail, newRole } = updatedMember;
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/Projects/update-role`,
+        {
+          projectId,
+          userEmail,
+          newRole: newRole.newRole,
+          userId: Cookies.get("userId"),
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("Member updated successfully");
+
+        setMembers((prevMembers) =>
+          prevMembers.map((member) =>
+            member.user.email === userEmail
+              ? { ...member, role: newRole.newRole }
+              : member
+          )
+        );
+
+        setIsEditModalOpen(false);
+        setReload(!reload);
+      } else {
+        console.error("Failed to update member");
+      }
+    } catch (error) {
+      console.error("Error updating member:", error);
     }
   };
 
@@ -97,17 +143,24 @@ const DetailsSection = ({ project }) => {
       {activeTab === "members" && (
         <MemberManagement
           members={members}
+          setMembers={setMembers}
           handleDeleteMember={handleDeleteMember}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          email={email}
-          setEmail={setEmail}
-          role={role}
-          setRole={setRole}
+          email={addEmail}
+          setEmail={setAddEmail}
+          role={addRole}
+          setRole={setAddRole}
           loading={loading}
           handleSubmit={handleSubmit}
           error={error}
           darkMode={darkMode}
+          id={id}
+          userId={userId}
+          handleUpdateRole={handleUpdateRole}
+          setIsEditModalOpen={setIsEditModalOpen}
+          isEditModalOpen={isEditModalOpen}
+          auth={auth}
         />
       )}
 

@@ -40,7 +40,6 @@ export const createProject = async (req, res) => {
 
 export const assignRole = async (req, res) => {
   const { projectId, userEmail, role, userId } = req.body;
-  // const userId = req.user.id; 
 
   if (!projectId || !userEmail || !role) {
     return res.status(400).json({ success: false, message: "Please fill in all fields" });
@@ -91,14 +90,12 @@ export const assignRole = async (req, res) => {
 };
 
 export const updateRole = async (req, res) => {
-  const { projectId, userEmail, userId } = req.body;
-  const newRole = req.body.newRole.newRole;
-
+  const { projectId, userEmail, userId, newRole } = req.body;
+    
   if (!projectId || !userEmail || !newRole) {
     return res.status(400).json({ success: false, message: "Please fill all fields" });
   }
 
-  // Ensure newRole is a string
   if (typeof newRole !== 'string') {
     return res.status(400).json({ success: false, message: "Role must be a string" });
   }
@@ -210,10 +207,13 @@ export const getProjectMembers = async (req, res) => {
       return res.status(404).json({ success: false, message: "Project not found" });
     }
 
-    const user = project.members.find(member => member.user.toString() === userId);
-    if (!user || !["owner", "manager"].includes(user.role)) {
-      return res.status(403).json({ success: false, message: "Unauthorized access" });
+    const user = project.members.find(member => member.user._id.toString() === userId);
+    if (!user ) {
+      return res.status(403).json({ success: false, message: "Unauthorized access1" });
     }
+    // if ( !["owner", "manager"].includes(user.role)) {
+    //   return res.status(403).json({ success: false, message: "Unauthorized access2" });
+    // }
 
     res.status(200).json({ success: true, members: project.members });
   } catch (error) {

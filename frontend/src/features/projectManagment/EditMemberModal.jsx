@@ -1,29 +1,27 @@
-// EditMemberModal.js
-import React, { useState, useEffect } from "react";
+/* eslint-disable react/prop-types */
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-const EditMemberModal = ({ isOpen, member, onClose, onSave }) => {
+const EditMemberModal = ({ isOpen, member, onClose, onUpdateRole }) => {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
 
-  // Local state for role
   const [role, setRole] = useState("");
 
-  // Populate state with member role when the modal opens
   useEffect(() => {
     if (member) {
-      setRole(member.role); // Set initial role from the member data
+      setRole(member.role);
     }
   }, [member]);
 
   const handleSave = () => {
     if (member) {
       const updatedMember = {
-        projectId: member.projectId, // Assuming projectId is part of the member object
-        userEmail: member.user?.email, // Static unchangeable email
+        projectId: member.projectId, 
+        userEmail: member.user?.email, 
         newRole: role,
-        userId: getUserIdFromCookies(), // Implement this function to get userId from cookies
+        userId: getUserIdFromCookies(), 
       };
-      onSave(updatedMember); // Pass the updated member data back
+      onUpdateRole(updatedMember); 
       onClose();
     }
   };
@@ -32,7 +30,7 @@ const EditMemberModal = ({ isOpen, member, onClose, onSave }) => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; userId=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
-    return null; // Return null if not found
+    return null; 
   };
 
   if (!isOpen) return null;
