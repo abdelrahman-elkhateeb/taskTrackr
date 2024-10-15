@@ -9,7 +9,12 @@ import { CircleX, Bolt } from "lucide-react";
 import ConfirmationModal from "./ConfirmationModal";
 import Cookies from "js-cookie";
 
-const DisplayMissions = ({ missions, reloadMission, setReloadMission }) => {
+const DisplayMissions = ({
+  missions,
+  reloadMission,
+  setReloadMission,
+  auth,
+}) => {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
   const [users, setUsers] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
@@ -102,7 +107,9 @@ const DisplayMissions = ({ missions, reloadMission, setReloadMission }) => {
       }
     } catch (error) {
       console.error("Error updating mission state:", error);
-      alert("There was an error updating the mission state. Please try again later.");
+      alert(
+        "There was an error updating the mission state. Please try again later."
+      );
     }
   };
 
@@ -119,16 +126,18 @@ const DisplayMissions = ({ missions, reloadMission, setReloadMission }) => {
       >
         Missions:
       </h2>
-      <button
-        className={`btn rounded-lg my-4 ${
-          darkMode
-            ? "bg-dark-primary text-dark-bg border-dark-primary hover:border-dark-primary hover:bg-dark-bg hover:text-dark-primary"
-            : "bg-light-primary text-light-bg border-light-primary hover:border-light-bg hover:bg-light-bg hover:text-light-primary"
-        }`}
-        onClick={() => setModalOpen(true)}
-      >
-        Add Mission
-      </button>
+      {auth && (
+        <button
+          className={`btn rounded-lg my-4 ${
+            darkMode
+              ? "bg-dark-primary text-dark-bg border-dark-primary hover:border-dark-primary hover:bg-dark-bg hover:text-dark-primary"
+              : "bg-light-primary text-light-bg border-light-primary hover:border-light-bg hover:bg-light-bg hover:text-light-primary"
+          }`}
+          onClick={() => setModalOpen(true)}
+        >
+          Add Mission
+        </button>
+      )}
       <ul
         className={`w-full ${
           darkMode ? "text-dark-primary " : " text-light-primary "
@@ -177,24 +186,26 @@ const DisplayMissions = ({ missions, reloadMission, setReloadMission }) => {
                     Created At:{" "}
                     {new Date(mission.createdAt).toLocaleDateString()}
                   </span>
-                  <div className="flex flex-row space-x-4">
-                    <label
-                      htmlFor="edit_mission_modal"
-                      onClick={() => {
-                        setEditingMission(mission);
-                        setNewState(mission.status);
-                      }}
-                    >
-                      <Bolt />
-                    </label>
-                    <CircleX
-                      className="text-red-600 cursor-pointer"
-                      onClick={() => {
-                        setMissionToDelete(mission);
-                        setConfirmationModalOpen(true);
-                      }}
-                    />
-                  </div>
+                  {auth && (
+                    <div className="flex flex-row space-x-4">
+                      <label
+                        htmlFor="edit_mission_modal"
+                        onClick={() => {
+                          setEditingMission(mission);
+                          setNewState(mission.status);
+                        }}
+                      >
+                        <Bolt />
+                      </label>
+                      <CircleX
+                        className="text-red-600 cursor-pointer"
+                        onClick={() => {
+                          setMissionToDelete(mission);
+                          setConfirmationModalOpen(true);
+                        }}
+                      />
+                    </div>
+                  )}
                 </p>
               </div>
             </li>

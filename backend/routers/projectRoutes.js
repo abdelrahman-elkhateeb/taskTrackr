@@ -13,6 +13,7 @@ import {
   getAllMissions,
   getUserMissions,
   deleteMissionFromProject,
+  updateMyMissionState
 } from '../controllers/projectController.js';
 
 const router = express.Router();
@@ -37,9 +38,9 @@ router.post('/addMission', addMissionToProject);                   // ✅
 
 router.put('/updateMissionState', updateMissionState);             // ✅
 
-// router.get('/allMissions/:projectId', getAllMissions);
+router.put('/updateMyMission/:missionId/:userId', updateMyMissionState);
 
-router.get('/userMissions/:userId', getUserMissions);
+router.get('/userMissions/:userId', getUserMissions);              // ✅
 
 router.delete('/del-mission', deleteMissionFromProject);           // ✅ 
 

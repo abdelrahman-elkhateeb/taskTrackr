@@ -171,7 +171,7 @@ const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
         />
       )}
 
-      {activeTab === "missions" && <DisplayMissions missions={project.missions} reloadMission={reloadMission} setReloadMission={setReloadMission} />}
+      {activeTab === "missions" && <DisplayMissions missions={project.missions} reloadMission={reloadMission} setReloadMission={setReloadMission} auth={auth} />}
     </div>
   );
 };
