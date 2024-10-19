@@ -5,12 +5,12 @@ import Features from "./Features";
 
 function Home() {
   return (
-    <>
+    <div className="min-h-screen">
       <Hero />
       <TaskCreation />
       <TaskCategorization />
       <Features />
-    </>
+    </div>
   );
 }
 
