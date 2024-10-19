@@ -45,6 +45,7 @@ function NavBar() {
   return (
     <nav
       className={`flex justify-between p-3 items-center container mx-auto fixed top-0 z-[1000]  ${
+      className={`flex justify-between p-3 items-center container mx-auto sticky top-0 z-[1000]  ${
         darkMode
           ? "border-dark-primary bg-dark-bg text-dark-text"
           : "border-light-primary bg-light-bg text-light-text"
