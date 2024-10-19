@@ -15,9 +15,7 @@ function AppLayout() {
   return (
     <div className={`${darkMode ? "bg-dark-bg" : "bg-light-bg"} relative`}>
       {isLoading && <Loader />}
-      <div className="flex justify-center">
-        {shouldShowNavBar && <NavBar />}
-      </div>
+      {shouldShowNavBar && <NavBar />}
       <main className="my-9 min-h-screen">
         <Outlet />
       </main>
