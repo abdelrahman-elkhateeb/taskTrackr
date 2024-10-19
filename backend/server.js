@@ -1,6 +1,6 @@
-const express = require ("express");
-const dotenv = require ("dotenv");
-const cors = require ("cors");
+const express = require("express");
+const dotenv = require("dotenv");
+const cors = require("cors");
 const connectDB = require("./config/db.js");
 const taskRouter = require("./routers/taskRoute.js");
 const userRoutes = require("./routers/userRoutes.js");
@@ -15,7 +15,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://depi-final-project-m1eh.vercel.app",
+      "https://depi-final-project-backend.vercel.app",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
