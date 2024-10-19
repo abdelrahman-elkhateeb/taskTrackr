@@ -21,8 +21,8 @@ function TaskCreation() {
           Task Creation and Assignment
         </motion.h2>
         <motion.p
-          initial={{ opacity: 0}}
-          whileInView={{ opacity: 1}}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           transition={{ duration: 0.7, ease: "easeInOut", delay: 0.5 }}
           viewport={{ once: true }}
           className={`${
