@@ -50,7 +50,8 @@ app.get("/health", async (req, res) => {
   } catch (error) {
     res.status(500).json({ status: "Database connection failed", error: error.message });
   }
-});
+}); 
+
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("I AM HERE", process.env.mong_url);
