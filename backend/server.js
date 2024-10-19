@@ -12,7 +12,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://depi-final-project-zeta.vercel.app/",
+    origin: "https://depi-final-project-zeta.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   }),
