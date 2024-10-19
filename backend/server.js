@@ -5,7 +5,7 @@ const connectDB = require("./config/db.js");
 const taskRouter = require("./routers/taskRoute.js");
 const userRoutes = require("./routers/userRoutes.js");
 const projectRoutes = require("./routers/projectRoutes.js");
-// import helmet from "helmet";
+const { default: helmet } = require("helmet");
 
 dotenv.config();
 
@@ -22,16 +22,16 @@ app.use(
   }),
 );
 
-// app.use(
-//   helmet.contentSecurityPolicy({
-//     directives: {
-//       defaultSrc: ["'none'"],
-//       scriptSrc: ["'self'", "https://vercel.live"],
-//       imgSrc: ["'self'", "data:"],
-//       styleSrc: ["'self'", "'unsafe-inline'"],
-//     },
-//   }),
-// );
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'none'"],
+      scriptSrc: ["'self'", "https://vercel.live"],
+      imgSrc: ["'self'", "data:"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+    },
+  }),
+);
 
 app.use(express.json());
 
