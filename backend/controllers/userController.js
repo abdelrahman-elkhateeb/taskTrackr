@@ -1,4 +1,4 @@
-import User from "../models/userModel.js";
+const User = require("../models/userModel.js");
 
 const register = async (req, res) => {
   const { username, email, password, gender } = req.body;
@@ -125,4 +125,4 @@ const getUser = async (req, res) => {
   }
 };
 
-export { register, login, updateUser, getUser };
+module.exports = { register, login, updateUser, getUser };

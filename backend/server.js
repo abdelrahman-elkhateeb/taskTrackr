@@ -1,10 +1,10 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import { connectDB } from "./config/db.js";
-import taskRouter from "./routers/taskRoute.js";
-import userRoutes from "./routers/userRoutes.js";
-import projectRoutes from "./routers/projectRoutes.js";
+const express = require ("express");
+const dotenv = require ("dotenv");
+const cors = require ("cors");
+const connectDB = require("./config/db.js");
+const taskRouter = require("./routers/taskRoute.js");
+const userRoutes = require("./routers/userRoutes.js");
+const projectRoutes = require("./routers/projectRoutes.js");
 // import helmet from "helmet";
 
 dotenv.config();

@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
-import { Project, Mission } from "../models/projectModel.js";
-import User from "../models/userModel.js";
+const mongoose = require("mongoose");
+const { Project, Mission } = require("../models/projectModel.js");
+const User = require("../models/userModel.js");
 
-export const createProject = async (req, res) => {
+ const createProject = async (req, res) => {
   const { title, description, userId } = req.body;
   // const userId = req.user.id;
 
@@ -44,7 +44,7 @@ export const createProject = async (req, res) => {
   }
 };
 
-export const assignRole = async (req, res) => {
+ const assignRole = async (req, res) => {
   const { projectId, userEmail, role, userId } = req.body;
 
   if (!projectId || !userEmail || !role) {
@@ -101,7 +101,7 @@ export const assignRole = async (req, res) => {
   }
 };
 
-export const updateRole = async (req, res) => {
+ const updateRole = async (req, res) => {
   const { projectId, userEmail, userId, newRole } = req.body;
 
   if (!projectId || !userEmail || !newRole) {
@@ -165,7 +165,7 @@ export const updateRole = async (req, res) => {
   }
 };
 
-export const removeMember = async (req, res) => {
+ const removeMember = async (req, res) => {
   const { projectId, userEmail, userId } = req.body;
 
   if (!projectId || !userEmail) {
@@ -226,7 +226,7 @@ export const removeMember = async (req, res) => {
   }
 };
 
-export const getProjectMembers = async (req, res) => {
+ const getProjectMembers = async (req, res) => {
   const { projectId, userId } = req.params;
 
   if (
@@ -269,7 +269,7 @@ export const getProjectMembers = async (req, res) => {
   }
 };
 
-export const deleteProject = async (req, res) => {
+ const deleteProject = async (req, res) => {
   const { projectId, userId } = req.params;
 
   if (
@@ -309,7 +309,7 @@ export const deleteProject = async (req, res) => {
   }
 };
 
-export const getUserProjects = async (req, res) => {
+ const getUserProjects = async (req, res) => {
   const { userId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -337,7 +337,7 @@ export const getUserProjects = async (req, res) => {
   }
 };
 
-export const getProjectById = async (req, res) => {
+ const getProjectById = async (req, res) => {
   const { projectId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(projectId)) {
@@ -364,7 +364,7 @@ export const getProjectById = async (req, res) => {
   }
 };
 
-export const addMissionToProject = async (req, res) => {
+ const addMissionToProject = async (req, res) => {
   const { projectId, title, description, userEmail, creatorId } = req.body;
 
   if (!projectId || !title || !description || !userEmail || !creatorId) {
@@ -465,7 +465,7 @@ export const addMissionToProject = async (req, res) => {
   }
 };
 
-export const updateMissionState = async (req, res) => {
+ const updateMissionState = async (req, res) => {
   const { projectId, missionId, newState, userId } = req.body;
 
   if (!projectId || !missionId || !newState || !userId) {
@@ -527,7 +527,7 @@ export const updateMissionState = async (req, res) => {
   }
 };
 
-export const updateMyMissionState = async (req, res) => {
+ const updateMyMissionState = async (req, res) => {
   const { missionId, userId } = req.params;
   const { newState } = req.body;
 
@@ -581,7 +581,7 @@ export const updateMyMissionState = async (req, res) => {
   }
 };
 
-export const getAllMissions = async (req, res) => {
+ const getAllMissions = async (req, res) => {
   const { projectId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(projectId)) {
@@ -604,7 +604,7 @@ export const getAllMissions = async (req, res) => {
   }
 };
 
-export const getUserMissions = async (req, res) => {
+ const getUserMissions = async (req, res) => {
   const { userId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -634,7 +634,7 @@ export const getUserMissions = async (req, res) => {
   }
 };
 
-export const deleteMissionFromProject = async (req, res) => {
+ const deleteMissionFromProject = async (req, res) => {
   const { projectId, missionId, userId } = req.body;
 
   if (!projectId || !missionId || !userId) {
@@ -694,4 +694,23 @@ export const deleteMissionFromProject = async (req, res) => {
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
+};
+
+
+
+module.exports = {
+  assignRole,
+  updateRole,
+  removeMember,
+  getProjectMembers,
+  createProject,
+  deleteProject,
+  getUserProjects,
+  addMissionToProject,
+  getProjectById,
+  updateMissionState,
+  getAllMissions,
+  getUserMissions,
+  deleteMissionFromProject,
+  updateMyMissionState
 };
