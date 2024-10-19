@@ -5,7 +5,7 @@ import { connectDB } from "./config/db.js";
 import taskRouter from "./routers/taskRoute.js";
 import userRoutes from "./routers/userRoutes.js";
 import projectRoutes from "./routers/projectRoutes.js";
-import helmet from "helmet";
+// import helmet from "helmet";
 
 dotenv.config();
 
@@ -22,16 +22,16 @@ app.use(
   }),
 );
 
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'none'"],
-      scriptSrc: ["'self'", "https://vercel.live"],
-      imgSrc: ["'self'", "data:"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-    },
-  }),
-);
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     directives: {
+//       defaultSrc: ["'none'"],
+//       scriptSrc: ["'self'", "https://vercel.live"],
+//       imgSrc: ["'self'", "data:"],
+//       styleSrc: ["'self'", "'unsafe-inline'"],
+//     },
+//   }),
+// );
 
 app.use(express.json());
 
