@@ -1,10 +1,10 @@
-const express = require("express");
-const {
+import express from "express";
+import {
   register,
   login,
   updateUser,
   getUser,
-} = require("../controllers/userController.js");
+} from "../controllers/userController.js";
 
 const router = express.Router();
 

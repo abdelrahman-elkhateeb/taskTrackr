@@ -35,19 +35,16 @@ function Login() {
     }
 
     try {
-      const response = await fetch(
-        "https://depi-final-project-zeta.vercel.app/api/Users/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
+      const response = await fetch("http://localhost:5000/api/Users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();

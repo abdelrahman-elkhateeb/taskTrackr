@@ -1,7 +1,6 @@
-const mongoose = require("mongoose");
-const { Project, Mission } = require("../models/projectModel");
-const User = require("../models/userModel");
-
+import mongoose from "mongoose";
+import { Project, Mission } from "../models/projectModel.js";
+import User from "../models/userModel.js";
 
 export const createProject = async (req, res) => {
   const { title, description, userId } = req.body;
