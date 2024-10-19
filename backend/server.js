@@ -46,7 +46,7 @@ console.log("I AM HERE",process.env.mong_url);
 app.get("/health", async (req, res) => {
   try {
     // Attempt to ping the database
-    await mongoose.connection.db.admin().ping();
+    await mongoose.connection.db.ping();
     res.status(200).json({ status: "Database is connected" });
   } catch (error) {
     res.status(500).json({ status: "Database connection failed", error: error.message });
