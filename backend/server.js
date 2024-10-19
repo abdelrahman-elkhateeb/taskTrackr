@@ -12,7 +12,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://depi-final-project-m1eh.vercel.app/",
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   }),
