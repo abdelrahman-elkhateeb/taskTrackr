@@ -6,6 +6,7 @@ const taskRouter = require("./routers/taskRoute.js");
 const userRoutes = require("./routers/userRoutes.js");
 const projectRoutes = require("./routers/projectRoutes.js");
 const { default: helmet } = require("helmet");
+const mongoose = require("mongoose");
 
 dotenv.config();
 
@@ -51,7 +52,6 @@ app.get("/health", async (req, res) => {
     res.status(500).json({ status: "Database connection failed", error: error.message });
   }
 }); 
-
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("I AM HERE", process.env.mong_url);
