@@ -4,7 +4,7 @@
     "dev": "nodemon backend/server.js",
     "start": "node backend/server.js"
   },
-  "type": "module",
+
   "dependencies": {
     "@headlessui/react": "^2.1.10",
     "@hookform/resolvers": "^3.9.0",
