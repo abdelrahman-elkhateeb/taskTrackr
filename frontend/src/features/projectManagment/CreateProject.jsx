@@ -25,7 +25,7 @@ const CreateProject = ({ onProjectCreated }) => {
     try {
       // Create a new project
       const response = await axios.post(
-        "https://depi-final-project-zeta.vercel.app/api/Projects/create",
+        "https://depi-final-project-backend.vercel.app/api/Projects/create",
         {
           title,
           description,

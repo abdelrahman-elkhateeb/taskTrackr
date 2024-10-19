@@ -57,7 +57,7 @@ function Register() {
 
     try {
       const response = await fetch(
-        "https://depi-final-project-zeta.vercel.app/api/Users/register",
+        "https://depi-final-project-backend.vercel.app/api/Users/register",
         {
           method: "POST",
           headers: {

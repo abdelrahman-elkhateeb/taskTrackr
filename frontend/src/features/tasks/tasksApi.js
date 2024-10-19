@@ -5,7 +5,7 @@ export const tasksApi = createApi({
   reducerPath: "tasksApi",
   tagTypes: ["tasks"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://depi-final-project-zeta.vercel.app/api",
+    baseUrl: "https://depi-final-project-backend.vercel.app/api",
   }),
   endpoints: (builder) => ({
     getTasks: builder.query({

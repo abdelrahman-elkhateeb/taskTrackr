@@ -16,7 +16,7 @@ const Missions = () => {
       try {
         setLoading(true); // Set loading to true when starting to fetch
         const response = await axios.get(
-          `https://depi-final-project-zeta.vercel.app/Projects/userMissions/${creatorId}`,
+          `https://depi-final-project-backend.vercel.app/Projects/userMissions/${creatorId}`,
         );
         setMissions(response.data.missions || []);
       } catch (error) {
@@ -32,7 +32,7 @@ const Missions = () => {
   const updateMissionState = async (missionId, newState) => {
     try {
       const response = await axios.put(
-        `https://depi-final-project-zeta.vercel.app/api/Projects/updateMyMission/${missionId}/${creatorId}`,
+        `https://depi-final-project-backend.vercel.app/api/Projects/updateMyMission/${missionId}/${creatorId}`,
         {
           newState,
         },

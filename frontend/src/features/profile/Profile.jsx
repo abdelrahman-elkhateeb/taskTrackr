@@ -13,7 +13,7 @@ function Profile() {
     const userId = Cookies.get("userId");
 
     if (userId) {
-      fetch(`https://depi-final-project-zeta.vercel.app/Users/${userId}`)
+      fetch(`https://depi-final-project-backend.vercel.app/Users/${userId}`)
         .then((response) => response.json())
         .then((data) => setUserData(data.user)) // Access the nested user object
         .catch((error) => {

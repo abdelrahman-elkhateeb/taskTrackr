@@ -17,7 +17,7 @@ function ProjectManagement() {
       if (userId) {
         setLoading(true);
         const response = await axios.get(
-          `https://depi-final-project-zeta.vercel.app/api/projects/user/${userId}/projects`,
+          `https://depi-final-project-backend.vercel.app/api/projects/user/${userId}/projects`,
         );
         setProjects(
           Array.isArray(response.data.projects) ? response.data.projects : []

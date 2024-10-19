@@ -16,7 +16,7 @@ const ProjectCard = ({ project, onProjectDeleted }) => {
     const userId = Cookies.get("userId");
     try {
       await axios.delete(
-        `https://depi-final-project-zeta.vercel.app/api/projects/${project._id}/${userId}`,
+        `https://depi-final-project-backend.vercel.app/api/projects/${project._id}/${userId}`,
       );
       onProjectDeleted(project._id);
     } catch (error) {

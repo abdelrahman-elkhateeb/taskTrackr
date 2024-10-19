@@ -28,7 +28,7 @@ const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
     const fetchMembers = async () => {
       try {
         const response = await axios.get(
-          `https://depi-final-project-zeta.vercel.app/api/Projects/${id}/members/${userId}`,
+          `https://depi-final-project-backend.vercel.app/api/Projects/${id}/members/${userId}`,
         );
 
         setMembers(response.data.members);
@@ -54,7 +54,7 @@ const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
 
     try {
       const response = await axios.delete(
-        "https://depi-final-project-zeta.vercel.app/api/Projects/remove-member",
+        "https://depi-final-project-backend.vercel.app/api/Projects/remove-member",
         {
           data: { projectId: id, userEmail, userId },
           headers: { "Content-Type": "application/json" },
@@ -76,7 +76,7 @@ const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
 
     try {
       const response = await axios.post(
-        "https://depi-final-project-zeta.vercel.app/api/Projects/assign-role",
+        "https://depi-final-project-backend.vercel.app/api/Projects/assign-role",
         {
           projectId: id,
           userEmail: addEmail,
@@ -109,7 +109,7 @@ const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
     const { userEmail, newRole } = updatedMember;
     try {
       const response = await axios.put(
-        `https://depi-final-project-zeta.vercel.app/api/Projects/update-role`,
+        `https://depi-final-project-backend.vercel.app/api/Projects/update-role`,
         {
           projectId: id,
           userEmail,
