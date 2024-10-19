@@ -1,5 +1,5 @@
-import express from 'express';
-import {
+const express = require("express");
+const {
   assignRole,
   updateRole,
   removeMember,
@@ -13,36 +13,35 @@ import {
   getAllMissions,
   getUserMissions,
   deleteMissionFromProject,
-  updateMyMissionState
-} from '../controllers/projectController.js';
+  updateMyMissionState,
+} = require("../controllers/projectController.js");
 
 const router = express.Router();
 
-router.post('/create', createProject);                                      // ✅
+router.post("/create", createProject); // ✅
 
-router.get('/user/:userId/projects', getUserProjects);                      // ✅
+router.get("/user/:userId/projects", getUserProjects); // ✅
 
-router.delete('/:projectId/:userId', deleteProject);                        // ✅
+router.delete("/:projectId/:userId", deleteProject); // ✅
 
-router.get('/:projectId', getProjectById);                                  // ✅
+router.get("/:projectId", getProjectById); // ✅
 
-router.get('/:projectId/members/:userId', getProjectMembers);               // ✅
+router.get("/:projectId/members/:userId", getProjectMembers); // ✅
 
-router.post('/assign-role', assignRole);                                    // ✅   add member to project
+router.post("/assign-role", assignRole); // ✅   add member to project
 
-router.put('/update-role', updateRole);                                     // ✅
+router.put("/update-role", updateRole); // ✅
 
-router.delete('/remove-member', removeMember);                              // ✅
+router.delete("/remove-member", removeMember); // ✅
 
-router.post('/addMission', addMissionToProject);                            // ✅
+router.post("/addMission", addMissionToProject); // ✅
 
-router.put('/updateMissionState', updateMissionState);                      // ✅
+router.put("/updateMissionState", updateMissionState); // ✅
 
-router.put('/updateMyMission/:missionId/:userId', updateMyMissionState);    // ✅
+router.put("/updateMyMission/:missionId/:userId", updateMyMissionState); // ✅
 
-router.get('/userMissions/:userId', getUserMissions);                       // ✅
+router.get("/userMissions/:userId", getUserMissions); // ✅
 
-router.delete('/del-mission', deleteMissionFromProject);                    // ✅ 
-
+router.delete("/del-mission", deleteMissionFromProject); // ✅
 
 export default router;

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const missionSchema = new mongoose.Schema({
   title: {
@@ -57,13 +57,12 @@ const projectSchema = new mongoose.Schema(
         },
       },
     ],
-    missions: [missionSchema], 
+    missions: [missionSchema],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Mission = mongoose.model("Mission", missionSchema);
 const Project = mongoose.model("Project", projectSchema);
 
 export { Project, Mission };
-

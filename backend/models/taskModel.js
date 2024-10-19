@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const taskSchema = new mongoose.Schema(
   {
@@ -24,7 +24,7 @@ const taskSchema = new mongoose.Schema(
       required: [true, "Due date is required"],
     },
     user: {
-      type: mongoose.Schema.Types.ObjectId, 
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },

@@ -1,6 +1,7 @@
-import Task from "../models/taskModel.js";
-import User from "../models/userModel.js";
-import mongoose from "mongoose";
+const Task = require("../models/taskModel");
+const User = require("../models/userModel");
+
+const mongoose = require("mongoose");
 
 export const getTasks = async (req, res) => {
   try {
@@ -76,14 +77,18 @@ export const deleteTask = async (req, res) => {
 
   try {
     const deletedTask = await Task.findByIdAndDelete(id);
-    
+
     if (!deletedTask) {
-      return res.status(404).json({ success: false, message: "Task not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Task not found" });
     }
 
     await User.findByIdAndUpdate(deletedTask.user, { $pull: { tasks: id } });
 
-    res.status(200).json({ success: true, message: "Task deleted successfully" });
+    res
+      .status(200)
+      .json({ success: true, message: "Task deleted successfully" });
   } catch (err) {
     console.log("Error in deleting task:", err.message);
     res.status(500).json({ success: false, message: "Server Error" });
@@ -122,13 +127,11 @@ export const getCountCompletedTasks = async (req, res) => {
       user: userId,
       completed: true,
     }).countDocuments();
-    res
-      .status(200)
-      .json({
-        success: true,
-        completedTasks: completedTasks,
-        totalTasks: numTasks,
-      });
+    res.status(200).json({
+      success: true,
+      completedTasks: completedTasks,
+      totalTasks: numTasks,
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: "Error fetching tasks" });
   }

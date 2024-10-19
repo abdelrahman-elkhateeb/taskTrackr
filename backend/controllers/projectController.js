@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
-import { Project, Mission } from "../models/projectModel.js";
-import User from "../models/userModel.js";
+const mongoose = require("mongoose");
+const { Project, Mission } = require("../models/projectModel");
+const User = require("../models/userModel");
+
 
 export const createProject = async (req, res) => {
   const { title, description, userId } = req.body;
@@ -25,11 +26,9 @@ export const createProject = async (req, res) => {
     });
 
     if (existingProject) {
-      return res
-        .status(409)
-        .json({
-          message: "A project with this title already exists for this user",
-        });
+      return res.status(409).json({
+        message: "A project with this title already exists for this user",
+      });
     }
 
     const newProject = await Project.create({
@@ -74,14 +73,14 @@ export const assignRole = async (req, res) => {
     }
 
     const requester = project.members.find(
-      (member) => member.user.toString() === userId
+      (member) => member.user.toString() === userId,
     );
     if (!requester || !["owner", "manager"].includes(requester.role)) {
       return res.status(403).json({ message: "Unauthorized to assign roles" });
     }
 
     const existingMember = project.members.find(
-      (member) => member.user.toString() === user._id.toString()
+      (member) => member.user.toString() === user._id.toString(),
     );
 
     if (existingMember) {
@@ -137,14 +136,14 @@ export const updateRole = async (req, res) => {
     }
 
     const requester = project.members.find(
-      (member) => member.user.toString() === userId
+      (member) => member.user.toString() === userId,
     );
     if (!requester || !["owner", "manager"].includes(requester.role)) {
       return res.status(403).json({ message: "Unauthorized to update roles" });
     }
 
     const memberIndex = project.members.findIndex(
-      (member) => member.user.toString() === user._id.toString()
+      (member) => member.user.toString() === user._id.toString(),
     );
 
     if (memberIndex === -1) {
@@ -192,7 +191,7 @@ export const removeMember = async (req, res) => {
     }
 
     const requester = project.members.find(
-      (member) => member.user.toString() === userId
+      (member) => member.user.toString() === userId,
     );
     if (!requester || !["owner", "manager"].includes(requester.role)) {
       return res
@@ -201,16 +200,14 @@ export const removeMember = async (req, res) => {
     }
 
     const memberIndex = project.members.findIndex(
-      (member) => member.user.toString() === user._id.toString()
+      (member) => member.user.toString() === user._id.toString(),
     );
 
     if (memberIndex === -1) {
-      return res
-        .status(404)
-        .json({
-          success: false,
-          message: "User is not a member of the project",
-        });
+      return res.status(404).json({
+        success: false,
+        message: "User is not a member of the project",
+      });
     }
 
     if (project.members[memberIndex].role === "owner") {
@@ -237,18 +234,16 @@ export const getProjectMembers = async (req, res) => {
     !mongoose.Types.ObjectId.isValid(projectId) ||
     !mongoose.Types.ObjectId.isValid(userId)
   ) {
-    return res
-      .status(400)
-      .json({
-        success: false,
-        message: "Invalid project ID or user ID format",
-      });
+    return res.status(400).json({
+      success: false,
+      message: "Invalid project ID or user ID format",
+    });
   }
 
   try {
     const project = await Project.findById(projectId).populate(
       "members.user",
-      "name email"
+      "name email",
     );
 
     if (!project) {
@@ -258,7 +253,7 @@ export const getProjectMembers = async (req, res) => {
     }
 
     const user = project.members.find(
-      (member) => member.user._id.toString() === userId
+      (member) => member.user._id.toString() === userId,
     );
     if (!user) {
       return res
@@ -282,12 +277,10 @@ export const deleteProject = async (req, res) => {
     !mongoose.Types.ObjectId.isValid(projectId) ||
     !mongoose.Types.ObjectId.isValid(userId)
   ) {
-    return res
-      .status(400)
-      .json({
-        success: false,
-        message: "Invalid project ID or user ID format",
-      });
+    return res.status(400).json({
+      success: false,
+      message: "Invalid project ID or user ID format",
+    });
   }
 
   try {
@@ -300,7 +293,7 @@ export const deleteProject = async (req, res) => {
     }
 
     const member = project.members.find(
-      (member) => member.user.toString() === userId
+      (member) => member.user.toString() === userId,
     );
     if (!member || member.role !== "owner") {
       return res
@@ -336,7 +329,7 @@ export const getUserProjects = async (req, res) => {
 
     const projects = await Project.find({ "members.user": userId }).populate(
       "members.user",
-      "name email"
+      "name email",
     );
 
     res.status(200).json({ projects });
@@ -357,7 +350,7 @@ export const getProjectById = async (req, res) => {
   try {
     const project = await Project.findById(projectId).populate(
       "members.user",
-      "name email"
+      "name email",
     );
 
     if (!project) {
@@ -385,12 +378,10 @@ export const addMissionToProject = async (req, res) => {
     !mongoose.Types.ObjectId.isValid(projectId) ||
     !mongoose.Types.ObjectId.isValid(creatorId)
   ) {
-    return res
-      .status(400)
-      .json({
-        success: false,
-        message: "Invalid project ID or creator ID format",
-      });
+    return res.status(400).json({
+      success: false,
+      message: "Invalid project ID or creator ID format",
+    });
   }
 
   try {
@@ -412,57 +403,47 @@ export const addMissionToProject = async (req, res) => {
     const userId = user._id; // Get the user ID from the found user
 
     const titleExists = project.missions.some(
-      (mission) => mission.title === title
+      (mission) => mission.title === title,
     );
     if (titleExists) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "A mission with this title already exists in the project",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "A mission with this title already exists in the project",
+      });
     }
 
     const userMember = project.members.find(
-      (member) => member.user.toString() === userId.toString()
+      (member) => member.user.toString() === userId.toString(),
     );
     if (!userMember) {
-      return res
-        .status(403)
-        .json({
-          success: false,
-          message: "User is not a member of this project",
-        });
+      return res.status(403).json({
+        success: false,
+        message: "User is not a member of this project",
+      });
     }
 
     const creatorMember = project.members.find(
-      (member) => member.user.toString() === creatorId
+      (member) => member.user.toString() === creatorId,
     );
     if (!creatorMember) {
-      return res
-        .status(403)
-        .json({
-          success: false,
-          message: "Creator is not a member of this project",
-        });
+      return res.status(403).json({
+        success: false,
+        message: "Creator is not a member of this project",
+      });
     }
 
     if (!["owner", "manager"].includes(creatorMember.role)) {
-      return res
-        .status(403)
-        .json({
-          success: false,
-          message: "Creator does not have permission to add a mission",
-        });
+      return res.status(403).json({
+        success: false,
+        message: "Creator does not have permission to add a mission",
+      });
     }
 
     if (!["owner", "manager", "contributor"].includes(userMember.role)) {
-      return res
-        .status(403)
-        .json({
-          success: false,
-          message: "User does not have permission to add a mission",
-        });
+      return res.status(403).json({
+        success: false,
+        message: "User does not have permission to add a mission",
+      });
     }
 
     const newMission = new Mission({
@@ -499,12 +480,10 @@ export const updateMissionState = async (req, res) => {
     !mongoose.Types.ObjectId.isValid(missionId) ||
     !mongoose.Types.ObjectId.isValid(userId)
   ) {
-    return res
-      .status(400)
-      .json({
-        success: false,
-        message: "Invalid project ID, mission ID, or user ID format",
-      });
+    return res.status(400).json({
+      success: false,
+      message: "Invalid project ID, mission ID, or user ID format",
+    });
   }
 
   try {
@@ -523,31 +502,27 @@ export const updateMissionState = async (req, res) => {
     }
 
     const userMember = project.members.find(
-      (member) => member.user.toString() === userId
+      (member) => member.user.toString() === userId,
     );
     if (
       !userMember ||
       !["owner", "manager", "contributor"].includes(userMember.role)
     ) {
-      return res
-        .status(403)
-        .json({
-          success: false,
-          message: "User does not have permission to update this mission",
-        });
+      return res.status(403).json({
+        success: false,
+        message: "User does not have permission to update this mission",
+      });
     }
 
     mission.status = newState;
 
     await project.save();
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Mission state updated successfully",
-        mission,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Mission state updated successfully",
+      mission,
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -558,31 +533,54 @@ export const updateMyMissionState = async (req, res) => {
   const { newState } = req.body;
 
   if (!newState) {
-    return res.status(400).json({ success: false, message: "New state is required" });
+    return res
+      .status(400)
+      .json({ success: false, message: "New state is required" });
   }
 
-  if (!mongoose.Types.ObjectId.isValid(missionId) || !mongoose.Types.ObjectId.isValid(userId)) {
-    return res.status(400).json({ success: false, message: "Invalid mission ID or user ID format" });
+  if (
+    !mongoose.Types.ObjectId.isValid(missionId) ||
+    !mongoose.Types.ObjectId.isValid(userId)
+  ) {
+    return res
+      .status(400)
+      .json({
+        success: false,
+        message: "Invalid mission ID or user ID format",
+      });
   }
 
   try {
     const project = await Project.findOneAndUpdate(
       { "missions._id": missionId, "members.user": userId },
       { $set: { "missions.$.status": newState } },
-      { new: true }
+      { new: true },
     );
 
     if (!project) {
-      return res.status(404).json({ success: false, message: "Project not found for the mission or user does not have permission" });
+      return res
+        .status(404)
+        .json({
+          success: false,
+          message:
+            "Project not found for the mission or user does not have permission",
+        });
     }
 
-    const updatedMission = project.missions.find(m => m._id.toString() === missionId);
-    res.status(200).json({ success: true, message: "Mission state updated successfully", mission: updatedMission });
+    const updatedMission = project.missions.find(
+      (m) => m._id.toString() === missionId,
+    );
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Mission state updated successfully",
+        mission: updatedMission,
+      });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
 
 export const getAllMissions = async (req, res) => {
   const { projectId } = req.params;
@@ -621,8 +619,8 @@ export const getUserMissions = async (req, res) => {
 
     const userMissions = projects.flatMap((project) =>
       project.missions.filter(
-        (mission) => mission.completedBy.toString() === userId
-      )
+        (mission) => mission.completedBy.toString() === userId,
+      ),
     );
 
     if (userMissions.length === 0) {
@@ -641,12 +639,10 @@ export const deleteMissionFromProject = async (req, res) => {
   const { projectId, missionId, userId } = req.body;
 
   if (!projectId || !missionId || !userId) {
-    return res
-      .status(400)
-      .json({
-        success: false,
-        message: "Please provide project ID, mission ID, and user ID",
-      });
+    return res.status(400).json({
+      success: false,
+      message: "Please provide project ID, mission ID, and user ID",
+    });
   }
 
   if (
@@ -668,7 +664,7 @@ export const deleteMissionFromProject = async (req, res) => {
     }
 
     const missionIndex = project.missions.findIndex(
-      (mission) => mission._id.toString() === missionId
+      (mission) => mission._id.toString() === missionId,
     );
     if (missionIndex === -1) {
       return res
@@ -677,15 +673,13 @@ export const deleteMissionFromProject = async (req, res) => {
     }
 
     const member = project.members.find(
-      (member) => member.user.toString() === userId
+      (member) => member.user.toString() === userId,
     );
     if (!member || !["owner", "manager"].includes(member.role)) {
-      return res
-        .status(403)
-        .json({
-          success: false,
-          message: "User does not have permission to delete a mission",
-        });
+      return res.status(403).json({
+        success: false,
+        message: "User does not have permission to delete a mission",
+      });
     }
 
     project.missions.splice(missionIndex, 1);
@@ -693,17 +687,12 @@ export const deleteMissionFromProject = async (req, res) => {
 
     await Mission.findByIdAndDelete(missionId);
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Mission deleted successfully",
-        project,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Mission deleted successfully",
+      project,
+    });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
-
-
