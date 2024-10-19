@@ -7,16 +7,23 @@ import Loader from "../Ui/Loader";
 import tasks from "../../../public/hero section.json";
 import "./Home.css";
 import AnimatedCompInHome from "../Ui/AnimatedCompInHome";
+import Cookies from "js-cookie";
+
 function Hero() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const darkMode = useSelector((state) => state.darkMode.darkMode);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const darkMode = useSelector((state) => state.darkMode.darkMode);
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem("loggedIn") === "true";
-    setIsLoggedIn(loggedIn);
-  }, []);
+    let userId = Cookies.get("userId");
+    if (userId) {
+      setIsLoggedIn(true);
+      navigate("/");
+    } else {
+      navigate("/register");
+    }
+  }, [navigate]);
 
   const handleButtonClick = () => {
     setIsLoading(true);

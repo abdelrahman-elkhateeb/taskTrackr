@@ -28,7 +28,7 @@ function NavBar() {
           console.error("Error fetching user data:", error);
         });
     } else {
-      navigate("/login");
+      navigate("/register");
     }
   }, [navigate]);
 
