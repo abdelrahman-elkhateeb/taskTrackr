@@ -9,6 +9,8 @@ import {
 const SearchTasks = () => {
   const { tasks } = useSelector((state) => state.searchTacks);
   const [searchText, setSearchText] = useState("");
+  const darkMode = useSelector((state) => state.darkMode.darkMode);
+
   const dispatch = useDispatch();
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
@@ -50,7 +52,11 @@ const SearchTasks = () => {
         <input
           type="search"
           id="default-search"
-          className="block w-full p-4 ps-10 text-sm text-white  border  rounded-lg  outline-none focus:border-dark-primary bg-gray-700 border-gray-600 dark:placeholder-gray-400 dark:text-white  "
+          className={`block w-full p-4 ps-10 text-sm   border rounded-lg  outline-none  ${
+            darkMode
+              ? "bg-gray-700 text-white"
+              : "bg-slate-200 border-[3px] text-black  border-dark-primary"
+          }  dark:placeholder-gray-400 dark:text-white  `}
           placeholder="Search"
           value={searchText}
           onChange={handleSearchChange}

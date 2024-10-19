@@ -31,7 +31,6 @@ const AlertModal = ({ id }) => {
           <label
             htmlFor="alert"
             className="btn btn-sm btn-circle absolute right-2 top-2"
-            onClick={() => setIsModalOpen(false)} // Close on click
           >
             ✕
           </label>
@@ -42,7 +41,7 @@ const AlertModal = ({ id }) => {
               {isLoading ? <Loader /> : "Delete"}
             </label>
             <label htmlFor="alert" className="btn mt-4 bg-gray-500">
-              Close!
+              Cancel
             </label>
           </div>
         </div>
