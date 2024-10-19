@@ -10,8 +10,8 @@ function TaskCreation() {
       <Lottie animationData={taskCreation} />
       <div>
         <motion.h2
-          initial={{ opacity: 0, x: 100 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           transition={{ duration: 0.7, ease: "easeInOut" }}
           viewport={{ once: true }}
           className={`${
@@ -21,9 +21,9 @@ function TaskCreation() {
           Task Creation and Assignment
         </motion.h2>
         <motion.p
-          initial={{ opacity: 0, x: 100 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, ease: "easeInOut", delay: 0.5 }}
+          initial={{ opacity: 0}}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.7, ease: "easeInOut", delay: 0.4 }}
           viewport={{ once: true }}
           className={`${
             darkMode ? "text-dark-text" : "text-light-text"
