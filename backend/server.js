@@ -41,6 +41,16 @@ app.use("/api/Tasks", taskRouter);
 
 app.use("/api/Projects", projectRoutes);
 
+app.get("/health", async (req, res) => {
+  try {
+    // Attempt to ping the database
+    await mongoose.connection.db.admin().ping();
+    res.status(200).json({ status: "Database is connected" });
+  } catch (error) {
+    res.status(500).json({ status: "Database connection failed", error: error.message });
+  }
+});
+
 app.listen(process.env.PORT || 5000, () => {
   connectDB();
   console.log("Server is running on port 5000");
