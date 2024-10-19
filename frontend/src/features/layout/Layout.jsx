@@ -2,6 +2,7 @@ import { Outlet, useNavigation, useLocation } from "react-router";
 import NavBar from "../Ui/NavBar";
 import Loader from "../Ui/Loader";
 import { useSelector } from "react-redux";
+import Footer from "../Ui/Footer";
 
 function AppLayout() {
   const navigation = useNavigation();
@@ -19,6 +20,7 @@ function AppLayout() {
       <main className="min-h-dvh">
         <Outlet />
       </main>
+      <Footer />
     </div>
   );
 }
