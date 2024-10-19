@@ -16,7 +16,7 @@ function AppLayout() {
     <div className={`${darkMode ? "bg-dark-bg" : "bg-light-bg"} relative`}>
       {isLoading && <Loader />}
       {shouldShowNavBar && <NavBar />}
-      <main className="">
+      <main className="min-h-dvh">
         <Outlet />
       </main>
     </div>
