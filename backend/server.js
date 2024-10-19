@@ -6,7 +6,7 @@ const taskRouter = require("./routers/taskRoute.js");
 const userRoutes = require("./routers/userRoutes.js");
 const projectRoutes = require("./routers/projectRoutes.js");
 const helmet = require("helmet");
-const mongoose = require("mongoose"); // Ensure mongoose is imported
+const mongoose = require("mongoose");
 
 dotenv.config();
 
@@ -37,25 +37,34 @@ app.use(
 
 app.use(express.json());
 
-// Route setup
-app.use("/api/Users", userRoutes);
-app.use("/api/Tasks", taskRouter);
-app.use("/api/Projects", projectRoutes);
+// Start the server and connect to the database
+connectDB()
+  .then(() => {
+    console.log("Database connected successfully");
 
-// Health check endpoint
-app.get("/health", async (req, res) => {
-  try {
-    await mongoose.connection.db.admin().ping();
-    res.status(200).json({ status: "Database is connected" });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ status: "Database connection failed", error: error.message });
-  }
-});
+    // Route setup
+    app.use("/api/Users", userRoutes);
+    app.use("/api/Tasks", taskRouter);
+    app.use("/api/Projects", projectRoutes);
 
-// Start the server
-app.listen(process.env.PORT || 5000, () => {
-  connectDB();
-  console.log("Server is running on port 5000");
-});
+    // Health check endpoint
+    app.get("/health", async (req, res) => {
+      try {
+        await mongoose.connection.db.admin().ping();
+        res.status(200).json({ status: "Database is connected" });
+      } catch (error) {
+        res
+          .status(500)
+          .json({ status: "Database connection failed", error: error.message });
+      }
+    });
+
+    // Start the server
+    app.listen(process.env.PORT || 5000, () => {
+      console.log("Server is running on port 5000");
+    });
+  })
+  .catch((error) => {
+    console.error(`Error connecting to the database: ${error.message}`);
+    process.exit(1);
+  });
