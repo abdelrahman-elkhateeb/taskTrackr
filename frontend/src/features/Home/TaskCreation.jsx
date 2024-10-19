@@ -22,8 +22,8 @@ function TaskCreation() {
         </motion.h2>
         <motion.p
           initial={{ opacity: 0}}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.7, ease: "easeInOut", delay: 0.4 }}
+          whileInView={{ opacity: 1}}
+          transition={{ duration: 0.7, ease: "easeInOut", delay: 0.5 }}
           viewport={{ once: true }}
           className={`${
             darkMode ? "text-dark-text" : "text-light-text"
