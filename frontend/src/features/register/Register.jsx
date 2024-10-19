@@ -300,26 +300,28 @@ function Register() {
                   </div>
                 </div>
 
-                <button
-                  type="submit"
-                  className={`py-3 rounded-lg w-full ${
-                    darkMode
-                      ? "bg-dark-primary hover:bg-dark-pHover text-light-text"
-                      : "bg-light-primary hover:bg-light-pHover text-dark-text"
-                  }`}
-                >
-                  Register
-                </button>
-                <Link
-                  to="/"
-                  className={`py-3 rounded-lg w-full ${
-                    darkMode
-                      ? "bg-dark-primary hover:bg-dark-pHover text-light-text"
-                      : "bg-light-primary hover:bg-light-pHover text-dark-text"
-                  }`}
-                >
-                  have a tour?
-                </Link>
+                <div className="flex flex-col text-center gap-2">
+                  <button
+                    type="submit"
+                    className={`py-3 rounded-lg w-full ${
+                      darkMode
+                        ? "bg-dark-primary hover:bg-dark-pHover text-light-text"
+                        : "bg-light-primary hover:bg-light-pHover text-dark-text"
+                    }`}
+                  >
+                    Register
+                  </button>
+                  <Link
+                    to="/"
+                    className={`py-3 rounded-lg w-full ${
+                      darkMode
+                        ? "bg-dark-primary hover:bg-dark-pHover text-light-text"
+                        : "bg-light-primary hover:bg-light-pHover text-dark-text"
+                    }`}
+                  >
+                    have a tour?
+                  </Link>
+                </div>
               </form>
             )}
             <div className="">
