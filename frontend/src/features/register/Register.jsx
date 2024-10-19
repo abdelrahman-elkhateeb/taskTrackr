@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Loader from "../Ui/Loader";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -310,6 +310,12 @@ function Register() {
                 >
                   Register
                 </button>
+                <Link
+                  to="/login"
+                  className={`text-sm ${
+                    darkMode ? "text-dark-primary" : "text-light-primary"
+                  }`}
+                >have a tour?</Link>
               </form>
             )}
             <div className="">
