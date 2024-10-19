@@ -311,11 +311,15 @@ function Register() {
                   Register
                 </button>
                 <Link
-                  to="/login"
-                  className={`text-sm ${
-                    darkMode ? "text-dark-primary" : "text-light-primary"
+                  to="/"
+                  className={`py-3 rounded-lg w-full ${
+                    darkMode
+                      ? "bg-dark-primary hover:bg-dark-pHover text-light-text"
+                      : "bg-light-primary hover:bg-light-pHover text-dark-text"
                   }`}
-                >have a tour?</Link>
+                >
+                  have a tour?
+                </Link>
               </form>
             )}
             <div className="">
