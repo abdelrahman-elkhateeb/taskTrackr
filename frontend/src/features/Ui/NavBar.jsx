@@ -18,7 +18,7 @@ function NavBar() {
   useEffect(() => {
     let userId = Cookies.get("userId");
     if (userId) {
-      fetch(`http://localhost:5000/api/Users/${userId}`)
+      fetch(`https://depi-final-project-zeta.vercel.app/api/Users/${userId}`)
         .then((response) => response.json())
         .then((data) => {
           setUserData(data.user);

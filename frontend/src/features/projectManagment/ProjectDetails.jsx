@@ -127,7 +127,7 @@ const ProjectDetails = () => {
     const fetchProjectDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/Projects/${id}`
+          `https://depi-final-project-zeta.vercel.app/api/Projects/${id}`,
         );
         setProject(response.data.project);
       } catch (error) {

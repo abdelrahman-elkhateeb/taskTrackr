@@ -56,18 +56,21 @@ function Register() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/Users/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://depi-final-project-zeta.vercel.app/api/Users/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            email,
+            password,
+            gender,
+          }),
         },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-          gender,
-        }),
-      });
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

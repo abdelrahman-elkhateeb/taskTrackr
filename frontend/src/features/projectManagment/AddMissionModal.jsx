@@ -38,14 +38,14 @@ const AddMissionModal = ({
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/Projects/addMission",
+        "https://depi-final-project-zeta.vercel.app/api/Projects/addMission",
         {
           projectId,
           title: formData.title,
           description: formData.description,
           userEmail: formData.userEmail,
           creatorId,
-        }
+        },
       );
 
       if (response.data.success) {
