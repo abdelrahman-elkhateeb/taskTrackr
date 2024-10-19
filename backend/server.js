@@ -40,9 +40,10 @@ app.use("/api/Users", userRoutes);
 app.use("/api/Tasks", taskRouter);
 
 app.use("/api/Projects", projectRoutes);
+console.log("I AM HERE",process.env.mong_url);
 
 app.listen(process.env.PORT || 5000, () => {
+  console.log("I AM HERE", process.env.mong_url);
   connectDB();
   console.log("Server is running on port 5000");
-  console.log(process.env.mong_url);
 });
