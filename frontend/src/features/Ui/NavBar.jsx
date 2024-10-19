@@ -44,10 +44,10 @@ function NavBar() {
 
   return (
     <nav
-      className={`flex justify-between p-3 items-center rounded-[35px] container mx-auto ${
+      className={`flex justify-between p-3 items-center container mx-auto fixed top-0 z-[1000]  ${
         darkMode
-          ? "border-dark-primary text-dark-text"
-          : "border-light-primary text-light-text"
+          ? "border-dark-primary bg-dark-bg text-dark-text"
+          : "border-light-primary bg-light-bg text-light-text"
       }`}
     >
       <Link to="/">
