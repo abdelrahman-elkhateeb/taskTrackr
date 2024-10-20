@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import SearchTasks from "../Ui/SearchTasks";
+import SearchTasks from "./SearchTasks";
 import {
+  sortingTasks,
   togglePriority,
   toggleStatus,
   updateFilteredTasks,
 } from "../../app/Slices/darkMode/searchTasksSlice";
+import SortingComponent from "./SortingComponent";
 
 /* eslint-disable react/prop-types */
 const FiltrationComponent = ({ isDrawerOpen, toggleDrawer }) => {
@@ -12,18 +14,25 @@ const FiltrationComponent = ({ isDrawerOpen, toggleDrawer }) => {
     (state) => state.searchTacks
   );
   const darkMode = useSelector((state) => state.darkMode.darkMode);
+  const sortingKeyword = useSelector(
+    (state) => state.searchTacks.sortingKeyword
+  );
   const dispatch = useDispatch();
   // handlers
   const onChangePriorities = (value) => {
     dispatch(togglePriority(value));
     dispatch(updateFilteredTasks());
+    dispatch(sortingTasks(sortingKeyword));
   };
   const onChangeStatus = (value) => {
     dispatch(toggleStatus(value));
     dispatch(updateFilteredTasks());
+    dispatch(sortingTasks(sortingKeyword));
   };
   return (
-    <div className={`drawer drawer-end ${isDrawerOpen ? "open" : ""}  z-[1000]`}>
+    <div
+      className={`drawer drawer-end ${isDrawerOpen ? "open" : ""}  z-[1000]`}
+    >
       <input
         id="my-drawer"
         type="checkbox"
@@ -153,6 +162,7 @@ const FiltrationComponent = ({ isDrawerOpen, toggleDrawer }) => {
                 </label>
               </div>
             </div>
+            <SortingComponent />
           </div>
         </ul>
       </div>

@@ -4,13 +4,16 @@ import {
   searchTasks,
   setSearchKeyword,
   setTasks,
+  sortingTasks,
 } from "../../app/Slices/darkMode/searchTasksSlice";
 
 const SearchTasks = () => {
   const { tasks } = useSelector((state) => state.searchTacks);
   const [searchText, setSearchText] = useState("");
   const darkMode = useSelector((state) => state.darkMode.darkMode);
-
+  const sortingKeyword = useSelector(
+    (state) => state.searchTacks.sortingKeyword
+  );
   const dispatch = useDispatch();
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
@@ -18,6 +21,8 @@ const SearchTasks = () => {
       dispatch(setTasks(tasks));
       dispatch(setSearchKeyword(""));
     }
+    dispatch(sortingTasks(sortingKeyword));
+
   };
   const onSubmit = (e) => {
     e.preventDefault();
