@@ -9,6 +9,9 @@ import Cookies from "js-cookie";
 import Tabs from "./Tabs";
 import { motion } from "framer-motion";
 import { domain } from "../../../../api/api";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import CustomCloseButton from "./CustomCloseButton";
 
 const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
   const [activeTab, setActiveTab] = useState("members");
@@ -66,9 +69,29 @@ const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
         setMembers((prevMembers) =>
           prevMembers.filter((m) => m.user._id !== member.user._id)
         );
+        toast.success("Member deleted successfully!", {
+          className: `toast-container mt-11 ${
+            darkMode ? "bg-dark-bg text-dark-primary" : "bg-light-bg text-light-primary"
+          }`,
+          bodyClassName: "toast-body",
+          progressClassName: `toast-progress ${
+            darkMode ? "bg-dark-primary" : "bg-light-primary"
+          }`,
+          closeButton: <CustomCloseButton darkMode={darkMode} />,
+        });
       }
     } catch (error) {
       console.error("Error deleting member:", error);
+      toast.error("You don't have permission to delete this member.", {
+        className: `toast-container mt-11 ${
+          darkMode ? "bg-dark-bg text-dark-primary" : "bg-light-bg text-light-primary"
+        }`,
+        bodyClassName: "toast-body",
+        progressClassName: `toast-progress ${
+          darkMode ? "bg-dark-primary" : "bg-light-primary"
+        }`,
+        closeButton: <CustomCloseButton darkMode={darkMode} />,
+      });
     }
   };
 
@@ -97,6 +120,16 @@ const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
         setAddRole("manager");
         setError(null);
         setReload(!reload);
+        toast.success("Member added successfully!", {
+          className: `toast-container mt-11 ${
+            darkMode ? "bg-dark-bg text-dark-primary" : "bg-light-bg text-light-primary"
+          }`,
+          bodyClassName: "toast-body",
+          progressClassName: `toast-progress ${
+            darkMode ? "bg-dark-primary" : "bg-light-primary"
+          }`,
+          closeButton: <CustomCloseButton darkMode={darkMode} />,
+        });
       }
     } catch (error) {
       console.error("Error adding member:", error);
@@ -129,6 +162,16 @@ const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
         );
         setIsEditModalOpen(false);
         setReload(!reload);
+        toast.success("Role updated successfully!", {
+          className: `toast-container mt-11 ${
+            darkMode ? "bg-dark-bg text-dark-primary" : "bg-light-bg text-light-primary"
+          }`,
+          bodyClassName: "toast-body",
+          progressClassName: `toast-progress ${
+            darkMode ? "bg-dark-primary" : "bg-light-primary"
+          }`,
+          closeButton: <CustomCloseButton darkMode={darkMode} />,
+        });
       }
     } catch (error) {
       console.error("Error updating member:", error);
@@ -143,6 +186,8 @@ const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
       day: "numeric",
     }
   );
+
+  
 
   return (
     <motion.div
@@ -238,6 +283,7 @@ const DetailsSection = ({ project, reloadMission, setReloadMission }) => {
           />
         </motion.div>
       )}
+      <ToastContainer />
     </motion.div>
   );
 };

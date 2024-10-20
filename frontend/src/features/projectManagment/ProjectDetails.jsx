@@ -140,7 +140,9 @@ const ProjectDetails = () => {
   if (!project) {
     return (
       <div className="flex justify-center mt-80">
-        <span className="loading loading-ball loading-lg"></span>
+        <span className={`loading loading-ball loading-lg ${
+          darkMode ? "text-dark-primary" : "text-light-primary"
+        }`}></span>
       </div>
     );
   }

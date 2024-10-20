@@ -9,6 +9,9 @@ import { CircleX, Bolt } from "lucide-react";
 import ConfirmationModal from "./ConfirmationModal";
 import Cookies from "js-cookie";
 import { motion } from "framer-motion";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import CustomCloseButton from "./CustomCloseButton";
 import { domain } from "../../../../api/api";
 
 
@@ -81,6 +84,16 @@ const DisplayMissions = ({
       setConfirmationModalOpen(false);
       if (response.data.success) {
         setReloadMission(!reloadMission);
+        toast.success("Mission deleted successfully!", {
+          className: `toast-container mt-11 ${
+            darkMode ? "bg-dark-bg text-dark-primary" : "bg-light-bg text-light-primary"
+          }`,
+          bodyClassName: "toast-body",
+          progressClassName: `toast-progress ${
+            darkMode ? "bg-dark-primary" : "bg-light-primary"
+          }`,
+          closeButton: <CustomCloseButton darkMode={darkMode} />,
+        });
       }
     } catch (error) {
       console.error("Error deleting mission:", error);
@@ -241,6 +254,7 @@ const DisplayMissions = ({
         onCancel={() => setConfirmationModalOpen(false)}
         setConfirmationModalOpen={setConfirmationModalOpen}
       />
+      <ToastContainer />
     </div>
   );
 };

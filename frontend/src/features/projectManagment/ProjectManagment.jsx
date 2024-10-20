@@ -6,6 +6,9 @@ import { useSelector } from "react-redux";
 import CreateProject from "./CreateProject";
 import { motion } from "framer-motion";
 import { domain } from "../../../../api/api";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import CustomCloseButton from "./CustomCloseButton";
 
 function ProjectManagement() {
   const [projects, setProjects] = useState([]);
@@ -33,6 +36,20 @@ function ProjectManagement() {
     }
   };
 
+  const handleProjectCreated = () => {
+    fetchUserProjects();
+    toast.success("Project created successfully!", {
+      className: `toast-container mt-11 ${
+        darkMode ? "bg-dark-bg text-dark-primary" : "bg-light-bg text-light-primary"
+      }`,
+      bodyClassName: "toast-body",
+      progressClassName: `toast-progress ${
+        darkMode ? "bg-dark-primary" : "bg-light-primary"
+      }`,
+      closeButton: <CustomCloseButton darkMode={darkMode} />,
+    });
+  };
+
   const handleProjectDeleted = (projectId) => {
     setProjects(projects.filter((project) => project._id !== projectId));
     setIsModalOpen(false);
@@ -46,14 +63,35 @@ function ProjectManagement() {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`${domain}/api/projects/${selectedProjectId}/${userId}`);
+      await axios.delete(
+        `${domain}/api/projects/${selectedProjectId}/${userId}`
+      );
       handleProjectDeleted(selectedProjectId);
+      toast.success("Project deleted successfully!", {
+        className: `toast-container mt-11 ${
+          darkMode ? "bg-dark-bg text-dark-primary" : "bg-light-bg text-light-primary"
+        }`,
+        bodyClassName: "toast-body",
+        progressClassName: `toast-progress ${
+          darkMode ? "bg-dark-primary" : "bg-light-primary"
+        }`,
+        closeButton: <CustomCloseButton darkMode={darkMode} />,
+      });
     } catch (error) {
       console.error(
         "Error deleting the project:",
         error.response ? error.response.data : error.message
       );
-      alert("Failed to delete project. Please try again.");
+      toast.error("You don't have permission to delete this project.", {
+        className: `toast-container mt-11 ${
+          darkMode ? "bg-dark-bg text-dark-primary" : "bg-light-bg text-light-primary"
+        }`,
+        bodyClassName: "toast-body",
+        progressClassName: `toast-progress ${
+          darkMode ? "bg-dark-primary" : "bg-light-primary"
+        }`,
+        closeButton: <CustomCloseButton darkMode={darkMode} />,
+      });
     } finally {
       setIsModalOpen(false);
     }
@@ -73,10 +111,14 @@ function ProjectManagement() {
       >
         Project Management
       </h1>
-      <CreateProject onProjectCreated={fetchUserProjects} />
+      <CreateProject onProjectCreated={handleProjectCreated} />
       {loading ? (
         <div className="flex justify-center items-center">
-          <span className="loading loading-ball loading-lg"></span>
+          <span
+            className={`loading loading-ball loading-lg ${
+              darkMode ? "text-dark-primary" : "text-light-primary"
+            }`}
+          ></span>
         </div>
       ) : projects.length === 0 ? (
         <p>No projects available.</p>
@@ -147,6 +189,7 @@ function ProjectManagement() {
           </form>
         </dialog>
       )}
+      <ToastContainer />
     </section>
   );
 }
