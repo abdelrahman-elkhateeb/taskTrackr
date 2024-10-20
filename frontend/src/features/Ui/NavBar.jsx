@@ -14,6 +14,8 @@ function NavBar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
+  const [isNotification, setIsNotification] = useState(null);
+
 
   useEffect(() => {
     const userId = Cookies.get("userId");
@@ -24,6 +26,7 @@ function NavBar() {
         const data = await response.json();
 
         if (response.ok && data.user) {
+          setIsNotification(data.notification);
           setUserData(data.user);
           setIsLoggedIn(true);
         } else {
@@ -72,11 +75,12 @@ function NavBar() {
 
       {/* Hamburger Icon for Mobile */}
       <div
-        className="md:hidden flex flex-col gap-1.5 cursor-pointer"
+        className="md:hidden flex flex-col gap-1.5 cursor-pointer relative"
         onClick={toggleSidebar}
       >
+        <span className={`${isNotification ? "notification" : ""}`}></span>
         <span
-          className={`w-6 h-0.5 ${
+          className={`w-6 h-0.5  ${
             darkMode ? "bg-dark-primary" : "bg-light-primary"
           }`}
         ></span>
@@ -118,7 +122,8 @@ function NavBar() {
               <DarkModeToggle />
             </div>
           )}
-          <Link
+          {isLoggedIn && <>
+            <Link
             to="/"
             className={`cursor-pointer relative ${
               darkMode ? "text-dark-primary" : "text-light-primary"
@@ -154,7 +159,7 @@ function NavBar() {
           </Link>
           <Link
             to="/myMissions"
-            className={`cursor-pointer relative after ${
+            className={`cursor-pointer relative after ${isNotification ? "notification" : ""} ${
               darkMode ? "text-dark-primary" : "text-light-primary"
             }`}
             onClick={() => {
@@ -162,7 +167,7 @@ function NavBar() {
             }}
           >
             Missions
-          </Link>
+          </Link></>}
           {!isLoggedIn ? (
             <Link
               to={"/login"}
@@ -228,10 +233,10 @@ function NavBar() {
           </Link>
         </li>
 
-        <li>
+        <li className="relative"> 
           <Link
             to="/myMissions"
-            className={`cursor-pointer ${
+            className={`cursor-pointer ${isNotification ? "notification" : ""} ${
               darkMode ? "text-dark-primary" : "text-light-primary"
             }`}
           >

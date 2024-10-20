@@ -14,7 +14,7 @@ const Missions = () => {
   useEffect(() => {
     const fetchMissions = async () => {
       try {
-        setLoading(true); // Set loading to true when starting to fetch
+        setLoading(true); 
         const response = await axios.get(
           `${domain}/api/Projects/userMissions/${creatorId}`
         );
@@ -22,10 +22,22 @@ const Missions = () => {
       } catch (error) {
         console.error("Error fetching missions:", error);
       } finally {
-        setLoading(false); // Set loading to false after fetching is done
+        setLoading(false); 
       }
     };
 
+    // Function to clear notifications on first render
+    const clearUserNotification = async () => {
+      try {
+        await axios.post(`${domain}/api/Projects/clear-notification`, {
+          userId: creatorId,
+        });
+      } catch (error) {
+        console.error("Error clearing notifications:", error);
+      }
+    };
+
+    clearUserNotification();
     fetchMissions();
   }, [creatorId]);
 
@@ -38,7 +50,6 @@ const Missions = () => {
         }
       );
       if (response.data.success) {
-        // Update the mission state in the UI
         setMissions((prevMissions) =>
           prevMissions.map((mission) =>
             mission._id === missionId
@@ -46,7 +57,7 @@ const Missions = () => {
               : mission
           )
         );
-        console.log("Mission state updated successfully.");
+
       }
     } catch (error) {
       console.error("Error updating mission state:", error);
@@ -67,7 +78,7 @@ const Missions = () => {
       case "in progress":
         return "completed";
       case "completed":
-        return null; // No next state for completed missions
+        return null;
       default:
         return null;
     }
@@ -94,7 +105,7 @@ const Missions = () => {
           darkMode ? "text-dark-primary" : "text-light-primary"
         }`}
       >
-        {loading ? ( // Check if loading is true
+        {loading ? (
           <li className="p-4 text-center">
             <span className="loading loading-ball loading-lg"></span>
           </li>
@@ -104,7 +115,7 @@ const Missions = () => {
           missions.map((mission) => (
             <li
               key={mission._id}
-              className={`p-4 my-3 flex flex-row justify-between border-2 rounded-xl transition-transform transform hover:scale-105 ${
+              className={`p-4 my-3 flex flex-row justify-between border-2 rounded-xl transition-transform transform hover:scale-[1.008] ${
                 darkMode
                   ? "bg-dark-card text-dark-text border-dark-primary"
                   : "bg-light-card text-light-text border-light-primary"
@@ -137,7 +148,7 @@ const Missions = () => {
                       onClick={() =>
                         handleStatusChange(mission._id, mission.status)
                       }
-                      disabled={mission.status === "completed"} // Disable if already completed
+                      disabled={mission.status === "completed"} 
                     >
                       {mission.status === "completed"
                         ? "Completed"

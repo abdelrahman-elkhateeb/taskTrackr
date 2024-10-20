@@ -122,6 +122,16 @@ const DisplayMissions = ({
         setReloadMission(!reloadMission);
         setEditingMission(null);
         setNewState("");
+        toast.success("Mission state updated successfully!", {
+          className: `toast-container mt-11 ${
+            darkMode ? "bg-dark-bg text-dark-primary" : "bg-light-bg text-light-primary"
+          }`,
+          bodyClassName: "toast-body",
+          progressClassName: `toast-progress ${
+            darkMode ? "bg-dark-primary" : "bg-light-primary"
+          }`,
+          closeButton: <CustomCloseButton darkMode={darkMode} />,
+        });
       }
     } catch (error) {
       console.error("Error updating mission state:", error);

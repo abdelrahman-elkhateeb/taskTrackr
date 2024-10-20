@@ -399,7 +399,7 @@ const User = require("../models/userModel.js");
         .json({ success: false, message: "User not found" });
     }
 
-    const userId = user._id; // Get the user ID from the found user
+    const userId = user._id; 
 
     const titleExists = project.missions.some(
       (mission) => mission.title === title,
@@ -456,6 +456,9 @@ const User = require("../models/userModel.js");
 
     await project.save();
     await newMission.save();
+
+    user.notification = true;
+    await user.save();
 
     res
       .status(201)
@@ -514,6 +517,12 @@ const User = require("../models/userModel.js");
     }
 
     mission.status = newState;
+
+    const user = await User.findById(userId); 
+    if (user) {
+      user.notification = true;
+      await user.save(); 
+    }
 
     await project.save();
 
@@ -696,7 +705,42 @@ const User = require("../models/userModel.js");
   }
 };
 
+const clearNotification = async (req, res) => {
+  const { userId } = req.body;
 
+  if (!userId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "User ID is required" });
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid user ID format",
+    });
+  }
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    user.notification = false;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Notification cleared successfully",
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 
 module.exports = {
   assignRole,
@@ -712,5 +756,6 @@ module.exports = {
   getAllMissions,
   getUserMissions,
   deleteMissionFromProject,
-  updateMyMissionState
+  updateMyMissionState,
+  clearNotification
 };

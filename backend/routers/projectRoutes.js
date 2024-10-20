@@ -13,7 +13,8 @@ const {
   getAllMissions,
   getUserMissions,
   deleteMissionFromProject,
-  updateMyMissionState
+  updateMyMissionState,
+  clearNotification
 } = require('../controllers/projectController.js');
 
 const router = express.Router();
@@ -43,5 +44,7 @@ router.put('/updateMyMission/:missionId/:userId', updateMyMissionState);    // �
 router.get('/userMissions/:userId', getUserMissions);                       // ✅
 
 router.delete('/del-mission', deleteMissionFromProject);                    // ✅ 
+
+router.post('/clear-notification', clearNotification);                      // ✅ 
 
 module.exports = router;
