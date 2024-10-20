@@ -23,7 +23,7 @@ const FiltrationComponent = ({ isDrawerOpen, toggleDrawer }) => {
     dispatch(updateFilteredTasks());
   };
   return (
-    <div className={`drawer drawer-end ${isDrawerOpen ? "open" : ""}  `}>
+    <div className={`drawer drawer-end ${isDrawerOpen ? "open" : ""}  z-[1000]`}>
       <input
         id="my-drawer"
         type="checkbox"

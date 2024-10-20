@@ -28,7 +28,7 @@ const AlertModal = ({ id }) => {
         checked={isModalOpen}
         onChange={(e) => setIsModalOpen(e.target.checked)}
       />
-      <div className="modal fixed inset-0 flex justify-center items-start bg-slate-200">
+      <div className="modal fixed inset-0 flex justify-center items-start bg-slate-200 z-[1000]">
         <div
           className={`modal-box mt-10 relative ${
             !darkMode ? "bg-slate-200" : ""

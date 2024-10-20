@@ -48,7 +48,7 @@ const UpdateTask = ({ taskEdit }) => {
   return (
     <div>
       <input type="checkbox" id="modal-update" className="modal-toggle" />
-      <div className="modal fixed inset-0 flex justify-center items-start ">
+      <div className="modal fixed inset-0 flex justify-center items-start z-[1000]">
         <div
           className={`modal-box mt-10 relative ${
             !darkMode ? "bg-slate-200" : ""
