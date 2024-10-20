@@ -30,7 +30,7 @@ const FiltrationBox = () => {
           <div className="divider"></div>
           <div className="form-control ">
             <label className="label cursor-pointer w-full">
-              <span className={`label-text  font-black text-lg ${!darkMode ? `text-gray-500`:''}`}>Low</span>
+              <span className={`label-text  font-black text-lg ${!darkMode ? `text-gray-400`:''}`}>Low</span>
               <input
                 type="checkbox"
                 checked={filtrationPriorities.includes("low")}
@@ -41,7 +41,7 @@ const FiltrationBox = () => {
           </div>
           <div className="form-control">
             <label className="label cursor-pointer">
-              <span className={`label-text  font-black text-lg ${!darkMode ? `text-gray-500`:''}`}>Medium</span>
+              <span className={`label-text  font-black text-lg ${!darkMode ? `text-gray-400`:''}`}>Medium</span>
               <input
                 type="checkbox"
                 checked={filtrationPriorities.includes("medium")}
@@ -52,7 +52,7 @@ const FiltrationBox = () => {
           </div>
           <div className="form-control">
             <label className="label cursor-pointer">
-              <span className={`label-text  font-black text-lg ${!darkMode ? `text-gray-500`:''}`}>High</span>
+              <span className={`label-text  font-black text-lg ${!darkMode ? `text-gray-400`:''}`}>High</span>
               <input
                 type="checkbox"
                 checked={filtrationPriorities.includes("high")}
@@ -67,7 +67,7 @@ const FiltrationBox = () => {
           <div className="divider"></div>
           <div className="form-control ">
             <label className="label cursor-pointer w-full">
-              <span className={`label-text  font-black text-lg ${!darkMode ? `text-gray-500`:''}`}>
+              <span className={`label-text  font-black text-lg ${!darkMode ? `text-gray-400`:''}`}>
                 Completed
               </span>
               <input
@@ -80,7 +80,7 @@ const FiltrationBox = () => {
           </div>
           <div className="form-control">
             <label className="label cursor-pointer">
-              <span className={`label-text  font-black text-lg ${!darkMode ? `text-gray-500`:''}`}>
+              <span className={`label-text  font-black text-lg ${!darkMode ? `text-gray-400`:''}`}>
                 In Progress
               </span>
               <input
