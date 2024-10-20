@@ -7,6 +7,7 @@ import male from "../../../public/male.svg";
 import female from "../../../public/female.svg";
 import { domain } from "../../../../api/api";
 import "./NavBar.css";
+import axios from "axios";
 
 function NavBar() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -15,7 +16,7 @@ function NavBar() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
   const [isNotification, setIsNotification] = useState(null);
-
+  const userId = Cookies.get("userId");
 
   useEffect(() => {
     const userId = Cookies.get("userId");
@@ -53,6 +54,16 @@ function NavBar() {
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
+  };
+
+  const clearUserNotification = async () => {
+    try {
+      await axios.post(`${domain}/api/Projects/clear-notification`, {
+        userId: userId,
+      });
+    } catch (error) {
+      console.error("Error clearing notifications:", error);
+    }
   };
 
   return (
@@ -164,6 +175,7 @@ function NavBar() {
             }`}
             onClick={() => {
               setSidebarOpen(false);
+              clearUserNotification();
             }}
           >
             Missions
@@ -239,6 +251,7 @@ function NavBar() {
             className={`cursor-pointer ${isNotification ? "notification" : ""} ${
               darkMode ? "text-dark-primary" : "text-light-primary"
             }`}
+            onClick={clearUserNotification()}
           >
             Missions
           </Link>
