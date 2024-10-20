@@ -4,13 +4,16 @@ import {
   searchTasks,
   setSearchKeyword,
   setTasks,
+  sortingTasks,
 } from "../../app/Slices/darkMode/searchTasksSlice";
 
 const SearchTasks = () => {
   const { tasks } = useSelector((state) => state.searchTacks);
   const [searchText, setSearchText] = useState("");
   const darkMode = useSelector((state) => state.darkMode.darkMode);
-
+  const sortingKeyword = useSelector(
+    (state) => state.searchTacks.sortingKeyword
+  );
   const dispatch = useDispatch();
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
@@ -18,6 +21,8 @@ const SearchTasks = () => {
       dispatch(setTasks(tasks));
       dispatch(setSearchKeyword(""));
     }
+    dispatch(sortingTasks(sortingKeyword));
+
   };
   const onSubmit = (e) => {
     e.preventDefault();
@@ -25,12 +30,7 @@ const SearchTasks = () => {
   };
   return (
     <form className="max-w-md mx-auto" onSubmit={onSubmit}>
-      <label
-        htmlFor="default-search"
-        className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-      >
-        Search
-      </label>
+     
       <div className="relative">
         <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
           <svg
@@ -64,7 +64,7 @@ const SearchTasks = () => {
         />
         <button
           type="submit"
-          className="text-black absolute end-2.5 bottom-2.5 bg-dark-primary hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-dark-primary dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-black absolute end-2.5 bottom-2.5 bg-dark-primary hover:bg-teal-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-dark-primary dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Search
         </button>
