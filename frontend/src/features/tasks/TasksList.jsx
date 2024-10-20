@@ -9,6 +9,7 @@ import TaskSkeleton from "./TaskSkeleton";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setTasks,
+  sortingTasks,
   updateFilteredTasks,
 } from "../../app/Slices/darkMode/searchTasksSlice";
 
@@ -17,11 +18,15 @@ const TasksList = () => {
   const [taskToEdit, setTaskToEdit] = useState();
   const { isLoading, data } = useGetTasksQuery();
   const { filteredTasks } = useSelector((state) => state.searchTacks);
+  const sortingKeyword = useSelector(
+    (state) => state.searchTacks.sortingKeyword
+  );
   const dispatch = useDispatch();
   useEffect(() => {
     if (!isLoading) {
       dispatch(setTasks(data?.tasks));
       dispatch(updateFilteredTasks());
+      dispatch(sortingTasks(sortingKeyword));
     }
   }, [isLoading, data]);
   return (

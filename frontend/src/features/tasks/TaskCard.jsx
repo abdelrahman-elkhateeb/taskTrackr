@@ -24,10 +24,20 @@ const TaskCard = ({
   };
   return (
     <>
-      <div className={`card ${darkMode ? 'bg-gray-700' :'bg-slate-200 border-light-primary'} max-w-sm shadow-2xl`}>
+      <div
+        className={`card ${
+          darkMode ? "bg-gray-700" : "bg-slate-200 border-light-primary"
+        } max-w-sm shadow-2xl`}
+      >
         <div className="card-body">
           <div className="flex justify-between">
-            <h2 className={`card-title  ${ darkMode ? "text-dark-primary" : "text-light-primary"}`}>{title}</h2>
+            <h2
+              className={`card-title  ${
+                darkMode ? "text-dark-primary" : "text-light-primary"
+              }`}
+            >
+              {title}
+            </h2>
             <span
               className={` ${
                 priority === "low"
@@ -80,11 +90,17 @@ const TaskCard = ({
             </div>
             <div className="form-control">
               <label className="label cursor-pointer">
-                <span className={`label-text mr-4 font-black ${darkMode ? '' : 'text-gray-600'}`}>Completed</span>
+                <span
+                  className={`label-text mr-4 font-black ${
+                    darkMode ? "" : "text-gray-600"
+                  }`}
+                >
+                  Completed
+                </span>
                 <input
                   type="checkbox"
                   checked={completed}
-                  className="checkbox"
+                  className="checkbox border-gray-500"
                   onChange={onChangeCompleted}
                 />
               </label>

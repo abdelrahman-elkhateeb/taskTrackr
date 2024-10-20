@@ -17,6 +17,7 @@ const Missions = () => {
         setLoading(true); // Set loading to true when starting to fetch
         const response = await axios.get(
           `${domain}/Projects/userMissions/${creatorId}`,
+
         );
         setMissions(response.data.missions || []);
       } catch (error) {
@@ -33,6 +34,7 @@ const Missions = () => {
     try {
       const response = await axios.put(
         `${domain}/api/Projects/updateMyMission/${missionId}/${creatorId}`,
+
         {
           newState,
         },

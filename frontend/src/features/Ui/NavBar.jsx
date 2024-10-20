@@ -19,6 +19,7 @@ function NavBar() {
     let userId = Cookies.get("userId");
     if (userId) {
       fetch(`${domain}/api/Users/${userId}`)
+
         .then((response) => response.json())
         .then((data) => {
           setUserData(data.user);
@@ -28,7 +29,7 @@ function NavBar() {
           console.error("Error fetching user data:", error);
         });
     } else {
-      navigate("/login");
+      navigate("/register");
     }
   }, [navigate]);
 
@@ -44,10 +45,10 @@ function NavBar() {
 
   return (
     <nav
-      className={`flex justify-between p-3 items-center rounded-[35px] container mx-auto ${
+      className={`flex justify-between p-3 items-center mx-auto sticky top-0 z-[1000] ${
         darkMode
-          ? "border-dark-primary text-dark-text"
-          : "border-light-primary text-light-text"
+          ? "border-dark-primary bg-dark-bg text-dark-text"
+          : "border-light-primary bg-light-bg text-light-text"
       }`}
     >
       <Link to="/">

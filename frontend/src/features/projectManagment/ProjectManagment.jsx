@@ -19,6 +19,7 @@ function ProjectManagement() {
         setLoading(true);
         const response = await axios.get(
           `${domain}/api/projects/user/${userId}/projects`,
+
         );
         setProjects(
           Array.isArray(response.data.projects) ? response.data.projects : []
