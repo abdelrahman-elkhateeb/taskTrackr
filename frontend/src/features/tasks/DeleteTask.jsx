@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Loader from "../Ui/Loader";
 import { useDeleteTaskMutation } from "./tasksApi";
 import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 /* eslint-disable react/prop-types */
 const AlertModal = ({ id }) => {
@@ -16,6 +17,12 @@ const AlertModal = ({ id }) => {
   useEffect(() => {
     if (isSuccess) {
       setIsModalOpen(false);
+      toast.success("Task Deleted successfully", {
+        style: {
+          backgroundColor: "black",
+          color: "#fff",
+        },
+      });
     }
   }, [isSuccess]);
 

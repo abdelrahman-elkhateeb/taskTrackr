@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useUpdateTaskMutation } from "./tasksApi";
 import Loader from "../Ui/Loader";
 import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 const UpdateTask = ({ taskEdit }) => {
   const {
     register,
@@ -31,8 +32,15 @@ const UpdateTask = ({ taskEdit }) => {
   useEffect(() => {
     if (isSuccess) {
       document.getElementById("modal-update").checked = false;
+      reset();
+      toast.success("Task Updated successfully", {
+        style: {
+          backgroundColor: "black",
+          color: "#fff",
+        },
+      });
     }
-  }, [isSuccess]);
+  }, [isSuccess, reset]);
   const onSubmit = (data) => {
     const { title, description, priority } = data;
     updateTask({

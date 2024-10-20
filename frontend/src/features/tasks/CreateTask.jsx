@@ -6,6 +6,7 @@ import Loader from "../Ui/Loader";
 import { useCreateTaskMutation } from "./tasksApi";
 import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const CreateTask = () => {
   const {
@@ -23,6 +24,12 @@ const CreateTask = () => {
     if (isSuccess) {
       document.getElementById("modal-create").checked = false;
       reset();
+      toast.success("Task Added successfully", {
+        style: {
+          backgroundColor: "black",
+          color: "#fff",
+        },
+      });
     }
   }, [isSuccess, reset]);
   const onSubmit = (data) => {

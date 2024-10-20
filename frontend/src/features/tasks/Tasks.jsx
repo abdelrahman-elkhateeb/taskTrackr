@@ -6,6 +6,7 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { MdFilterListAlt } from "react-icons/md";
 import { useState } from "react";
 import FiltrationComponent from "./FiltrationComponent";
+import { Toaster } from "react-hot-toast";
 
 function Tasks() {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
@@ -59,6 +60,7 @@ function Tasks() {
         isDrawerOpen={isDrawerOpen}
         toggleDrawer={toggleDrawer}
       />
+       <Toaster />
     </div>
   );
 }
