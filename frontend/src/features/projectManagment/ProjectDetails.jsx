@@ -127,9 +127,7 @@ const ProjectDetails = () => {
   useEffect(() => {
     const fetchProjectDetails = async () => {
       try {
-        const response = await axios.get(
-          `${domain}/api/Projects/${id}`,
-        );
+        const response = await axios.get(`${domain}/api/Projects/${id}`);
         setProject(response.data.project);
       } catch (error) {
         console.error("Error fetching project details:", error);
@@ -140,7 +138,11 @@ const ProjectDetails = () => {
   }, [id, reloadMission]);
 
   if (!project) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center mt-80">
+        <span className="loading loading-ball loading-lg"></span>
+      </div>
+    );
   }
 
   return (
@@ -208,6 +210,7 @@ const ProjectDetails = () => {
 };
 
 export default ProjectDetails;
+
 
 
 {/* <button

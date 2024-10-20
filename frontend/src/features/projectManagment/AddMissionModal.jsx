@@ -86,7 +86,11 @@ const AddMissionModal = ({
             <form onSubmit={handleSubmit}>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Title</span>
+                  <span className={`label-text ${
+                    darkMode
+                      ? "text-dark-primary"
+                      : "text-light-primary"
+                  }`}>Title</span>
                 </label>
                 <input
                   type="text"
@@ -103,7 +107,11 @@ const AddMissionModal = ({
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Description</span>
+                  <span className={`label-text ${
+                    darkMode
+                      ? "text-dark-primary"
+                      : "text-light-primary"
+                  }`}>Description</span>
                 </label>
                 <input
                   name="description"
@@ -119,7 +127,11 @@ const AddMissionModal = ({
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">User Email</span>
+                  <span className={`label-text ${
+                    darkMode
+                      ? "text-dark-primary"
+                      : "text-light-primary"
+                  }`}>User Email</span>
                 </label>
                 <input
                   type="email"

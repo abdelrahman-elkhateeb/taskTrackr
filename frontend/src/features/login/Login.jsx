@@ -165,39 +165,13 @@ function Login() {
                 )}
               </div>
 
-              <div className="flex items-center justify-between">
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
-                    <input
-                      id="remember"
-                      aria-describedby="remember"
-                      type="checkbox"
-                      className={`checkbox checkbox-primary border-dark-primary hover:`}
-                    />
-                  </div>
-                  <div
-                    className={`ml-3 text-sm ${
-                      darkMode ? " text-dark-primary" : " text-light-primary"
-                    }`}
-                  >
-                    <label htmlFor="remember">Remember me</label>
-                  </div>
-                </div>
-                <a
-                  href=""
-                  className={`text-sm font-medium hover:underline ${
-                    darkMode ? " text-dark-accent" : " text-light-accent"
-                  }`}
-                >
-                  Forgot password?
-                </a>
-              </div>
+              
               <button
                 type="submit"
                 className={`btn btn-primary w-full ${
                   darkMode
-                    ? "bg-dark-primary text-light-text hover:bg-dark-pHover"
-                    : "bg-light-primary text-dark-text hover:bg-light-pHover"
+                    ? "bg-dark-primary text-light-text border-dark-primary hover:5border-dark-primary hover:bg-dark-pHover"
+                    : "bg-light-primary text-dark-text border-light-primary hover:border-light-primary hover:bg-light-pHover"
                 }`}
                 disabled={loading}
               >

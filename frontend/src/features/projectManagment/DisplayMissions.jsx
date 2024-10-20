@@ -153,11 +153,11 @@ const DisplayMissions = ({
         ) : (
           missions.map((mission) => (
             <motion.li
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
               key={mission._id}
-              className={`p-4 my-3 flex flex-row justify-between border-2 rounded-xl transition-transform transform hover:scale-105 ${
+              className={`p-4 my-3 flex flex-row justify-between border-2 rounded-xl transition-transform transform hover:scale-[1.007] ${
                 darkMode
                   ? "bg-dark-card text-dark-text border-dark-primary"
                   : "bg-light-card text-light-text border-light-primary"

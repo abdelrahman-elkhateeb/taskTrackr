@@ -16,22 +16,31 @@ function NavBar() {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    let userId = Cookies.get("userId");
-    if (userId) {
-      fetch(`${domain}/api/Users/${userId}`)
+    const userId = Cookies.get("userId");
 
-        .then((response) => response.json())
-        .then((data) => {
+    const fetchUserData = async (userId) => {
+      try {
+        const response = await fetch(`${domain}/api/Users/${userId}`);
+        const data = await response.json();
+
+        if (response.ok && data.user) {
           setUserData(data.user);
           setIsLoggedIn(true);
-        })
-        .catch((error) => {
-          console.error("Error fetching user data:", error);
-        });
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setIsLoggedIn(false);
+      }
+    };
+
+    if (userId) {
+      fetchUserData(userId);
     } else {
-      navigate("/register");
+      setIsLoggedIn(false);
     }
-  }, [navigate]);
+  }, []);
 
   function handleLogout() {
     Cookies.remove("userId");
@@ -189,6 +198,15 @@ function NavBar() {
 
       {/* Main Nav for Desktop */}
       <ul className="hidden md:flex gap-6 items-center text-lg font-semibold">
+        {isLoggedIn && <>
+          <Link
+          to="/"
+          className={`cursor-pointer relative ${
+            darkMode ? "text-dark-primary" : "text-light-primary"
+          }`}
+        >
+          Home
+        </Link>
         <Link to="/ProjectManagement">
           <li
             className={`cursor-pointer ${
@@ -219,7 +237,7 @@ function NavBar() {
           >
             Missions
           </Link>
-        </li>
+        </li></>}
         {isLoggedIn ? (
           <div className="dropdown dropdown-end">
             <div
