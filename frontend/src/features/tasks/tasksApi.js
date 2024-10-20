@@ -4,7 +4,9 @@ import Cookies from "js-cookie";
 export const tasksApi = createApi({
   reducerPath: "tasksApi",
   tagTypes: ["tasks"],
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://depi-final-project-backend.vercel.app/api",
+  }),
   endpoints: (builder) => ({
     getTasks: builder.query({
       query: () => ({
@@ -32,7 +34,7 @@ export const tasksApi = createApi({
         const patchResult = dispatch(
           tasksApi.util.updateQueryData("getTasks", _id, (draft) => {
             Object.assign(draft, patch);
-          })
+          }),
         );
         try {
           await queryFulfilled;
@@ -55,7 +57,7 @@ export const tasksApi = createApi({
         const patchResult = dispatch(
           tasksApi.util.updateQueryData("getTasks", id, (draft) => {
             Object.assign(draft, patch);
-          })
+          }),
         );
         try {
           await queryFulfilled;

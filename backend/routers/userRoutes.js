@@ -1,10 +1,10 @@
-import express from "express";
-import {
+const express = require("express");
+const {
   register,
   login,
   updateUser,
   getUser,
-} from "../controllers/userController.js";
+} = require("../controllers/userController.js");
 
 const router = express.Router();
 
@@ -17,4 +17,14 @@ router.post("/login", login);
 // Update user route
 router.put("/:userId", updateUser).get("/:userId", getUser);
 
-export default router;
+const users = [
+  { id: 1, name: "John Doe" },
+  { id: 2, name: "Jane Doe" },
+];
+
+// GET all users
+router.get("/", (req, res) => {
+  res.json(users); // Return the user data
+});
+
+module.exports = router;

@@ -25,12 +25,12 @@ const CreateProject = ({ onProjectCreated }) => {
     try {
       // Create a new project
       const response = await axios.post(
-        "http://localhost:5000/api/Projects/create",
+        "https://depi-final-project-backend.vercel.app/api/Projects/create",
         {
           title,
           description,
           userId,
-        }
+        },
       );
 
       if (response.status === 201) {

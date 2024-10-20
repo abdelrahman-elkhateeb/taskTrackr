@@ -16,7 +16,7 @@ const Missions = () => {
       try {
         setLoading(true); // Set loading to true when starting to fetch
         const response = await axios.get(
-          `http://localhost:5000/api/Projects/userMissions/${creatorId}`
+          `https://depi-final-project-backend.vercel.app/Projects/userMissions/${creatorId}`,
         );
         setMissions(response.data.missions || []);
       } catch (error) {
@@ -32,10 +32,10 @@ const Missions = () => {
   const updateMissionState = async (missionId, newState) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/Projects/updateMyMission/${missionId}/${creatorId}`,
+        `https://depi-final-project-backend.vercel.app/api/Projects/updateMyMission/${missionId}/${creatorId}`,
         {
           newState,
-        }
+        },
       );
       if (response.data.success) {
         // Update the mission state in the UI

@@ -35,16 +35,19 @@ function Login() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/Users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://depi-final-project-backend.vercel.app/api/Users/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
         },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -54,7 +57,7 @@ function Login() {
       const data = await response.json();
 
       Cookies.set("userId", data.user._id, { expires: 1 });
-      localStorage.setItem("loggedIn", true);
+
       navigate("/");
     } catch (error) {
       console.error("Error:", error);

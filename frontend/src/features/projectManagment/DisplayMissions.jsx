@@ -41,12 +41,14 @@ const DisplayMissions = ({
 
         const userPromises = userIds.map((userId) =>
           axios
-            .get(`http://localhost:5000/api/Users/${userId}`)
+            .get(
+              `https://depi-final-project-backend.vercel.app/api/Users/${userId}`,
+            )
             .then((res) => res.data)
             .catch((err) => {
               console.error(`Error fetching user ${userId}:`, err);
               return null;
-            })
+            }),
         );
 
         const usersData = await Promise.all(userPromises);
@@ -72,8 +74,8 @@ const DisplayMissions = ({
   const handleDeleteMission = async (missionId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/Projects/del-mission`,
-        { data: { projectId, missionId, userId: creatorId } }
+        `https://depi-final-project-backend.vercel.app/api/Projects/del-mission`,
+        { data: { projectId, missionId, userId: creatorId } },
       );
       setConfirmationModalOpen(false);
       if (response.data.success) {
@@ -94,13 +96,13 @@ const DisplayMissions = ({
   const handleUpdateMissionState = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/Projects/updateMissionState`,
+        `https://depi-final-project-backend.vercel.app/api/Projects/updateMissionState`,
         {
           projectId,
           missionId: editingMission._id,
           newState,
           userId: creatorId,
-        }
+        },
       );
       if (response.data.success) {
         setReloadMission(!reloadMission);
