@@ -8,7 +8,8 @@ import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
 import DarkModeToggle from "../Ui/DarkModeToggle";
 import Lottie from "lottie-react";
-import { motion } from "framer-motion"; // Import Framer Motion
+import { motion } from "framer-motion"; 
+import { domain } from "../../../../api/api";
 
 function Login() {
   const {
@@ -35,7 +36,7 @@ function Login() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/Users/login", {
+      const response = await fetch(`${domain}/api/Users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

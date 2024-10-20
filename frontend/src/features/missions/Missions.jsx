@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { motion } from "framer-motion";
-import { Spinner } from "reactstrap"; // Import a spinner component from a library
+import { domain } from "../../../../api/api";
 
 const Missions = () => {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
@@ -16,7 +16,7 @@ const Missions = () => {
       try {
         setLoading(true); // Set loading to true when starting to fetch
         const response = await axios.get(
-          `https://depi-final-project-zeta.vercel.app/Projects/userMissions/${creatorId}`,
+          `${domain}/Projects/userMissions/${creatorId}`,
         );
         setMissions(response.data.missions || []);
       } catch (error) {
@@ -32,7 +32,7 @@ const Missions = () => {
   const updateMissionState = async (missionId, newState) => {
     try {
       const response = await axios.put(
-        `https://depi-final-project-zeta.vercel.app/api/Projects/updateMyMission/${missionId}/${creatorId}`,
+        `${domain}/api/Projects/updateMyMission/${missionId}/${creatorId}`,
         {
           newState,
         },

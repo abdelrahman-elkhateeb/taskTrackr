@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import Cookies from "js-cookie";
+import { domain } from "../../../../api/api";
 
 export const tasksApi = createApi({
   reducerPath: "tasksApi",
   tagTypes: ["tasks"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://depi-final-project-zeta.vercel.app/api",
+    baseUrl: `${domain}/api`,
   }),
   endpoints: (builder) => ({
     getTasks: builder.query({

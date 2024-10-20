@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import ChatSection from "./ChatSection"; // Import the ChatSection component
-import DetailsSection from "./DetailsSection"; // Import the DetailsSection component
+import ChatSection from "./ChatSection"; 
+import DetailsSection from "./DetailsSection";
 import './project.css';
+import { domain } from "../../../../api/api";
 
 const ProjectDetails = () => {
   const { id } = useParams();
@@ -127,7 +128,7 @@ const ProjectDetails = () => {
     const fetchProjectDetails = async () => {
       try {
         const response = await axios.get(
-          `https://depi-final-project-zeta.vercel.app/api/Projects/${id}`,
+          `${domain}/api/Projects/${id}`,
         );
         setProject(response.data.project);
       } catch (error) {

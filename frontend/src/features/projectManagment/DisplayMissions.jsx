@@ -9,6 +9,7 @@ import { CircleX, Bolt } from "lucide-react";
 import ConfirmationModal from "./ConfirmationModal";
 import Cookies from "js-cookie";
 import { motion } from "framer-motion";
+import { domain } from "../../../../api/api";
 
 
 const DisplayMissions = ({
@@ -42,7 +43,7 @@ const DisplayMissions = ({
         const userPromises = userIds.map((userId) =>
           axios
             .get(
-              `https://depi-final-project-zeta.vercel.app/api/Users/${userId}`,
+              `${domain}/api/Users/${userId}`,
             )
             .then((res) => res.data)
             .catch((err) => {
@@ -74,7 +75,7 @@ const DisplayMissions = ({
   const handleDeleteMission = async (missionId) => {
     try {
       const response = await axios.delete(
-        `https://depi-final-project-zeta.vercel.app/api/Projects/del-mission`,
+        `${domain}/api/Projects/del-mission`,
         { data: { projectId, missionId, userId: creatorId } },
       );
       setConfirmationModalOpen(false);
@@ -96,7 +97,7 @@ const DisplayMissions = ({
   const handleUpdateMissionState = async () => {
     try {
       const response = await axios.put(
-        `https://depi-final-project-zeta.vercel.app/api/Projects/updateMissionState`,
+        `${domain}/api/Projects/updateMissionState`,
         {
           projectId,
           missionId: editingMission._id,

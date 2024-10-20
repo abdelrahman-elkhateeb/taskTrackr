@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
+import { domain } from "../../../../api/api";
 
 const CreateProject = ({ onProjectCreated }) => {
   const [title, setTitle] = useState("");
@@ -25,7 +26,7 @@ const CreateProject = ({ onProjectCreated }) => {
     try {
       // Create a new project
       const response = await axios.post(
-        "https://depi-final-project-zeta.vercel.app/api/Projects/create",
+        `${domain}/api/Projects/create`,
         {
           title,
           description,

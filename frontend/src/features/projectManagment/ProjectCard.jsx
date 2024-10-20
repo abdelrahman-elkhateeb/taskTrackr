@@ -5,6 +5,7 @@ import { Settings, Trash2 } from "lucide-react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; 
+import { domain } from "../../../../api/api";
 
 const ProjectCard = ({ project, onProjectDeleted }) => {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
@@ -16,7 +17,7 @@ const ProjectCard = ({ project, onProjectDeleted }) => {
     const userId = Cookies.get("userId");
     try {
       await axios.delete(
-        `https://depi-final-project-zeta.vercel.app/api/projects/${project._id}/${userId}`,
+        `${domain}/api/projects/${project._id}/${userId}`,
       );
       onProjectDeleted(project._id);
     } catch (error) {

@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Loader from "../Ui/Loader";
+import { domain } from "../../../../api/api";
 
 function Profile() {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
@@ -13,7 +14,7 @@ function Profile() {
     const userId = Cookies.get("userId");
 
     if (userId) {
-      fetch(`https://depi-final-project-zeta.vercel.app/Users/${userId}`)
+      fetch(`${domain}/Users/${userId}`)
         .then((response) => response.json())
         .then((data) => setUserData(data.user)) // Access the nested user object
         .catch((error) => {

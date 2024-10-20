@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
+import { domain } from "../../../../api/api";
 
 const AddMissionModal = ({
   modalOpen,
@@ -38,7 +39,7 @@ const AddMissionModal = ({
 
     try {
       const response = await axios.post(
-        "https://depi-final-project-zeta.vercel.app/api/Projects/addMission",
+        `${domain}/api/Projects/addMission`,
         {
           projectId,
           title: formData.title,

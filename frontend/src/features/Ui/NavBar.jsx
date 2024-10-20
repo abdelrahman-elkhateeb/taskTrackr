@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
 import male from "../../../public/male.svg";
 import female from "../../../public/female.svg";
-
+import { domain } from "../../../../api/api";
 import "./NavBar.css";
 
 function NavBar() {
@@ -18,7 +18,7 @@ function NavBar() {
   useEffect(() => {
     let userId = Cookies.get("userId");
     if (userId) {
-      fetch(`https://depi-final-project-zeta.vercel.app/api/Users/${userId}`)
+      fetch(`${domain}/api/Users/${userId}`)
         .then((response) => response.json())
         .then((data) => {
           setUserData(data.user);

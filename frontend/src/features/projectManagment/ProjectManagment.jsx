@@ -5,6 +5,7 @@ import ProjectCard from "./ProjectCard";
 import { useSelector } from "react-redux";
 import CreateProject from "./CreateProject";
 import { motion } from "framer-motion";
+import { domain } from "../../../../api/api";
 
 function ProjectManagement() {
   const [projects, setProjects] = useState([]);
@@ -17,7 +18,7 @@ function ProjectManagement() {
       if (userId) {
         setLoading(true);
         const response = await axios.get(
-          `https://depi-final-project-zeta.vercel.app/api/projects/user/${userId}/projects`,
+          `${domain}/api/projects/user/${userId}/projects`,
         );
         setProjects(
           Array.isArray(response.data.projects) ? response.data.projects : []
