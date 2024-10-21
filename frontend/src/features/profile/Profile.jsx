@@ -14,7 +14,7 @@ function Profile() {
     const userId = Cookies.get("userId");
 
     if (userId) {
-      fetch(`${domain}/Users/${userId}`)
+      fetch(`${domain}/api/Users/${userId}`)
         .then((response) => response.json())
         .then((data) => setUserData(data.user)) // Access the nested user object
         .catch((error) => {
