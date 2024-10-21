@@ -23,7 +23,11 @@ const userSchema = new mongoose.Schema({
     tasks: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Task",
-    }]
+    }],
+    notification: {
+        type: Boolean,
+        default: false,
+    }
 }, { timestamps: true });
 
 const User = mongoose.model("User", userSchema);

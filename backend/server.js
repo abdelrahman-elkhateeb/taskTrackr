@@ -5,7 +5,8 @@ const connectDB = require("./config/db.js");
 const taskRouter = require("./routers/taskRoute.js");
 const userRoutes = require("./routers/userRoutes.js");
 const projectRoutes = require("./routers/projectRoutes.js");
-const helmet = require("helmet");
+const { default: helmet } = require("helmet");
+
 const mongoose = require("mongoose");
 
 dotenv.config();

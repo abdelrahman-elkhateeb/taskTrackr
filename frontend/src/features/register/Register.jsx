@@ -9,6 +9,7 @@ import DarkModeToggle from "../Ui/DarkModeToggle";
 import darkRegisterSVG from "../../../public/regiter.json";
 import lightRegisterSVG from "../../../public/lightRegister.json";
 import Lottie from "lottie-react";
+import { domain } from "../../../../api/api";
 
 function Register() {
   const {
@@ -57,7 +58,7 @@ function Register() {
 
     try {
       const response = await fetch(
-        "https://depi-final-project-backend.vercel.app/api/Users/register",
+        `${domain}/api/Users/register`,
         {
           method: "POST",
           headers: {
@@ -311,16 +312,6 @@ function Register() {
                   >
                     Register
                   </button>
-                  <Link
-                    to="/"
-                    className={`py-3 rounded-lg w-full ${
-                      darkMode
-                        ? "bg-dark-primary hover:bg-dark-pHover text-light-text"
-                        : "bg-light-primary hover:bg-light-pHover text-dark-text"
-                    }`}
-                  >
-                    have a tour?
-                  </Link>
                 </div>
               </form>
             )}
