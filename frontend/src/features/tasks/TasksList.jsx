@@ -12,6 +12,7 @@ import {
   sortingTasks,
   updateFilteredTasks,
 } from "../../app/Slices/darkMode/searchTasksSlice";
+import NoTaskFound from "./NoTaskFound";
 
 const TasksList = () => {
   const [taskIdToDelete, setTaskIdToDelete] = useState();
@@ -50,6 +51,7 @@ const TasksList = () => {
               />
             ))}
       </div>
+      {filteredTasks.length === 0 && !isLoading && <NoTaskFound />}
       <AlertModal id={taskIdToDelete} />
       <UpdateTask taskEdit={taskToEdit} />
       <CreateTask />
