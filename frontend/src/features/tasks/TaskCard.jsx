@@ -32,7 +32,7 @@ const TaskCard = ({
         <div className="card-body">
           <div className="flex justify-between">
             <h2
-              className={`card-title  ${
+              className={`card-title break-words break-all  ${
                 darkMode ? "text-dark-primary" : "text-light-primary"
               }`}
             >
@@ -50,7 +50,7 @@ const TaskCard = ({
               {priority}
             </span>
           </div>
-          <p className="text-sm">{description}</p>
+          <p className="text-sm break-words break-all">{description}</p>
           <div className="flex my-2 text-xs">
             <p className=" text-slate-400 ">
               Due-Date :{new Date(dueDate).toLocaleDateString()}{" "}
