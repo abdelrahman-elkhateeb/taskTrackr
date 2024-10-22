@@ -25,4 +25,4 @@ const apis = {
 const localUrl = "http://localhost:5000"
 const domainUrl = "https://depi-final-project-backend.vercel.app";
 
-export const domain = localUrl;
+export const domain = domainUrl;
