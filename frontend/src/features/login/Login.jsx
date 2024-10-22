@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
 import DarkModeToggle from "../Ui/DarkModeToggle";
 import Lottie from "lottie-react";
-import { motion } from "framer-motion"; 
+import { motion } from "framer-motion";
 import { domain } from "../../../../api/api";
 
 function Login() {
@@ -36,19 +36,16 @@ function Login() {
     }
 
     try {
-      const response = await fetch(
-        `${domain}/api/Users/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
+      const response = await fetch(`${domain}/api/Users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -74,7 +71,7 @@ function Login() {
 
   return (
     <section
-      className={`h-screen flex items-center justify-center ${
+      className={`bg-base-100 grid grid-cols-1 md:grid-cols-2 items-center w-full p-6 md:p-12 min-h-screen ${
         darkMode ? "bg-dark-bg" : "bg-light-bg"
       }`}
     >
@@ -87,12 +84,14 @@ function Login() {
           <DarkModeToggle />
         </div>
         <motion.div
-          className={`w-full md:w-96 rounded-lg shadow-md border-2 ${
-            darkMode ? "border-dark-primary" : "border-dark-primary"
-          }`}
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
+          className={`w-full bg-base-200 rounded-lg shadow-md sm:max-w-md border-2 ${
+            darkMode
+              ? "bg-dark-bg border-dark-primary"
+              : "bg-light-bg border-light-primary"
+          }`}
         >
           <div className="p-6 space-y-4">
             <h1
@@ -129,7 +128,7 @@ function Login() {
                   className={`input input-bordered w-full border-[1px] ${
                     darkMode
                       ? "bg-dark-bg text-dark-text border-dark-primary"
-                      : "bg-light-bg text-light-text"
+                      : "bg-light-bg text-light-text border-light-primary"
                   }`}
                   placeholder="name@company.com"
                   {...register("email", { required: true })}
@@ -156,7 +155,7 @@ function Login() {
                   className={`input input-bordered w-full border-[1px] ${
                     darkMode
                       ? "bg-dark-bg text-dark-text border-dark-primary"
-                      : "bg-light-bg text-light-text"
+                      : "bg-light-bg text-light-text border-light-primary"
                   }`}
                   {...register("password", { required: true })}
                 />
@@ -165,13 +164,12 @@ function Login() {
                 )}
               </div>
 
-              
               <button
                 type="submit"
-                className={`btn btn-primary w-full ${
+                className={`py-3 rounded-lg w-full ${
                   darkMode
-                    ? "bg-dark-primary text-light-text border-dark-primary hover:5border-dark-primary hover:bg-dark-pHover"
-                    : "bg-light-primary text-dark-text border-light-primary hover:border-light-primary hover:bg-light-pHover"
+                    ? "bg-dark-primary hover:bg-dark-pHover text-light-text"
+                    : "bg-light-primary hover:bg-light-pHover text-dark-text"
                 }`}
                 disabled={loading}
               >
@@ -181,8 +179,8 @@ function Login() {
                 Don't have an account?{" "}
                 <a
                   href=""
-                  className={`font-medium text-primary hover:underline ${
-                    darkMode ? " text-dark-accent" : " text-light-accent"
+                  className={`cursor-pointer ${
+                    darkMode ? "text-dark-primary" : "text-light-primary"
                   }`}
                   onClick={handleRegisterClick}
                 >
