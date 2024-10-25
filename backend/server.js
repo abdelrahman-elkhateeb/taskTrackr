@@ -18,7 +18,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://depi-final-project-m1eh.vercel.app",
+      "https://depi-final-project-m1eh-4nm8uhik1.vercel.app",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
