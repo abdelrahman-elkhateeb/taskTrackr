@@ -132,7 +132,7 @@ const Missions = () => {
                     {mission.status}
                   </span>
                 </div>
-                <p className="text-gray-700">{mission.description}</p>
+                <p className="text-gray-500">{mission.description}</p>
                 <p className="text-sm flex flex-row justify-between">
                   <span className="font-semibold">
                     Created At:{" "}

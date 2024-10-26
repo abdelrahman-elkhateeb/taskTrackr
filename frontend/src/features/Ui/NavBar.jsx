@@ -13,6 +13,7 @@ function NavBar() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const darkMode = useSelector((state) => state.darkMode.darkMode);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
   const [isNotification, setIsNotification] = useState(null);
@@ -36,6 +37,8 @@ function NavBar() {
       } catch (error) {
         console.error("Error fetching user data:", error);
         setIsLoggedIn(false);
+      }finally{
+        setIsLoading(true);
       }
     };
 
@@ -67,7 +70,8 @@ function NavBar() {
   };
 
   return (
-    <nav
+    <>
+        {isLoading && <nav
       className={`flex justify-between p-3 items-center mx-auto sticky top-0 z-[1000] ${
         darkMode
           ? "border-dark-primary bg-dark-bg text-dark-text"
@@ -326,7 +330,9 @@ function NavBar() {
           onClick={toggleSidebar}
         ></div>
       )}
-    </nav>
+    </nav>}
+    </>
+
   );
 }
 
