@@ -9,6 +9,8 @@ import Profile from "../profile/Profile";
 import ProjectManagement from "../projectManagment/ProjectManagment";
 import ProjectDetails from "../projectManagment/ProjectDetails";
 import Missions from "../missions/Missions";
+import AuthRoute from "./protectedRoutes/AuthRoute";
+import ProtectedLogin from "./protectedRoutes/ProtectedLogin";
 
 const router = createBrowserRouter([
   {
@@ -16,13 +18,19 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       { path: "/", element: <Home /> },
-      { path: "/login", element: <Login /> },
-      { path: "/register", element: <Register /> },
-      { path: "/tasks", element: <Tasks /> },
-      { path: "/profile", element: <Profile /> },
-      { path: "/projectManagement", element: <ProjectManagement /> },
-      { path: "/projects/:id", element: <ProjectDetails />} ,
-      { path: "/myMissions", element: <Missions />} ,
+      { path: "/login", element: <ProtectedLogin element={<Login />} /> },
+      { path: "/register", element: <ProtectedLogin element={<Register />} /> },
+      { path: "/tasks", element: <AuthRoute element={<Tasks />} /> },
+      { path: "/profile", element: <AuthRoute element={<Profile />} /> },
+      {
+        path: "/projectManagement",
+        element: <AuthRoute element={<ProjectManagement />} />,
+      },
+      {
+        path: "/projects/:id",
+        element: <AuthRoute element={<ProjectDetails />} />,
+      },
+      { path: "/myMissions", element: <AuthRoute element={<Missions />} /> },
     ],
   },
 ]);
