@@ -15,6 +15,7 @@ import {
 import NoTaskFound from "./NoTaskFound";
 
 const TasksList = () => {
+  const isOnline = useSelector((state) => state.network.isOnline);
   const [taskIdToDelete, setTaskIdToDelete] = useState();
   const [taskToEdit, setTaskToEdit] = useState();
   const { isLoading, data } = useGetTasksQuery();
@@ -33,7 +34,7 @@ const TasksList = () => {
   return (
     <div>
       <div className=" mt-10  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3  gap-2 md:gap-4  rounded-md">
-        {isLoading
+        {isLoading || !isOnline
           ? Array.from({ length: 6 }, (_, index) => (
               <TaskSkeleton key={index} />
             ))
