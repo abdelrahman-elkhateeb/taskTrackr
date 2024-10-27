@@ -2,6 +2,7 @@
 import { MdDelete, MdEdit } from "react-icons/md";
 import { useUpdateTaskMutation } from "./tasksApi";
 import { useSelector } from "react-redux";
+import { format } from "date-fns";
 
 const TaskCard = ({
   title,
@@ -52,8 +53,8 @@ const TaskCard = ({
           </div>
           <p className="text-sm break-words break-all">{description}</p>
           <div className="flex my-2 text-xs">
-            <p className=" text-slate-400 ">
-              Due-Date :{new Date(dueDate).toLocaleDateString()}{" "}
+            <p className="text-slate-400">
+              Due-Date: {format(new Date(dueDate), "dd/MM/yyyy")}
             </p>
             <span
               className={`${
