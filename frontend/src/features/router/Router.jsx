@@ -5,7 +5,7 @@ import Home from "../Home/Home";
 import AppLayout from "../layout/Layout";
 import Error from "../Ui/Error";
 import Tasks from "../tasks/Tasks";
-import Profile from "../profile/Profile";
+import Profile from "../profile/ProfilePage";
 import ProjectManagement from "../projectManagment/ProjectManagment";
 import ProjectDetails from "../projectManagment/ProjectDetails";
 import Missions from "../missions/Missions";
