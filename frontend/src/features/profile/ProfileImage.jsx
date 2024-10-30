@@ -1,22 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import male from "../../../public/male.svg";
 import female from "../../../public/female.svg";
-import { useState } from "react";
-const ProfileImage = ({ gender }) => {
+import { useEffect, useState } from "react";
+const ProfileImage = ({ userData, setUserData, submitUpdate }) => {
   const data = new FormData();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [fileImage, setFileImage] = useState(null);
   const handleImageChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
       setSelectedImage(URL.createObjectURL(file));
-      data.append("file", file);
-      data.append("upload_preset", "profile_image");
-      data.append("cloud_name", "dh71g32l9");
-      submitUpload();
+      setFileImage(file);
     }
   };
   const submitUpload = async () => {
-    console.log(data)
+    data.append("file", fileImage);
+    data.append("upload_preset", "profile_image");
+    data.append("cloud_name", "dh71g32l9");
     const res = await fetch(
       `https://api.cloudinary.com/v1_1/dh71g32l9/image/upload`,
       {
@@ -26,13 +27,29 @@ const ProfileImage = ({ gender }) => {
     );
     const uploaded = await res.json();
     console.log(uploaded);
+    setSelectedImage(uploaded.url);
+    setUserData((prev) => ({
+      ...prev,
+      imageUrl: uploaded.url,
+      imageId: uploaded.public_id,
+    }));
   };
+  useEffect(() => {
+    console.log(userData)
+    if (userData.imageUrl === selectedImage) {
+      submitUpdate();
+    }
+  }, [userData.imageUrl, userData.imageId]);
   return (
     <div className="flex flex-col items-center md:space-x-12 space-y-5 sm:flex-row sm:space-y-0">
       <img
         className="object-cover w-32 h-32 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500"
-        src={selectedImage || (gender === "male" ? male : female)}
-        alt="Bordered avatar"
+        src={
+          selectedImage ||
+          userData.imageUrl ||
+          (userData.gender === "male" ? male : female)
+        }
+        alt="Image Profile"
       />
       <input
         type="file"

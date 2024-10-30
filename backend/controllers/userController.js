@@ -63,7 +63,7 @@ const login = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const { userId } = req.params;
-  const { username, email, password, gender } = req.body;
+  const { username, email, password, gender, imageUrl, imageId } = req.body;
 
   try {
     const user = await User.findById(userId);
@@ -100,7 +100,8 @@ const updateUser = async (req, res) => {
     } else if (gender) {
       user.gender = gender;
     }
-
+    user.imageId = imageId;
+    user.imageUrl = imageUrl;
     const updatedUser = await user.save();
     res
       .status(200)

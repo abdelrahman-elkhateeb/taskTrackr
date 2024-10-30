@@ -22,7 +22,6 @@ function Profile() {
         console.error("Error fetching user data:", error);
       });
   }, []);
-
   const ConfirmUpdate = async () => {
     try {
       const res = await axios.put(`${domain}/api/Users/${userId}`, {
@@ -34,7 +33,7 @@ function Profile() {
       toast.error(`${error?.response?.data.message} Please try again`);
     }
   };
-
+console.log(userData)
   if (!userData) {
     return <ProfileSkeleton />;
   }
@@ -57,7 +56,11 @@ function Profile() {
 
                     <div className="grid mx-auto">
                       {/* Profile Picture Section */}
-                      <ProfileImage gender={userData?.gender} />
+                      <ProfileImage
+                        userData={userData}
+                        setUserData={setUserData}
+                        submitUpdate={ConfirmUpdate}
+                      />
                       {/* Form Data Section */}
                       <ProfileDataForm
                         userData={userData}
