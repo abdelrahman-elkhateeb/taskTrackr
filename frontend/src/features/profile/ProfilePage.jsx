@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -6,14 +7,15 @@ import { domain } from "../../../../api/api";
 import ProfileDataForm from "./ProfileDataForm";
 import ProfileImage from "./ProfileImage";
 import ChangePasswordForm from "./ChangePasswordForm";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 function Profile() {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
   const [userData, setUserData] = useState(null);
+  const userId = Cookies.get("userId");
 
   useEffect(() => {
-    const userId = Cookies.get("userId");
-
     if (userId) {
       fetch(`${domain}/api/Users/${userId}`)
         .then((response) => response.json())
@@ -25,11 +27,21 @@ function Profile() {
       console.error("User data not found in cookies.");
     }
   }, []);
+  const ConfirmUpdate = async () => {
+    try {
+      const res = await axios.put(`${domain}/api/Users/${userId}`, {
+        ...userData,
+      });
+     setUserData(res.data.user)
+      toast.success("Profile updated successfully")
+    } catch (error) {
+      toast.error(`${error?.response?.data.message} Please try again`)
+    }
+  };
 
   if (!userData) {
     return <Loader />;
   }
-  console.log(userData);
   return (
     <>
       <>
@@ -52,9 +64,9 @@ function Profile() {
                       <ProfileImage gender={userData?.gender} />
                       {/* Form Data Section */}
                       <ProfileDataForm
-                        username={userData?.username}
-                        email={userData?.email}
-                        gender={userData?.gender}
+                        userData={userData}
+                        setUserData={setUserData}
+                        submitUpdate={ConfirmUpdate}
                       />
                       {/* Change Password */}
                       <ChangePasswordForm password={userData?.password} />
