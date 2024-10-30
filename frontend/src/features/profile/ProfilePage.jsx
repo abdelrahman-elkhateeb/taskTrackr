@@ -9,6 +9,7 @@ import ChangePasswordForm from "./ChangePasswordForm";
 import axios from "axios";
 import toast from "react-hot-toast";
 import ProfileSkeleton from "./ProfileSkeleton";
+import DeleteImageProfile from "./DeleteImageProfile";
 
 function Profile() {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
@@ -33,7 +34,7 @@ function Profile() {
       toast.error(`${error?.response?.data.message} Please try again`);
     }
   };
-console.log(userData)
+ 
   if (!userData) {
     return <ProfileSkeleton />;
   }
@@ -80,6 +81,11 @@ console.log(userData)
             </div>
           </div>
         </section>
+        <DeleteImageProfile
+          userData={userData}
+          setUserData={setUserData}
+          submitUpdate={ConfirmUpdate}
+        />
       </>
     </>
   );

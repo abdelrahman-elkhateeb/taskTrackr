@@ -26,7 +26,6 @@ const ProfileImage = ({ userData, setUserData, submitUpdate }) => {
       }
     );
     const uploaded = await res.json();
-    console.log(uploaded);
     setSelectedImage(uploaded.url);
     setUserData((prev) => ({
       ...prev,
@@ -35,9 +34,9 @@ const ProfileImage = ({ userData, setUserData, submitUpdate }) => {
     }));
   };
   useEffect(() => {
-    console.log(userData)
     if (userData.imageUrl === selectedImage) {
       submitUpdate();
+      setSelectedImage(null);
     }
   }, [userData.imageUrl, userData.imageId]);
   return (
@@ -77,15 +76,17 @@ const ProfileImage = ({ userData, setUserData, submitUpdate }) => {
         >
           Save picture
         </button>
-        <button
-          type="button"
+        <label
+          htmlFor="delete_image"
           onClick={() => setSelectedImage(null)}
           className={`w-full py-3.5 px-3 ${
             selectedImage ? "hidden" : "block"
-          } text-base font-medium text-indigo-900 bg-red-200 rounded-lg border border-indigo-200 hover:bg-red-300 hover:text-[#202142]`}
+          } ${
+            userData.imageUrl ? "" : "hidden"
+          } text-base text-center font-medium text-indigo-900 cursor-pointer bg-red-200 rounded-lg border border-indigo-200 hover:bg-red-300 hover:text-[#202142]`}
         >
           Delete picture
-        </button>
+        </label>
         <button
           type="button"
           onClick={() => setSelectedImage(null)}
