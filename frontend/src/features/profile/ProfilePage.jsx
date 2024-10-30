@@ -32,10 +32,10 @@ function Profile() {
       const res = await axios.put(`${domain}/api/Users/${userId}`, {
         ...userData,
       });
-     setUserData(res.data.user)
-      toast.success("Profile updated successfully")
+      setUserData(res.data.user);
+      toast.success("Profile updated successfully");
     } catch (error) {
-      toast.error(`${error?.response?.data.message} Please try again`)
+      toast.error(`${error?.response?.data.message} Please try again`);
     }
   };
 
@@ -69,7 +69,11 @@ function Profile() {
                         submitUpdate={ConfirmUpdate}
                       />
                       {/* Change Password */}
-                      <ChangePasswordForm password={userData?.password} />
+                      <ChangePasswordForm
+                        userData={userData}
+                        setUserData={setUserData}
+                        submitUpdate={ConfirmUpdate}
+                      />
                     </div>
                   </div>
                 </div>
