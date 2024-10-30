@@ -2,31 +2,27 @@
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import Loader from "../Ui/Loader";
 import { domain } from "../../../../api/api";
 import ProfileDataForm from "./ProfileDataForm";
 import ProfileImage from "./ProfileImage";
 import ChangePasswordForm from "./ChangePasswordForm";
 import axios from "axios";
 import toast from "react-hot-toast";
+import ProfileSkeleton from "./ProfileSkeleton";
 
 function Profile() {
   const darkMode = useSelector((state) => state.darkMode.darkMode);
   const [userData, setUserData] = useState(null);
   const userId = Cookies.get("userId");
-
   useEffect(() => {
-    if (userId) {
-      fetch(`${domain}/api/Users/${userId}`)
-        .then((response) => response.json())
-        .then((data) => setUserData(data.user)) // Access the nested user object
-        .catch((error) => {
-          console.error("Error fetching user data:", error);
-        });
-    } else {
-      console.error("User data not found in cookies.");
-    }
+    fetch(`${domain}/api/Users/${userId}`)
+      .then((response) => response.json())
+      .then((data) => setUserData(data.user)) // Access the nested user object
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      });
   }, []);
+
   const ConfirmUpdate = async () => {
     try {
       const res = await axios.put(`${domain}/api/Users/${userId}`, {
@@ -40,7 +36,7 @@ function Profile() {
   };
 
   if (!userData) {
-    return <Loader />;
+    return <ProfileSkeleton />;
   }
   return (
     <>

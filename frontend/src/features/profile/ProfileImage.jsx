@@ -1,26 +1,82 @@
 /* eslint-disable react/prop-types */
 import male from "../../../public/male.svg";
 import female from "../../../public/female.svg";
+import { useState } from "react";
 const ProfileImage = ({ gender }) => {
+  const data = new FormData();
+  const [selectedImage, setSelectedImage] = useState(null);
+  const handleImageChange = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedImage(URL.createObjectURL(file));
+      data.append("file", file);
+      data.append("upload_preset", "profile_image");
+      data.append("cloud_name", "dh71g32l9");
+      submitUpload();
+    }
+  };
+  const submitUpload = async () => {
+    console.log(data)
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/dh71g32l9/image/upload`,
+      {
+        method: "POST",
+        body: data,
+      }
+    );
+    const uploaded = await res.json();
+    console.log(uploaded);
+  };
   return (
-    <div className="flex flex-col items-center lg:space-x-12 space-y-5 sm:flex-row sm:space-y-0">
+    <div className="flex flex-col items-center md:space-x-12 space-y-5 sm:flex-row sm:space-y-0">
       <img
         className="object-cover w-32 h-32 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500"
-        src={`${gender === "male" ? male : female}`}
+        src={selectedImage || (gender === "male" ? male : female)}
         alt="Bordered avatar"
+      />
+      <input
+        type="file"
+        accept="image/*"
+        id="imageUpload"
+        style={{ display: "none" }}
+        onChange={handleImageChange}
       />
       <div className="flex flex-col space-y-5 w-full sm:w-auto">
         <button
           type="button"
-          className="w-full py-3.5 px-3 text-base font-medium text-indigo-100 bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200"
+          onClick={() => document.getElementById("imageUpload").click()}
+          className={`w-full ${
+            selectedImage ? "hidden" : "block"
+          } py-3.5 px-3 text-base font-medium text-indigo-100 bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 `}
         >
-          Change picture
+          Upload picture
         </button>
         <button
           type="button"
-          className="w-full py-3.5 text-base px-2 font-medium text-indigo-900 bg-red-200 rounded-lg border border-indigo-200 hover:bg-red-300 hover:text-[#202142] focus:z-10 focus:ring-4 focus:ring-indigo-200"
+          onClick={submitUpload}
+          className={`w-full ${
+            selectedImage ? "block" : "hidden"
+          } py-3.5 px-3 text-base font-medium text-indigo-100 bg-[#268149] rounded-lg border border-indigo-200  `}
+        >
+          Save picture
+        </button>
+        <button
+          type="button"
+          onClick={() => setSelectedImage(null)}
+          className={`w-full py-3.5 px-3 ${
+            selectedImage ? "hidden" : "block"
+          } text-base font-medium text-indigo-900 bg-red-200 rounded-lg border border-indigo-200 hover:bg-red-300 hover:text-[#202142]`}
         >
           Delete picture
+        </button>
+        <button
+          type="button"
+          onClick={() => setSelectedImage(null)}
+          className={`w-full py-3.5 px-3 text-base ${
+            selectedImage ? "block" : "hidden"
+          } font-medium text-slate-300 bg-gray-500 rounded-lg border border-indigo-200 hover:bg-gray-600 `}
+        >
+          Cancel upload
         </button>
       </div>
     </div>

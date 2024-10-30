@@ -142,7 +142,7 @@ const ProfileDataForm = ({ userData, setUserData, submitUpdate }) => {
           </div>
         </div>
 
-        <button className="w-full text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4">
+        <button className="w-full text-white bg-indigo-700 hover:bg-indigo-800  font-medium rounded-lg text-sm px-5 py-2.5 mt-4">
           Update Profile
         </button>
       </form>
