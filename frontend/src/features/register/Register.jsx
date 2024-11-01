@@ -10,6 +10,7 @@ import darkRegisterSVG from "../../../public/regiter.json";
 import lightRegisterSVG from "../../../public/lightRegister.json";
 import Lottie from "lottie-react";
 import { domain } from "../../../../api/api";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 function Register() {
   const {
@@ -18,37 +19,19 @@ function Register() {
     formState: { errors },
   } = useForm();
 
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    gender: "",
-  });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const darkMode = useSelector((state) => state.darkMode.darkMode);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);
   }, [darkMode]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
   const registerUser = async (formData) => {
     const { username, email, password, confirmPassword, gender } = formData;
 
-    if (!username || !email || !password || !gender) {
-      setError("All fields are required.");
-      return;
-    }
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
       return;
@@ -57,21 +40,18 @@ function Register() {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        `${domain}/api/Users/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username,
-            email,
-            password,
-            gender,
-          }),
+      const response = await fetch(`${domain}/api/Users/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          gender,
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -79,23 +59,14 @@ function Register() {
       }
 
       const data = await response.json();
-      console.log(data);
 
-      setFormData({
-        username: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        gender: "",
-      });
       setError("");
 
       setTimeout(() => {
         navigate("/login");
       }, 2000);
     } catch (error) {
-      console.error("Error:", error);
-      setError("An error occurred. Please try again.");
+      setError(`${error}`);
     } finally {
       setLoading(false);
     }
@@ -168,11 +139,14 @@ function Register() {
                         : "bg-light-bg text-light-text border-light-primary"
                     }`}
                     placeholder="John Doe"
-                    onChange={handleChange}
-                    {...register("username", { required: true })}
+                    {...register("username", {
+                      required: "Please Enter Your Name",
+                    })}
                   />
                   {errors.username && (
-                    <span className="text-red-500">This field is required</span>
+                    <span className="text-red-500">
+                      {errors.username.message}
+                    </span>
                   )}
                 </div>
                 <div>
@@ -194,14 +168,20 @@ function Register() {
                         : "bg-light-bg text-light-text border-light-primary"
                     }`}
                     placeholder="name@company.com"
-                    onChange={handleChange}
-                    {...register("email", { required: true })}
+                    {...register("email", {
+                      required: "Please Enter Your Email",
+                      pattern: {
+                        value:
+                          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                        message: "Please enter a valid email address",
+                      },
+                    })}
                   />
                   {errors.email && (
-                    <span className="text-red-500">This field is required</span>
+                    <span className="text-red-500">{errors.email.message}</span>
                   )}
                 </div>
-                <div>
+                <div className="">
                   <label
                     htmlFor="password"
                     className={`block mb-2 text-sm font-medium ${
@@ -210,8 +190,9 @@ function Register() {
                   >
                     Password
                   </label>
+                  <div className="relative">
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="password"
                     id="password"
                     placeholder="••••••••"
@@ -220,11 +201,25 @@ function Register() {
                         ? "bg-dark-bg text-dark-text border-dark-primary"
                         : "bg-light-bg text-light-text border-light-primary"
                     }`}
-                    onChange={handleChange}
-                    {...register("password", { required: true })}
+                    {...register("password", {
+                      required: "Please Enter Your Password",
+                      minLength: {
+                        value: 6,
+                        message: "Password must be at least 6 characters long",
+                      },
+                    })}
                   />
+                  <span
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}{" "}
+                  </span>
+                  </div>
                   {errors.password && (
-                    <span className="text-red-500">This field is required</span>
+                    <span className="text-red-500">
+                      {errors.password.message}
+                    </span>
                   )}
                 </div>
                 <div>
@@ -246,11 +241,14 @@ function Register() {
                         ? "bg-dark-bg text-dark-text border-dark-primary"
                         : "bg-light-bg text-light-text border-light-primary"
                     }`}
-                    onChange={handleChange}
-                    {...register("confirmPassword", { required: true })}
+                    {...register("confirmPassword", {
+                      required: "Please Repeat Your Password",
+                    })}
                   />
                   {errors.confirmPassword && (
-                    <span className="text-red-500">This field is required</span>
+                    <span className="text-red-500">
+                      {errors.confirmPassword.message}
+                    </span>
                   )}
                 </div>
 
@@ -270,8 +268,9 @@ function Register() {
                         name="gender"
                         value="male"
                         className="radio"
-                        onChange={handleChange}
-                        {...register("gender", { required: true })}
+                        {...register("gender", {
+                          required: "Please Select Your Gender",
+                        })}
                       />
                       <span
                         className={`ml-2 ${
@@ -287,8 +286,9 @@ function Register() {
                         name="gender"
                         value="female"
                         className="radio"
-                        onChange={handleChange}
-                        {...register("gender", { required: true })}
+                        {...register("gender", {
+                          required: "Please Select Your Gender",
+                        })}
                       />
                       <span
                         className={`ml-2 ${
@@ -299,6 +299,9 @@ function Register() {
                       </span>
                     </label>
                   </div>
+                  {errors.gender && (
+                    <p className="text-red-500">{errors.gender.message}</p>
+                  )}
                 </div>
 
                 <div className="flex flex-col text-center gap-2">

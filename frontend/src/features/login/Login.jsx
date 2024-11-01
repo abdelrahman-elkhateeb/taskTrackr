@@ -10,6 +10,7 @@ import DarkModeToggle from "../Ui/DarkModeToggle";
 import Lottie from "lottie-react";
 import { motion } from "framer-motion";
 import { domain } from "../../../../api/api";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 function Login() {
   const {
@@ -21,6 +22,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const darkMode = useSelector((state) => state.darkMode.darkMode);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);
@@ -131,36 +133,54 @@ function Login() {
                       : "bg-light-bg text-light-text border-light-primary"
                   }`}
                   placeholder="name@company.com"
-                  {...register("email", { required: true })}
+                  {...register("email", {
+                    required: "Please Enter Your Email",
+                    pattern: {
+                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                      message: "Please enter a valid email address",
+                    },
+                  })}
                 />
                 {errors.email && (
-                  <span className="text-red-500">This field is required</span>
+                  <span className="text-red-500">{errors.email.message}</span>
                 )}
               </div>
 
-              <div>
+              <div className="">
                 <label
                   htmlFor="password"
                   className={`block mb-2 text-sm font-medium ${
-                    darkMode ? " text-dark-text" : " text-light-text"
+                    darkMode ? " text-dark-text " : " text-light-text"
                   }`}
                 >
                   Password
                 </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="••••••••"
-                  className={`input input-bordered w-full border-[1px] ${
-                    darkMode
-                      ? "bg-dark-bg text-dark-text border-dark-primary"
-                      : "bg-light-bg text-light-text border-light-primary"
-                  }`}
-                  {...register("password", { required: true })}
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    id="password"
+                    placeholder="••••••••"
+                    className={`input input-bordered w-full border-[1px] ${
+                      darkMode
+                        ? "bg-dark-bg text-dark-text border-dark-primary"
+                        : "bg-light-bg text-light-text border-light-primary"
+                    }`}
+                    {...register("password", {
+                      required: "Please Enter Your Password",
+                    })}
+                  />
+                  <span
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}{" "}
+                  </span>
+                </div>
                 {errors.password && (
-                  <span className="text-red-500">This field is required</span>
+                  <span className="text-red-500">
+                    {errors.password.message}
+                  </span>
                 )}
               </div>
 
