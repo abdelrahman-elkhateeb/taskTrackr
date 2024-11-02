@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
 const ChangePasswordForm = ({ userData, setUserData, submitUpdate }) => {
@@ -10,6 +11,11 @@ const ChangePasswordForm = ({ userData, setUserData, submitUpdate }) => {
     oldPassword: "",
     newPassword: "",
   });
+  const [showPasswords, setShowPasswords] = useState({
+    oldPassword: false,
+    newPassword: false,
+  });
+
   // handlers
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,10 +38,10 @@ const ChangePasswordForm = ({ userData, setUserData, submitUpdate }) => {
       setErrors({ ...errors, oldPassword: "Old Password Doesn't Match!" });
       return;
     }
-    if (newPassword.length < 8) {
+    if (newPassword.length < 6) {
       setErrors({
         ...errors,
-        newPassword: "Password must be at least 8 characters long!",
+        newPassword: "Password must be at least 6 characters long!",
       });
       return;
     }
@@ -62,19 +68,34 @@ const ChangePasswordForm = ({ userData, setUserData, submitUpdate }) => {
             >
               Old Password
             </label>
-            <input
-              type="password"
-              name="oldPassword"
-              id="old_password"
-              className={`block w-full p-3 text-sm border rounded-lg outline-none ${
-                darkMode
-                  ? "bg-gray-700 text-white"
-                  : "bg-slate-200 border-[1px] text-black border-dark-primary"
-              } dark:placeholder-gray-400 dark:text-white`}
-              placeholder="Old Password"
-              value={passwords.oldPassword}
-              onChange={handleChange}
-            />
+            <div className="relative">
+              <input
+                type={showPasswords.oldPassword ? "text" : "password"}
+                name="oldPassword"
+                id="old_password"
+                className={`block w-full p-3 text-sm border rounded-lg outline-none ${
+                  darkMode
+                    ? "bg-gray-700 text-white"
+                    : "bg-slate-200 border-[1px] text-black border-dark-primary"
+                } dark:placeholder-gray-400 dark:text-white`}
+                placeholder="Old Password"
+                value={passwords.oldPassword}
+                onChange={handleChange}
+              />
+              <span
+                className={`absolute right-3 ${
+                  darkMode ? "text-white" : "text-black"
+                } top-1/2 transform -translate-y-1/2  cursor-pointer`}
+                onClick={() =>
+                  setShowPasswords({
+                    ...showPasswords,
+                    oldPassword: !showPasswords.oldPassword,
+                  })
+                }
+              >
+                {showPasswords.oldPassword ? <FaRegEyeSlash /> : <FaRegEye />}{" "}
+              </span>
+            </div>
             {errors.oldPassword && (
               <p className="text-red-500 text-xs ">{errors.oldPassword}</p>
             )}
@@ -90,19 +111,34 @@ const ChangePasswordForm = ({ userData, setUserData, submitUpdate }) => {
           >
             New Password
           </label>
-          <input
-            type="password"
-            name="newPassword"
-            id="new_password"
-            className={`block w-full p-3 text-sm border rounded-lg outline-none ${
-              darkMode
-                ? "bg-gray-700 text-white"
-                : "bg-slate-200 border-[1px] text-black border-dark-primary"
-            } dark:placeholder-gray-400 dark:text-white`}
-            placeholder="New Password"
-            value={passwords.newPassword}
-            onChange={handleChange}
-          />
+          <div className="relative">
+            <input
+              type={showPasswords.newPassword ? "text" : "password"}
+              name="newPassword"
+              id="new_password"
+              className={`block w-full p-3 text-sm border rounded-lg outline-none ${
+                darkMode
+                  ? "bg-gray-700 text-white"
+                  : "bg-slate-200 border-[1px] text-black border-dark-primary"
+              } dark:placeholder-gray-400 dark:text-white`}
+              placeholder="New Password"
+              value={passwords.newPassword}
+              onChange={handleChange}
+            />
+            <span
+              className={`absolute right-3 ${
+                darkMode ? "text-white" : "text-black"
+              } top-1/2 transform -translate-y-1/2  cursor-pointer`}
+              onClick={() =>
+                setShowPasswords({
+                  ...showPasswords,
+                  newPassword: !showPasswords.newPassword,
+                })
+              }
+            >
+              {showPasswords.newPassword ? <FaRegEyeSlash /> : <FaRegEye />}{" "}
+            </span>
+          </div>
           {errors.newPassword && (
             <p className="text-red-500 text-xs ">{errors.newPassword}</p>
           )}

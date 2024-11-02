@@ -22,7 +22,6 @@ const SearchTasks = () => {
       dispatch(setSearchKeyword(""));
     }
     dispatch(sortingTasks(sortingKeyword));
-
   };
   const onSubmit = (e) => {
     e.preventDefault();
@@ -30,7 +29,6 @@ const SearchTasks = () => {
   };
   return (
     <form className="max-w-md mx-auto" onSubmit={onSubmit}>
-     
       <div className="relative">
         <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
           <svg
@@ -64,7 +62,7 @@ const SearchTasks = () => {
         />
         <button
           type="submit"
-          className="text-black absolute end-2.5 bottom-2.5 bg-dark-primary hover:bg-teal-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-dark-primary dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-black absolute end-2.5 bottom-2.5 bg-dark-primary hover:bg-teal-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-dark-primary dark:hover:bg-teal-600 "
         >
           Search
         </button>
