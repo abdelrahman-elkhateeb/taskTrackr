@@ -5,6 +5,7 @@ import {
   setSearchKeyword,
   setTasks,
   sortingTasks,
+  updateFilteredTasks,
 } from "../../app/Slices/darkMode/searchTasksSlice";
 
 const SearchTasks = () => {
@@ -20,12 +21,15 @@ const SearchTasks = () => {
     if (e.target.value === "") {
       dispatch(setTasks(tasks));
       dispatch(setSearchKeyword(""));
+      dispatch(updateFilteredTasks());
     }
     dispatch(sortingTasks(sortingKeyword));
   };
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(searchTasks(searchText));
+    dispatch(updateFilteredTasks());
+    dispatch(sortingTasks(sortingKeyword));
   };
   return (
     <form className="max-w-md mx-auto" onSubmit={onSubmit}>
