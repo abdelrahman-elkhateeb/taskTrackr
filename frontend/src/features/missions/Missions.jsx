@@ -44,7 +44,7 @@ const Missions = () => {
   const updateMissionState = async (missionId, newState) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/Projects/updateMyMission/${missionId}/${creatorId}`,
+        `${domain}/api/Projects/updateMyMission/${missionId}/${creatorId}`,
         {
           newState,
         }
